@@ -1,0 +1,223 @@
+/* ---- NAVBAR ---- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250, 250, 248, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 32px;
+}
+
+.navbar-inner {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.navbar-back {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s;
+}
+
+.navbar-back:hover {
+  color: var(--color-accent);
+}
+
+.navbar-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.navbar-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.navbar-link:hover {
+  color: var(--color-accent);
+}
+
+/* ---- CASE STUDY PAGE ---- */
+.case-study-page section {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 32px;
+  margin-bottom: 72px;
+}
+
+.case-study-page section.wide {
+  max-width: var(--max-width-wide);
+}
+
+.case-study-page section h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-text);
+  margin-bottom: 20px;
+}
+
+.case-study-page section h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: 12px;
+  margin-top: 40px;
+}
+
+.case-study-page section p {
+  margin-bottom: 16px;
+  color: var(--color-text);
+}
+
+.case-study-page section p.secondary {
+  color: var(--color-text-secondary);
+}
+
+/* ---- CASE STUDY HERO ---- */
+.case-study-hero {
+  padding: 80px 32px 64px;
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: 20px;
+}
+
+.case-study-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-accent);
+  margin-bottom: 24px;
+  max-width: 700px;
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border);
+}
+
+.hero-meta dt {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+}
+
+.hero-meta dd {
+  font-size: 15px;
+  color: var(--color-text);
+  font-weight: 400;
+}
+
+/* ---- SCROLL REVEAL ---- */
+.case-study-page section {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.will-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+/* ---- SECTION NUMBERS ---- */
+.case-study-page {
+  counter-reset: section-counter;
+}
+
+.case-study-page section:not(.wide) {
+  position: relative;
+  counter-increment: section-counter;
+  isolation: isolate;
+}
+
+.case-study-page section:not(.wide)::before {
+  content: counter(section-counter, decimal-leading-zero);
+  position: absolute;
+  right: 0;
+  top: -8px;
+  font-family: var(--font-display);
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-border);
+  opacity: 0.45;
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+}
+
+/* ---- PROGRESS BAR ---- */
+.progress-bar {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  height: 3px;
+  background: var(--color-accent);
+  z-index: 200;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 640px) {
+  .navbar { padding: 0 20px; }
+  .case-study-hero { padding: 48px 20px 40px; }
+  .case-study-page section { padding: 0 20px; margin-bottom: 56px; }
+  .hero-meta { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .case-study-page section:not(.wide)::before { font-size: 64px; }
+}

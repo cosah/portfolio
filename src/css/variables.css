@@ -1,0 +1,16 @@
+:root {
+  --color-bg: #FAFAF8;
+  --color-surface: #FFFFFF;
+  --color-text: #1A1A1A;
+  --color-text-secondary: #5C5C5C;
+  --color-border: #E8E6E1;
+  --color-tag-bg: #F0EFEC;
+  --color-accent: #00274C;
+  --color-accent-soft: #FFF3CC;
+
+  --font-display: 'Libre Baskerville', serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --max-width: 860px;
+  --max-width-wide: 1120px;
+}
