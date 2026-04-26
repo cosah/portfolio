@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useSunTheme } from './hooks/useSunTheme'
 import './css/global.css'
 import './css/layout.css'
 import './css/components.css'
@@ -25,6 +26,7 @@ function getRoute() {
 }
 
 export default function App() {
+  useSunTheme()
   const [route, setRoute] = useState(getRoute)
 
   useEffect(() => {

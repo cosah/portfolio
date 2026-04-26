@@ -12,6 +12,7 @@ import CaseStudyFooter from '../components/CaseStudyFooter'
 const THEME = {
   '--color-accent': '#1E3D2F',
   '--color-accent-soft': '#D6EBE0',
+  '--color-accent-night': '#6BA3C8',
 }
 
 const META = [
@@ -78,7 +79,7 @@ export default function CourtsAudit({ onHome }) {
         <SectionLabel>The Problem</SectionLabel>
         <h2>Evaluating a public legal resource against the accessibility standard Michigan has adopted</h2>
         <p>The Michigan Courts System website serves a wide range of users: attorneys filing motions, journalists tracking court decisions, and members of the public navigating legal processes with varying degrees of familiarity. It hosts court rules, hearing schedules, filing portals, and data dashboards, often as the primary point of contact between citizens and the court system.</p>
-        <p>Michigan has formally adopted WCAG 2.1 at the AA level of conformance, committing the site to a specific, measurable accessibility standard. Our team was brought in to evaluate whether the site actually meets it. We audited seven distinct pages across the Michigan Courts site to document where it conforms, where it falls short, and what the path to full compliance looks like.</p>
+        <p>We audited seven distinct pages across the Michigan Courts site to document where it conforms, where it falls short, and what the path to full compliance looks like.</p>
         <p>Accessibility on a legal information site carries real weight. Barriers that prevent a screen reader user from navigating a form, or a keyboard user from identifying which element is focused, have consequences beyond inconvenience. Getting the baseline right matters for this kind of site.</p>
         <StatRow stats={STATS} />
       </section>
@@ -97,16 +98,16 @@ export default function CourtsAudit({ onHome }) {
         <p>The pattern that emerged across all seven pages was consistent. The site had good bones in some areas (page titles, consistent navigation structure, readable zoom behavior) but failed repeatedly on contrast, semantic structure, and keyboard interaction. These weren't isolated bugs. They were architectural patterns repeated across the entire site.</p>
         <h3>Four failure categories that showed up everywhere</h3>
         <FindingBlock label="Color contrast">
-          Text-to-background ratios as low as 1:1 on multiple pages. WCAG AA requires 4.5:1 for normal text. The Interactive Court Data Dashboard alone had 79 contrast errors.
+          Contrast below WCAG minimums across multiple pages, ranging from marginal misses to near-zero ratios. Most severe on the Interactive Court Data Dashboard.
         </FindingBlock>
         <FindingBlock label="Missing or broken semantic structure">
           Most pages were missing proper landmark elements (&lt;main&gt;, &lt;header&gt;, &lt;footer&gt;). Heading levels were skipped, making screen reader navigation disorienting. "Skip to main content" links were present on most pages but nonfunctional: not keyboard-activatable, and pointing to sections that didn't exist.
         </FindingBlock>
         <FindingBlock label="Unlabeled interactive elements">
-          79+ empty buttons across multiple pages. Icons with no alt text or generic labels like "image." SVG graphics missing title and description elements. Form fields missing programmatic label associations.
+          Empty buttons and icons with no accessible names across every page. SVG graphics missing title and description elements. Form fields missing programmatic label associations.
         </FindingBlock>
         <FindingBlock label="Focus indicator failures">
-          Keyboard users couldn't reliably see which element was active. Several pages had no visible focus ring on checkboxes, radio buttons, or links. One page had a focus ring that existed but failed minimum contrast.
+          Keyboard users had no reliable way to track which element was active. No consistent visible focus state across the site.
         </FindingBlock>
       </section>
 
@@ -166,7 +167,7 @@ export default function CourtsAudit({ onHome }) {
           <p>Text-to-background contrast ratios as low as 1:1 were found across multiple pages. WCAG AA requires 4.5:1 for normal text and 3:1 for large text and non-text elements. The Interactive Court Data Dashboard had 79 contrast errors. The data visualizations used color coding that was functionally meaningless for users with color-vision deficiencies.</p>
         </DecisionCard>
         <DecisionCard number={4} title="Add visible focus state highlighting to all keyboard-navigable elements" rationale="Focus visibility is the keyboard user's cursor. Without it, keyboard navigation becomes guesswork. Any interactive element that can receive focus must be visibly identifiable as focused. This was failing everywhere.">
-          <p>Across all seven pages, keyboard users frequently couldn't tell where they were. Focus rings were absent, too low-contrast to see, or inconsistently applied across element types. "Skip to main content" links existed on most pages but couldn't be activated by keyboard. The tab order on several pages required cycling through dozens of navigation elements before reaching meaningful content.</p>
+          <p>Across all seven pages, keyboard users frequently couldn't tell where they were. Focus rings were absent, too low-contrast to see, or inconsistently applied across element types. The tab order on several pages required cycling through dozens of navigation elements before reaching meaningful content.</p>
         </DecisionCard>
       </section>
 

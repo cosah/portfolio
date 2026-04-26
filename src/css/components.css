@@ -751,6 +751,148 @@
   color: var(--color-text-secondary);
 }
 
+/* ---- DARK MODE ---- */
+
+/* Image slot label */
+[data-theme="dark"] .image-slot .slot-label {
+  color: var(--color-accent-night, #6BA3C8);
+}
+
+/* Section label */
+[data-theme="dark"] .section-label {
+  color: var(--color-accent-night, #6BA3C8);
+  background: color-mix(in srgb, var(--color-accent-night, #6BA3C8) 12%, transparent);
+}
+
+/* Callout — becomes a surface card */
+[data-theme="dark"] .callout {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+[data-theme="dark"] .callout h3,
+[data-theme="dark"] .case-study-page section .callout h3 {
+  color: var(--color-accent-night, #6BA3C8);
+}
+[data-theme="dark"] .callout .stat {
+  color: var(--color-accent-night, #6BA3C8);
+}
+[data-theme="dark"] .callout p,
+[data-theme="dark"] .case-study-page section .callout p {
+  color: var(--color-text-secondary);
+}
+
+/* Decision card */
+[data-theme="dark"] .decision-card .card-number {
+  color: var(--color-accent-night, #6BA3C8);
+  background: color-mix(in srgb, var(--color-accent-night, #6BA3C8) 12%, transparent);
+}
+[data-theme="dark"] .decision-card .rationale {
+  border-left-color: color-mix(in srgb, var(--color-accent-night, #6BA3C8) 40%, transparent);
+}
+
+/* Contrib grid */
+[data-theme="dark"] .contrib-grid .phase {
+  color: var(--color-accent-night, #6BA3C8);
+}
+
+/* Stat row */
+[data-theme="dark"] .stat-cell .stat-number {
+  color: var(--color-accent-night, #6BA3C8);
+}
+
+/* Pull quote */
+[data-theme="dark"] .pull-quote {
+  background: color-mix(in srgb, var(--color-accent-night, #6BA3C8) 8%, transparent);
+  border-left-color: var(--color-accent-night, #6BA3C8);
+}
+[data-theme="dark"] .pull-quote p {
+  color: var(--color-accent-night, #6BA3C8);
+}
+
+/* Video section — becomes surface card */
+[data-theme="dark"] .video-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+[data-theme="dark"] .video-section h3,
+[data-theme="dark"] .case-study-page section .video-section h3 {
+  color: var(--color-accent-night, #6BA3C8);
+}
+[data-theme="dark"] .video-section p,
+[data-theme="dark"] .case-study-page section .video-section p {
+  color: var(--color-text-secondary);
+}
+
+/* Team pod */
+[data-theme="dark"] .team-pod .pod-label {
+  color: var(--color-accent-night, #6BA3C8);
+  background: color-mix(in srgb, var(--color-accent-night, #6BA3C8) 12%, transparent);
+}
+
+/* Persona card */
+[data-theme="dark"] .persona-card .persona-name {
+  color: var(--color-accent-night, #6BA3C8);
+}
+
+/* Tool tag */
+[data-theme="dark"] .tool-tag {
+  color: var(--color-accent-night, #6BA3C8);
+  background: color-mix(in srgb, var(--color-accent-night, #6BA3C8) 12%, transparent);
+}
+
+/* Finding block */
+[data-theme="dark"] .finding-block .finding-label {
+  color: var(--color-accent-night, #6BA3C8);
+}
+
+/* Hypothesis grid */
+[data-theme="dark"] .hyp-id {
+  color: var(--color-accent-night, #6BA3C8);
+}
+
+/* Hypothesis signals */
+[data-theme="dark"] .hyp-signal.validated {
+  color: #7FD4A8;
+  background: rgba(127, 212, 168, 0.1);
+}
+[data-theme="dark"] .hyp-signal.partial,
+[data-theme="dark"] .hyp-signal.conditional {
+  color: #E8C870;
+  background: rgba(232, 200, 112, 0.1);
+}
+
+/* Prototype embed */
+[data-theme="dark"] .prototype-embed-wrapper {
+  background: var(--color-surface);
+}
+
+/* Prototype link */
+[data-theme="dark"] .prototype-link-wrapper {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+[data-theme="dark"] .prototype-link-tagline {
+  color: var(--color-text);
+}
+[data-theme="dark"] .prototype-link-btn {
+  background: var(--color-accent-night, #6BA3C8);
+  color: var(--color-bg);
+}
+
+/* Image modal */
+[data-theme="dark"] .img-modal-card {
+  background: var(--color-surface);
+}
+[data-theme="dark"] .img-modal-footer {
+  border-top-color: var(--color-border);
+}
+[data-theme="dark"] .img-modal-close {
+  color: var(--color-text-secondary);
+}
+[data-theme="dark"] .img-modal-close:hover {
+  color: var(--color-text);
+}
+
 /* ---- RESPONSIVE ---- */
 
 /* Tablet */

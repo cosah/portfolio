@@ -13,4 +13,17 @@
 
   --max-width: 860px;
   --max-width-wide: 1120px;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --color-bg: #111820;
+  --color-surface: #1B2535;
+  --color-text: #EBE9E3;
+  --color-text-secondary: #9A9893;
+  --color-border: #2C3547;
+  --color-tag-bg: #1E2838;
+
+  color-scheme: dark;
 }

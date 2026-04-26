@@ -19,6 +19,7 @@ import CaseStudyFooter from '../components/CaseStudyFooter'
 const THEME = {
   '--color-accent': '#00274C',
   '--color-accent-soft': '#FFF3CC',
+  '--color-accent-night': '#6BA3C8',
 }
 
 const META = [
@@ -88,7 +89,7 @@ export default function SeedLibrary({ onHome }) {
         <h3>Usability testing exposed the identification crisis</h3>
         <p>All seven usability participants required facilitator intervention at some point during the flow. More critically, zero out of seven could identify which seed they had received. They searched labels, shook capsules, and asked the facilitator directly. The physical system gave them seeds but no way to know what they were holding. This was confirmed by the analytics: only 3 of 110 site visitors reached the specific plant page for the seeds that were actually in the machines.</p>
         <h3>The survey quantified the awareness gap</h3>
-        <p>Among 53 respondents (81% undergraduate, 7% graduate, 12% community members), 84.9% had never heard of the Seed Library. Yet when presented with the concept, 60% expressed interest in community participation and 59% wanted themed community sessions. The interest existed. The pathways to that interest were missing.</p>
+        <p>Among 53 respondents (81% undergraduate, 7% graduate, 12% community members), most had never heard of the program — yet when presented with the concept, 60% expressed interest in community participation and 59% wanted themed community sessions. The interest existed. The pathways to it were missing.</p>
         <ImageSlot label="Figma Export">Affinity diagram: synthesized findings from all four research methods, coded by theme</ImageSlot>
       </section>
 
@@ -179,7 +180,7 @@ export default function SeedLibrary({ onHome }) {
           <p>Usability testing showed that users immediately sought actionable care guidance after identifying their seed, not botanical reference information. The Plant Detail page was restructured to lead with six numbered care steps, followed by difficulty ratings, growing specs in scannable card format, and student testimonials. In the hi-fi revision, care instructions were moved into collapsible sections using progressive disclosure to reduce scroll length.</p>
         </DecisionCard>
         <DecisionCard number={4} title="Community Features Distributed Across the System" rationale="Features that users want but cannot find are functionally nonexistent. Distributing community touchpoints across the experience builds familiarity through repeated exposure rather than requiring users to seek out a dedicated page.">
-          <p>Despite 60% of surveyed users expressing interest in community participation, events were almost entirely undiscovered in the original system. Rather than concentrating everything on a single Events page, the redesign surfaced community programming across plant pages, the homepage, and navigation. Attendance indicators ("34 attending | 5 seats left") combined social proof with scarcity to drive registration.</p>
+          <p>Events were almost entirely undiscovered in the original system despite strong expressed interest. Rather than concentrating everything on a single Events page, the redesign surfaced community programming across plant pages, the homepage, and navigation. Attendance indicators ("34 attending | 5 seats left") combined social proof with scarcity to drive registration.</p>
         </DecisionCard>
         <DecisionCard number={5} title="Location-Based Seed Organization" rationale="Location is the natural entry point for a physical-first experience. Organizing around it connects the digital catalog directly to the real-world context where users encounter the system.">
           <p>With machines in three campus libraries (Shapiro, Hatcher, Leinweber), the plant catalog was organized by building location rather than alphabetically or by plant type. This served users in both directions: someone who found a machine could immediately see what's available at that location, and someone browsing digitally could identify which building to visit. Combined search and filter tools supported both goal-directed and exploratory browsing.</p>

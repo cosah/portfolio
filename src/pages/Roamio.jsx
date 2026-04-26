@@ -30,6 +30,7 @@ const RESEARCH_SLIDES = [
 const THEME = {
   '--color-accent': '#1D3D2F',
   '--color-accent-soft': '#E4EDE9',
+  '--color-accent-night': '#6BA3C8',
 }
 
 const META = [
@@ -188,7 +189,7 @@ export default function Roamio({ onHome }) {
       <section>
         <SectionLabel>Iteration</SectionLabel>
         <h2>Five product changes that came directly from testing</h2>
-        <p>The research synthesis produced a prioritized backlog of design changes. The team shipped all five before Demo Day, treating each as a direct response to observed user behavior.</p>
+        <p>The research synthesis produced a prioritized backlog of design changes, each a direct response to observed user behavior.</p>
         <DecisionCard number={1} title="Itemized Checkout with Hotel Details" rationale="The price isn't the problem. The information vacuum around the price is. Transparency doesn't reduce conversion, it enables it.">
           <p>P1's price reaction flipped the moment he learned what was and wasn't included. P2 couldn't find hotel information on the detail page. The revision added a complete line-item breakdown: agent fee, hotel, activities, and what was explicitly excluded (flights). Travelers now evaluate value before committing, not after.</p>
         </DecisionCard>
@@ -244,7 +245,7 @@ export default function Roamio({ onHome }) {
       <section>
         <SectionLabel>Reflection</SectionLabel>
         <h2>What I'd do differently as the PM</h2>
-        <p>The biggest product lesson from Roamio was about the gap between a compelling concept and a trustworthy product. The local agent model validated strongly: 5/5 participants rejected AI recommendations in favor of human curation. The market wants what Roamio promises. But the prototype kept revealing the same failure: when travelers couldn't see what they were buying, they didn't buy. The product's information design was working against the business model.</p>
+        <p>The biggest product lesson from Roamio was about the gap between a compelling concept and a trustworthy product. The market wants what Roamio promises. But information design turned out to be a business model problem — when travelers couldn't see what they were buying, they didn't buy.</p>
         <p>In a product role, I would have pushed for transparency as a first-class feature from the beginning rather than a post-test fix. That means: define what information a traveler needs to feel confident at checkout before designing the checkout, not after testing it. We treated opacity as a design constraint and discovered it was actually a conversion blocker. A PM should catch that upstream.</p>
         <p>Three specific things I'd change. First, I would have interviewed supply-side participants: local agents and tour operators. All our research was demand-side, which is correct for early validation, but V3 (guide willingness to take a 25 to 50 percent commission) was marked "not testable" throughout. That's a critical assumption for a marketplace to leave unexamined through an entire semester. Even two supply-side interviews would have surfaced whether the commission structure was realistic. Second, I would have defined quantitative success thresholds before testing: what task completion rate would validate each hypothesis, what Likert score would qualify as "high enough confidence to ship." We relied on qualitative judgment calls instead, which left the team debating what "partial" meant for D3. Third, I would have run a second round of usability testing on the revised prototype before Demo Day. We iterated based on findings and shipped five changes, but never verified those changes worked. That's the same gap I identified in the Mintify project: we assume the fix addressed the failure without proving it.</p>
         <h3>If Roamio Continued</h3>

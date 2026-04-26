@@ -30,6 +30,7 @@ const SCREENS = [
 const THEME = {
   '--color-accent': '#00274C',
   '--color-accent-soft': '#FFF3CC',
+  '--color-accent-night': '#6BA3C8',
 }
 
 const META = [
@@ -195,7 +196,7 @@ export default function TheDiag({ onHome }) {
       <section>
         <SectionLabel>Reflection</SectionLabel>
         <h2>What I'd do differently as the PM</h2>
-        <p>The biggest lesson from this project was about the gap between clever solutions and usable ones. The NLP input field was objectively a better interaction pattern for experienced users, but it assumed familiarity that first-time event creators didn't have. In a product context, I would have pushed for a progressive disclosure approach: ship the simple form first, then layer in smart features (like paste-to-parse) as a power-user shortcut once the base flow was validated.</p>
+        <p>The biggest lesson: clever solutions that don't match user mental models are just friction by another name. In a product context, I would have pushed for progressive disclosure from the start — ship the conventional form first, then layer in smart features like paste-to-parse as a power-user shortcut once the base flow was validated.</p>
         <p>If I were leading this as a product manager, three things would change. First, I would have run a lightweight supply-side discovery sprint before designing: interviewing org leaders about their current event promotion workflow to understand what "easy" means to them, rather than assuming. Second, I would have defined quantitative success metrics upfront (task completion rate targets, time-to-publish benchmarks) so the testing results would have clear pass/fail thresholds. Third, I would have prioritized a second round of usability testing on the revised Create Event flow to validate that the fix actually worked, rather than shipping the iteration on assumption.</p>
         <h3>Next Release Priorities</h3>
         <p>Validate the revised Create Event flow with another test round. Add calendar integration for easier event management. Expand social features (friend attendance visibility, event sharing). Build a notification system for reminders. Launch org admin tools for event approval, editing, and analytics.</p>

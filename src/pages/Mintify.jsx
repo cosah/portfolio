@@ -15,6 +15,7 @@ import CaseStudyFooter from '../components/CaseStudyFooter'
 const THEME = {
   '--color-accent': '#1A3B5C',
   '--color-accent-soft': '#DCE9F5',
+  '--color-accent-night': '#6BA3C8',
 }
 
 const META = [
@@ -57,8 +58,8 @@ export default function Mintify({ onHome }) {
         <SectionLabel>The Problem</SectionLabel>
         <h2>Seventy percent of Michigan debt defendants never get to tell their side of the story</h2>
         <p>In Michigan, defendants in debt collection cases face an almost impossible information asymmetry. When a debt collector files a complaint, the defendant receives two court documents: an Advice of Rights notice and an Answer Form. These two pieces of paper are the only bridge between the defendant and their ability to participate in the legal process.</p>
-        <p>Most defendants never use them. Seventy percent of debt collection cases in Michigan end in default judgment, meaning the defendant simply doesn't show up or respond, and the plaintiff wins automatically. It's not because defendants don't have a defense. It's because the forms are so dense, jargon-heavy, and cognitively overwhelming that many defendants give up before they start.</p>
-        <p>The power imbalance is stark: over 90% of plaintiffs in debt collection cases are represented by attorneys. Only 3% of defendants are. For the remaining 97%, the form <em>is</em> the system. If they can't understand it, they can't access justice.</p>
+        <p>Most defendants never use them — not because they don't have a defense, but because the forms are dense, jargon-heavy, and cognitively overwhelming enough that many give up before they start.</p>
+        <p>The power imbalance is stark: over 90% of plaintiffs are represented by attorneys. For most defendants, the form <em>is</em> the system. If they can't understand it, they can't access justice.</p>
         <StatRow stats={STATS} />
         <p>The Michigan Supreme Court Justice For All Commission (MSCJFA), which works to close gaps in access to justice, engaged Mintify to study the barriers and redesign both forms. The goal: make these documents clear enough that defendants can actually use them.</p>
       </section>
@@ -134,7 +135,7 @@ export default function Mintify({ onHome }) {
         <h3>Managing the Client Relationship</h3>
         <p>I served as the primary contact for the MSCJFA throughout the project. This meant drafting the initial client outreach in week one, scheduling and leading the kickoff, and running the November mid-project alignment call. That call, and the scope clarification that came from it, was the most consequential PM decision of the semester.</p>
         <h3>Managing Toward a Deadline</h3>
-        <p>The project had a hard external deadline: a client handoff meeting on January 12–13. Working backward from that date, I set the internal design deadline of January 4th, giving one week of buffer for final report writing, presentation preparation, and any last design adjustments. This buffer turned out to be necessary, as the high-fidelity revisions took longer than the mid-fi iteration cycle suggested they would.</p>
+        <p>Working backward from the client handoff date, I set an internal design deadline with one week of buffer for report writing, presentation prep, and final adjustments — buffer that turned out to be necessary, as the high-fidelity revisions took longer than the mid-fi iteration cycle suggested.</p>
       </section>
 
       <section>
@@ -162,7 +163,7 @@ export default function Mintify({ onHome }) {
       <section>
         <SectionLabel>Delivery</SectionLabel>
         <h2>What we handed to the Michigan Justice For All Commission</h2>
-        <p>At the January handoff meeting, the team delivered a complete package to the MSCJFA Debt Collection Workgroup: high-fidelity redesigns of both forms, a final report documenting the full process and findings, and a presentation summarizing the project for the client's stakeholders. The research artifacts, affinity diagram, personas, journey maps, and survey visualizations, were included as supplemental appendices.</p>
+        <p>At the January handoff meeting, the team delivered a complete package to the MSCJFA Debt Collection Workgroup: high-fidelity redesigns of both forms, a final report documenting the full process and findings, and a presentation summarizing the project for the client's stakeholders.</p>
         <p>The high-fidelity designs were built to be immediately usable as a production reference, not just a prototype. Design decisions were documented with the reasoning behind them so the MSCJFA team could evaluate, adapt, or extend the work without losing the context that made those decisions.</p>
         <ImageSlot label="Figma Export">Final client presentation deck: project summary and form walkthroughs</ImageSlot>
       </section>

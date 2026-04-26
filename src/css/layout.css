@@ -304,6 +304,24 @@
   .case-study-footer { padding: 32px 20px 56px; }
 }
 
+/* ---- DARK MODE ---- */
+[data-theme="dark"] .navbar {
+  background: rgba(17, 24, 32, 0.92);
+}
+
+[data-theme="dark"] .navbar-back:hover,
+[data-theme="dark"] .navbar-link:hover {
+  color: var(--color-accent-night, #6BA3C8);
+}
+
+[data-theme="dark"] .case-study-hero h1 {
+  color: var(--color-accent-night, #6BA3C8);
+}
+
+[data-theme="dark"] .progress-bar {
+  background: var(--color-accent-night, #6BA3C8);
+}
+
 /* Small phone */
 @media (max-width: 480px) {
   .case-study-hero { padding: 36px 16px 32px; }
