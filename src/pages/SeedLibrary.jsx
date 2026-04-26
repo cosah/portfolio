@@ -1,4 +1,11 @@
 import Navbar from '../components/Navbar'
+import imgPlantListing from '../assets/seed-plant-listing.png'
+import imgPlantDetail from '../assets/seed-plant-detail.png'
+import imgEvents from '../assets/seed-events-page.png'
+import imgHomepage from '../assets/seed-homepage.png'
+import imgPersona1 from '../assets/seed-persona-2.png'
+import imgPersona2 from '../assets/seed-persona-1.png'
+import imgEvalBoard from '../assets/seed-eval-board.png'
 import CaseStudyHero from '../components/CaseStudyHero'
 import SectionLabel from '../components/SectionLabel'
 import Callout from '../components/Callout'
@@ -54,10 +61,10 @@ export default function SeedLibrary({ onHome }) {
 
       <section className="wide">
         <ImageGrid columns={4}>
-          <ImageSlot label="Figma Export">Plant Listing Page (Grow)</ImageSlot>
-          <ImageSlot label="Figma Export">Plant Detail Page</ImageSlot>
-          <ImageSlot label="Figma Export">Events Page</ImageSlot>
-          <ImageSlot label="Figma Export">Homepage</ImageSlot>
+          <ImageSlot label="Plant Listing" src={imgPlantListing} alt="Plant Listing page" />
+          <ImageSlot label="Plant Detail" src={imgPlantDetail} alt="Plant Detail page" />
+          <ImageSlot label="Events" src={imgEvents} alt="Events page" />
+          <ImageSlot label="Homepage" src={imgHomepage} alt="Homepage" />
         </ImageGrid>
       </section>
 
@@ -132,10 +139,10 @@ export default function SeedLibrary({ onHome }) {
 
       <section className="wide">
         <ImageGrid columns={4}>
-          <ImageSlot label="Figma Export">Plant Listing: location-based seed catalog with color-coded cards</ImageSlot>
-          <ImageSlot label="Figma Export">Plant Detail: care instructions, difficulty rating, specs cards</ImageSlot>
-          <ImageSlot label="Figma Export">Events: filterable community programming with attendance indicators</ImageSlot>
-          <ImageSlot label="Figma Export">Homepage: mission, seed locations, and upcoming events</ImageSlot>
+          <ImageSlot label="Plant Listing" src={imgPlantListing} alt="Plant Listing: location-based seed catalog with color-coded cards" />
+          <ImageSlot label="Plant Detail" src={imgPlantDetail} alt="Plant Detail: care instructions, difficulty rating, specs cards" />
+          <ImageSlot label="Events" src={imgEvents} alt="Events: filterable community programming with attendance indicators" />
+          <ImageSlot label="Homepage" src={imgHomepage} alt="Homepage: mission, seed locations, and upcoming events" />
         </ImageGrid>
       </section>
 
@@ -152,8 +159,8 @@ export default function SeedLibrary({ onHome }) {
         <h3>From findings to requirements</h3>
         <p>The synthesis process used affinity diagramming to group findings from all four methods by touchpoint in the user journey. This produced the journey map, the user flow diagram (documenting both intended paths and observed error states), two personas with storyboards, and ultimately the four design requirements. The requirements were structured to be testable: each one mapped to a specific failure mode we had observed, which meant the evaluation phase could measure whether the redesign actually addressed it.</p>
         <ImageGrid columns={2}>
-          <ImageSlot label="Figma Export">Persona 1: experienced gardener seeking community connection</ImageSlot>
-          <ImageSlot label="Figma Export">Persona 2: curious beginner looking for a low-effort hobby</ImageSlot>
+          <ImageSlot label="Persona 1" src={imgPersona1} alt="Britt — experienced gardener seeking community connection" />
+          <ImageSlot label="Persona 2" src={imgPersona2} alt="Casey — curious beginner looking for a low-effort hobby" />
         </ImageGrid>
       </section>
 
@@ -182,7 +189,7 @@ export default function SeedLibrary({ onHome }) {
       <section className="wide">
         <div style={{ margin: '48px 0' }}>
           <SectionLabel>Try It</SectionLabel>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '32px', fontWeight: 700, marginBottom: '8px' }}>Interactive Prototype</h2>
+          <h2 style={{ marginBottom: '8px' }}>Interactive Prototype</h2>
           <p style={{ color: 'var(--color-text-secondary)', marginBottom: '24px' }}>Click through the final desktop prototype below. Start on the Plant Listing page (the QR entry point) and explore the full site.</p>
           <div className="prototype-embed-wrapper">
             <iframe
@@ -200,7 +207,7 @@ export default function SeedLibrary({ onHome }) {
         <SectionLabel>Results</SectionLabel>
         <h2>Before and after the redesign</h2>
         <p>The evaluation phase compared pre-design usability testing (7 participants on the original system) with post-design testing (8 participants on the redesigned system). The most significant change was seed identification: a task that was completely impossible in the original system became universally successful in the redesign.</p>
-        <ImageSlot label="Figma Export">Before/after comparison charts: seed identification (4% to 83% in field observation) and task completion (0% to 95%)</ImageSlot>
+        <ImageSlot label="Evaluation Phase Data" src={imgEvalBoard} alt="Evaluation phase data: before and after comparison" />
         <p>Obtaining seeds required prompting for 43% of participants before the redesign and 0% after. Seed identification went from a 0% success rate (every participant failed) to 100% (every participant succeeded through at least one identification channel). Seed caretaking task completion improved from 85.7% to 100%. The exploration task, which could not be measured on the original system because community features were undiscoverable, achieved 87.5% completion in the redesigned system.</p>
         <Callout label="2026 UMSI Exposition" stat="BSI UX Pathway Award">
           <p>This project was selected as the BSI UX Pathway Award winner at the 2026 UMSI Student Project Exposition, judged by a panel of UMSI alumni and industry experts. The award recognizes excellence in user experience research and design, clear execution, and feasible, valuable recommendations to the client organization.</p>

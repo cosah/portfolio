@@ -175,24 +175,31 @@
 }
 
 /* ---- RESPONSIVE ---- */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .home-header { padding: 60px 28px 48px; }
+  .case-studies-section { padding: 0 28px 100px; }
+  .case-study-card { padding: 32px; }
+  .home-header p { font-size: 18px; }
+}
+
+/* Phone */
 @media (max-width: 640px) {
-  .home-header {
-    padding: 48px 20px 40px;
-    margin-bottom: 48px;
-  }
-  .case-studies-section {
-    padding: 0 20px 80px;
-  }
-  .case-study-card {
-    padding: 28px 24px;
-  }
-  .card-arrow {
-    display: none;
-  }
-  .case-study-card h2 {
-    font-size: 22px;
-  }
-  .home-corner-links {
-    display: none;
-  }
+  .home-header { padding: 48px 20px 36px; margin-bottom: 40px; }
+  .home-header p { font-size: 17px; }
+  .case-studies-section { padding: 0 20px 72px; }
+  .case-study-card { padding: 24px 20px; }
+  .case-study-card h2 { font-size: 20px; }
+  .case-study-card .card-subtitle { font-size: 15px; margin-bottom: 16px; }
+  .card-arrow { display: none; }
+  .home-corner-links { display: none; }
+  .home-footer { padding: 24px 20px; font-size: 13px; }
+}
+
+/* Small phone */
+@media (max-width: 480px) {
+  .home-header { padding: 36px 16px 28px; }
+  .case-studies-section { padding: 0 16px 64px; }
+  .case-study-card { padding: 20px 16px; }
 }

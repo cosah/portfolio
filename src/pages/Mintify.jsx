@@ -1,4 +1,7 @@
 import Navbar from '../components/Navbar'
+import imgAffinity from '../assets/mintify-affinity.png'
+import imgPersona1 from '../assets/mintify-persona-1.png'
+import imgPersona2 from '../assets/mintify-persona-2.png'
 import CaseStudyHero from '../components/CaseStudyHero'
 import SectionLabel from '../components/SectionLabel'
 import Callout from '../components/Callout'
@@ -89,14 +92,14 @@ export default function Mintify({ onHome }) {
         <h2>What five interviews and 21 surveys revealed about legal form comprehension</h2>
         <p>The research team's initial tabling attempts at the Ann Arbor library and courthouse produced no participant engagement, a schedule threat I couldn't let sit. I stepped in directly: organized team sign-ups for a full campus tabling day, assembled the table, prepared the forms, and arranged food and drink as incentives to draw passersby. The result was a single high-output day that generated the bulk of our data: survey responses, contextual inquiries, and interview commitments from University of Michigan students.</p>
         <p>The research approach was deliberately mixed: the survey captured scaled self-assessments of trust and comprehension, while the interviews surfaced the specific language and interaction patterns that caused confusion.</p>
-        <ImageSlot label="Figma Export">Affinity diagram: synthesized from 5 interviews, coded by theme</ImageSlot>
+        <ImageSlot label="Affinity Diagram" src={imgAffinity} alt="Affinity diagram: synthesized from 5 interviews, coded by theme" />
         <p>Three failure modes emerged consistently across both forms and all participants. First, the legal terminology created a comprehension wall even for educated participants. Words like "plaintiff" and "defendant," used without definition, left interviewees unsure of their own role in the process. Second, the density of information on each page triggered cognitive overload before participants finished reading, many skimmed or gave up. Third, the forms buried critical action steps (deadlines, response options) inside blocks of undifferentiated text, making it difficult for participants to identify what they were actually supposed to do.</p>
         <p>On the survey, participants were also asked which improvements would most help them understand court documents. Plain language and visual deadlines were the most common responses, confirming that the core problem wasn't information quantity but information design.</p>
         <ImageSlot label="Figma Export">Survey data visualization: comprehension and trust ratings across 21 respondents</ImageSlot>
         <p>The research team also developed two personas and accompanying journey maps: one representing a defendant who actively tries to navigate the forms, and one representing a defendant who becomes overwhelmed and disengages. These artifacts served as the bridge document I used to brief the design team before they began their redesign work.</p>
         <ImageGrid columns={2}>
-          <ImageSlot label="Figma Export">Persona 1: Engaged Defendant</ImageSlot>
-          <ImageSlot label="Figma Export">Persona 2: Overwhelmed Defendant</ImageSlot>
+          <ImageSlot label="Andrew — Engaged Defendant" src={imgPersona1} alt="Andrew persona: engaged defendant" />
+          <ImageSlot label="Brett — Overwhelmed Defendant" src={imgPersona2} alt="Brett persona: overwhelmed defendant" />
         </ImageGrid>
       </section>
 

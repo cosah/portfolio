@@ -1,13 +1,31 @@
 import Navbar from '../components/Navbar'
+import imgEventsFeed from '../assets/diag-events-feed.png'
+import imgMap from '../assets/diag-map.png'
+import imgCalendar from '../assets/diag-calendar.png'
+import imgProfile from '../assets/diag-profile-anthony.png'
+import imgEventDetail from '../assets/diag-event-detail.png'
+import imgOrgPage from '../assets/diag-org-page.png'
+import imgAwards from '../assets/diag-awards.png'
+import imgCreateEventNew from '../assets/diag-create-event-2.png'
 import CaseStudyHero from '../components/CaseStudyHero'
 import SectionLabel from '../components/SectionLabel'
 import Callout from '../components/Callout'
 import DecisionCard from '../components/DecisionCard'
 import ContribGrid from '../components/ContribGrid'
-import ImageGrid from '../components/ImageGrid'
 import ImageSlot from '../components/ImageSlot'
 import VideoSection from '../components/VideoSection'
+import PhoneCarousel from '../components/PhoneCarousel'
 import CaseStudyFooter from '../components/CaseStudyFooter'
+
+const SCREENS = [
+  { src: imgCalendar,       label: 'Calendar' },
+  { src: imgCreateEventNew, label: 'Create Event' },
+  { src: imgEventsFeed,     label: 'Events Feed' },
+  { src: imgEventDetail,    label: 'Event Detail' },
+  { src: imgMap,            label: 'Map View' },
+  { src: imgProfile,        label: 'Profile' },
+  { src: imgOrgPage,        label: 'Org Page' },
+]
 
 const THEME = {
   '--color-accent': '#00274C',
@@ -43,14 +61,8 @@ export default function TheDiag({ onHome }) {
         meta={META}
       />
 
-      <section className="wide">
-        <ImageGrid columns={4}>
-          <ImageSlot label="Figma Export">Events Feed</ImageSlot>
-          <ImageSlot label="Figma Export">Map View</ImageSlot>
-          <ImageSlot label="Figma Export">Calendar</ImageSlot>
-          <ImageSlot label="Figma Export">Profile</ImageSlot>
-        </ImageGrid>
-      </section>
+      <div className="case-study-with-rail">
+        <div className="rail-body">
 
       <section>
         <SectionLabel>The Problem</SectionLabel>
@@ -88,15 +100,9 @@ export default function TheDiag({ onHome }) {
         <p>A personal calendar view showing events the student is attending, events from their organizations, and suggested events, organized by week with day-level granularity.</p>
         <h3>Gamified Engagement</h3>
         <p>An achievement system that rewards attendance milestones (5, 10, 15, 25 events) and org-specific participation. This serves a retention purpose: giving students visible progress toward community involvement, and giving organizations a reason to keep posting events.</p>
-      </section>
-
-      <section className="wide">
-        <ImageGrid columns={4}>
-          <ImageSlot label="Figma Export">Event Discovery Feed (filtered)</ImageSlot>
-          <ImageSlot label="Figma Export">Event Detail Page</ImageSlot>
-          <ImageSlot label="Figma Export">Org Page</ImageSlot>
-          <ImageSlot label="Figma Export">Awards / Badges</ImageSlot>
-        </ImageGrid>
+        <div className="rail-carousel--inline">
+          <PhoneCarousel screens={SCREENS} />
+        </div>
       </section>
 
       <section>
@@ -114,7 +120,7 @@ export default function TheDiag({ onHome }) {
         <p>This was a critical product lesson: engineering elegance that doesn't match user expectations is just friction by another name.</p>
         <h3>The Revision</h3>
         <p>I rebuilt the flow around a conventional stepped form. Select your organization first, then fill in event details through clearly labeled fields: name, location, date/time picker, categories, perks, description, and image upload. A preview screen lets the creator verify before publishing, and a friend-invite step encourages social distribution at the point of creation.</p>
-        <ImageSlot label="Figma Export">Revised Create Event flow: org selection, form fields, preview, friend invite</ImageSlot>
+        <ImageSlot label="Revised Create Event Flow" src={imgCreateEventNew} alt="Revised Create Event: form fields step" phone />
         <p>The key decisions in the revision were removing the NLP field entirely, making the create button visually prominent with a "+" icon, and breaking the flow into discrete, predictable steps. Each step maps to one clear action, reducing cognitive load.</p>
       </section>
 
@@ -139,10 +145,16 @@ export default function TheDiag({ onHome }) {
         </DecisionCard>
       </section>
 
+        </div>{/* end rail-body */}
+        <aside className="rail-carousel">
+          <PhoneCarousel screens={SCREENS} />
+        </aside>
+      </div>{/* end case-study-with-rail */}
+
       <section className="wide">
         <div style={{ margin: '48px 0' }}>
           <SectionLabel>Try It</SectionLabel>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '32px', fontWeight: 600, marginBottom: '8px' }}>Interactive Prototype</h2>
+          <h2 style={{ marginBottom: '8px' }}>Interactive Prototype</h2>
           <p style={{ color: 'var(--color-text-secondary)', marginBottom: '24px' }}>Click through the final prototype below. Start on the Events feed and explore the full app.</p>
           <div className="prototype-embed-wrapper">
             <iframe

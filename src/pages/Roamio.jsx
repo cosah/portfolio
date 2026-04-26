@@ -1,4 +1,10 @@
 import Navbar from '../components/Navbar'
+import imgResearchIdeation  from '../assets/SI 311 Project Team Echo Ideation.png'
+import imgResearchLeanCanvas from '../assets/SI 311 Project Team Echo Lean Canvas.png'
+import imgResearchVPC        from '../assets/SI 311 Project Team Echo Value Proposition Canvas.png'
+import imgResearchJourney    from '../assets/SI 311 Project Team Echo User Journey Map.png'
+import imgResearchBPv1       from '../assets/SI 311 Project Team Echo Service Blueprint v1.png'
+import imgResearchBPv2       from '../assets/SI 311 Project Team Echo Service Blueprint v2.png'
 import CaseStudyHero from '../components/CaseStudyHero'
 import SectionLabel from '../components/SectionLabel'
 import Callout from '../components/Callout'
@@ -6,10 +12,20 @@ import DecisionCard from '../components/DecisionCard'
 import ContribGrid from '../components/ContribGrid'
 import ImageGrid from '../components/ImageGrid'
 import ImageSlot from '../components/ImageSlot'
+import ResearchCarousel from '../components/ResearchCarousel'
 import StatRow from '../components/StatRow'
 import VideoSection from '../components/VideoSection'
 import PullQuote from '../components/PullQuote'
 import CaseStudyFooter from '../components/CaseStudyFooter'
+
+const RESEARCH_SLIDES = [
+  { src: imgResearchIdeation,  label: 'Research Synthesis & Ideation' },
+  { src: imgResearchLeanCanvas, label: 'Lean Canvas' },
+  { src: imgResearchVPC,        label: 'Value Proposition Canvas' },
+  { src: imgResearchJourney,    label: 'User Journey Map' },
+  { src: imgResearchBPv1,       label: 'Service Blueprint v1' },
+  { src: imgResearchBPv2,       label: 'Service Blueprint v2' },
+]
 
 const THEME = {
   '--color-accent': '#1D3D2F',
@@ -88,7 +104,7 @@ export default function Roamio({ onHome }) {
         <p>SI 311 is a zero-to-one product design course built around five sequential project phases: problem statement, product concept, prototype and iterate, data and learnings, and a final pitch. Team Echo's research phase ran across phases three and four, spanning customer discovery interviews, moderated usability tests, and a post-session survey.</p>
         <p>I designed the customer discovery interview guide and co-designed the usability test plan. The interview guide was structured around three modules: warm-up (travel profile and recent trip), a grand tour question (step-by-step planning walkthrough), and two deep focus areas (local recommendations and planning tools). This structure was deliberate: we wanted participants to surface their real behavior before we introduced Roamio, so their reactions to the prototype weren't colored by what they thought we wanted to hear.</p>
         <p>The team ran five sessions in total, each pairing a customer discovery interview with a moderated usability test and a post-session survey. I facilitated and notetook two of the five sessions, while the rest were run by other team members using the same protocol.</p>
-        <ImageSlot label="Figma Export">Customer Discovery Interview Guide: warm-up, grand tour, local recs deep focus, planning deep focus</ImageSlot>
+        <ResearchCarousel slides={RESEARCH_SLIDES} lightbox />
         <p>The competitive landscape our research mapped was revealing: Airbnb Experiences offered a marketplace but no curation. Viator handled tour logistics but not insider knowledge. Reddit and TikTok surfaced authentic local content but had no booking. ToursByLocals offered private tours but no hidden-gem mechanic. Nobody combined a named local expert, insider recommendations, and centralized booking in one place.</p>
       </section>
 
@@ -193,7 +209,7 @@ export default function Roamio({ onHome }) {
       <section className="wide">
         <div style={{ margin: '48px 0' }}>
           <SectionLabel>Try It</SectionLabel>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '32px', fontWeight: 700, marginBottom: '8px' }}>Interactive Prototype</h2>
+          <h2 style={{ marginBottom: '8px' }}>Interactive Prototype</h2>
           <p style={{ color: 'var(--color-text-secondary)', marginBottom: '24px', maxWidth: '560px' }}>The final Roamio prototype was built in Figma Make. Open it in a new tab to click through the homepage, world map, package detail, checkout, and the secrets-unlocked trip dashboard.</p>
           <div className="prototype-link-wrapper">
             <div className="prototype-link-tagline">Every Local Knows Something You Don't</div>
