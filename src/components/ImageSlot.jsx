@@ -1,16 +1,36 @@
-export default function ImageSlot({ label, children, src, alt, phone }) {
-  if (src) {
-    return (
-      <div className={`image-slot image-slot--filled${phone ? ' image-slot--phone' : ''}`}>
-        {label && <span className="slot-label">{label}</span>}
-        <img src={src} alt={alt || label || ''} className="slot-image" />
-      </div>
-    )
-  }
+export default function ImageSlot({
+  id,
+  caption,
+  label,
+  children,
+  src,
+  alt,
+  aspect = '16x9',
+  contain,
+  phone,
+}) {
+  const aspectClass = phone ? 'aspect-9x16' : `aspect-${aspect}`
+  const captionText = caption || label
+
   return (
-    <div className="image-slot">
-      {label && <span className="slot-label">{label}</span>}
-      {children}
-    </div>
+    <figure className="figure">
+      {(id || captionText) && (
+        <figcaption className="figure-meta">
+          {id && <span className="id">FIG. {id}</span>}
+          <span>{captionText}</span>
+        </figcaption>
+      )}
+      <div
+        className={`figure-frame ${aspectClass}${contain ? ' contain' : ''}${src ? '' : ' placeholder'}`}
+        role={src ? 'img' : undefined}
+        aria-label={src ? (alt || captionText || '') : undefined}
+      >
+        {src ? (
+          <img src={src} alt={alt || captionText || ''} />
+        ) : (
+          <span aria-hidden="true">[ {children || captionText || 'figure'} ]</span>
+        )}
+      </div>
+    </figure>
   )
 }

@@ -2,22 +2,14 @@ import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
 export default function ResearchCarousel({ slides, lightbox = false }) {
-  const [index, setIndex] = useState(0)
-  const [open, setOpen] = useState(false)
-
-  const prev = (e) => { e?.stopPropagation(); setIndex(i => (i - 1 + slides.length) % slides.length) }
-  const next = (e) => { e?.stopPropagation(); setIndex(i => (i + 1) % slides.length) }
+  const [openIndex, setOpenIndex] = useState(-1)
 
   useEffect(() => {
-    slides.forEach(s => { const img = new Image(); img.src = s.src })
-  }, [slides])
-
-  useEffect(() => {
-    if (!open) return
+    if (openIndex < 0) return
     const onKey = (e) => {
-      if (e.key === 'Escape') setOpen(false)
-      if (e.key === 'ArrowRight') setIndex(i => (i + 1) % slides.length)
-      if (e.key === 'ArrowLeft') setIndex(i => (i - 1 + slides.length) % slides.length)
+      if (e.key === 'Escape') setOpenIndex(-1)
+      if (e.key === 'ArrowRight') setOpenIndex(i => (i + 1) % slides.length)
+      if (e.key === 'ArrowLeft') setOpenIndex(i => (i - 1 + slides.length) % slides.length)
     }
     document.body.style.overflow = 'hidden'
     window.addEventListener('keydown', onKey)
@@ -25,64 +17,40 @@ export default function ResearchCarousel({ slides, lightbox = false }) {
       document.body.style.overflow = ''
       window.removeEventListener('keydown', onKey)
     }
-  }, [open, slides.length])
+  }, [openIndex, slides.length])
 
   return (
     <>
-      <div className="research-carousel">
-        <div
-          className="research-frame"
-          style={{ cursor: lightbox ? 'zoom-in' : 'pointer' }}
-          onClick={() => lightbox ? setOpen(true) : next()}
-        >
-          <img src={slides[index].src} alt={slides[index].label} className="research-img" />
-        </div>
-        <div className="phone-carousel-nav">
-          <button className="carousel-arrow" onClick={prev} aria-label="Previous">←</button>
-          <div className="carousel-dots">
-            {slides.map((s, i) => (
-              <button
-                key={i}
-                className={`carousel-dot${i === index ? ' active' : ''}`}
-                onClick={() => setIndex(i)}
-                aria-label={s.label}
-              />
-            ))}
-          </div>
-          <button className="carousel-arrow" onClick={next} aria-label="Next">→</button>
-        </div>
-        <p className="phone-carousel-label">{slides[index].label}</p>
+      <div className="research-row" role="list">
+        {slides.map((s, i) => (
+          <button
+            key={i}
+            type="button"
+            className="research-slot"
+            onClick={() => lightbox && setOpenIndex(i)}
+            aria-label={s.label}
+            role="listitem"
+          >
+            <div className="research-frame">
+              <img src={s.src} alt={s.label} />
+            </div>
+            <p className="research-label">{s.label}</p>
+          </button>
+        ))}
       </div>
 
-      {open && createPortal(
-        <div className="img-modal-overlay" onClick={() => setOpen(false)}>
+      {openIndex >= 0 && createPortal(
+        <div className="img-modal-overlay" onClick={() => setOpenIndex(-1)}>
           <div className="img-modal-card" onClick={e => e.stopPropagation()}>
             <img
-              src={slides[index].src}
-              alt={slides[index].label}
+              src={slides[openIndex].src}
+              alt={slides[openIndex].label}
               className="img-modal-image"
-              onClick={next}
-              style={{ cursor: 'pointer' }}
+              onClick={() => setOpenIndex(i => (i + 1) % slides.length)}
             />
             <div className="img-modal-footer">
-              <button className="carousel-arrow img-modal-arrow" onClick={prev} aria-label="Previous">←</button>
-              <div className="img-modal-center">
-                <div className="carousel-dots">
-                  {slides.map((s, i) => (
-                    <button
-                      key={i}
-                      className={`carousel-dot${i === index ? ' active' : ''}`}
-                      onClick={() => setIndex(i)}
-                      aria-label={s.label}
-                    />
-                  ))}
-                </div>
-                <span className="img-modal-label">{slides[index].label}</span>
-              </div>
-              <div className="img-modal-right">
-                <button className="carousel-arrow img-modal-arrow" onClick={next} aria-label="Next">→</button>
-                <button className="img-modal-close" onClick={() => setOpen(false)} aria-label="Close">×</button>
-              </div>
+              <span className="img-modal-label">{slides[openIndex].label}</span>
+              <button className="img-modal-close" onClick={() => setOpenIndex(-1)} aria-label="Close">×</button>
             </div>
           </div>
         </div>,

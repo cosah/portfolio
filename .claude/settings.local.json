@@ -38,7 +38,9 @@
       "Bash(curl -s -o \"c:/Site Make/Portfolio/portfolio/src/assets/research-ideation.png\" \"https://www.figma.com/api/mcp/asset/ff1243e7-8f49-4986-b98a-f912cd441068\")",
       "Bash(curl -s -o \"c:/Site Make/Portfolio/portfolio/src/assets/research-vpc.png\" \"https://www.figma.com/api/mcp/asset/d681685a-3930-4cde-903c-9023ca2426a5\")",
       "Bash(curl -s -o \"c:/Site Make/Portfolio/portfolio/src/assets/research-blueprint.png\" \"https://www.figma.com/api/mcp/asset/929e6b63-699b-4819-9ab4-0fa2e601c86d\")",
-      "Bash(curl -s -o \"c:/Site Make/Portfolio/portfolio/src/assets/research-journey.png\" \"https://www.figma.com/api/mcp/asset/963828a0-07d2-4811-9229-5674e3e5c8c1\")"
+      "Bash(curl -s -o \"c:/Site Make/Portfolio/portfolio/src/assets/research-journey.png\" \"https://www.figma.com/api/mcp/asset/963828a0-07d2-4811-9229-5674e3e5c8c1\")",
+      "Bash(npx vite *)",
+      "Bash(curl -s http://localhost:5180/portfolio/)"
     ]
   }
 }

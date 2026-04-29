@@ -1,9 +1,12 @@
-export default function Callout({ label, stat, children }) {
+export default function Callout({ label, stat, title, tone = 'warn', children }) {
   return (
-    <div className="callout">
-      {label && <h3>{label}</h3>}
-      {stat && <span className="stat">{stat}</span>}
-      {children}
+    <div className={`key-moment tone-${tone}`}>
+      <div className="figure-num">{stat}</div>
+      <div className="context">
+        {label && <p className="label">{label}</p>}
+        {title && <h3>{title}</h3>}
+        {children}
+      </div>
     </div>
   )
 }

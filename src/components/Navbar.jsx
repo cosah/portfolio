@@ -1,36 +1,35 @@
-import ProgressBar from './ProgressBar'
-import useScrollReveal from '../hooks/useScrollReveal'
+import { useEffect, useState } from 'react'
 
-export default function Navbar({ onHome, label }) {
-  useScrollReveal()
+export default function Navbar({ onHome, label, slug }) {
+  const [pct, setPct] = useState(0)
+
+  useEffect(() => {
+    function update() {
+      const total = document.body.scrollHeight - window.innerHeight
+      const p = total > 0 ? Math.min(99, Math.round((window.scrollY / total) * 100)) : 0
+      setPct(p)
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
 
   return (
-    <>
-    <ProgressBar />
-    <nav className="navbar">
-      <div className="navbar-inner">
-        <button className="navbar-back" onClick={onHome}>
-          ← All Work
-        </button>
-        {label && <span className="navbar-label">{label}</span>}
-        <div className="navbar-links">
-          <a
-            className="navbar-link"
-            href="https://www.linkedin.com/in/anthony-shephard/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </a>
-          <a
-            className="navbar-link"
-            href="mailto:antshep@umich.edu"
-          >
-            Email
-          </a>
-        </div>
-      </div>
-    </nav>
-    </>
+    <header className="sys-header" role="banner">
+      <button className="name" onClick={onHome} aria-label="Anthony Shephard, home">
+        anthony.shephard
+      </button>
+      <span className="crumbs" aria-hidden="true">
+        work / <span className="here">{slug || 'case-study'}</span>{label ? ` / ${label}` : ''}
+      </span>
+      <span className="progress" aria-live="polite" aria-atomic="true">
+        <span className="sr-only">Reading progress: </span>
+        progress <span className="pct">{String(pct).padStart(2, '0')}</span>%
+      </span>
+    </header>
   )
 }

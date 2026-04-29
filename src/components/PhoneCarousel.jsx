@@ -5,21 +5,29 @@ export default function PhoneCarousel({ screens }) {
 
   useEffect(() => {
     screens.forEach(s => {
-      const img = new Image()
-      img.src = s.src
+      if (s.src) {
+        const img = new Image()
+        img.src = s.src
+      }
     })
   }, [screens])
+
   const prev = () => setIndex(i => (i - 1 + screens.length) % screens.length)
   const next = () => setIndex(i => (i + 1) % screens.length)
 
+  const current = screens[index]
+
   return (
     <div className="phone-carousel">
-      <div className="phone-frame" onClick={next} style={{ cursor: 'pointer' }}>
-        <img
-          src={screens[index].src}
-          alt={screens[index].label}
-          className="phone-screen"
-        />
+      <div className="phone-frame" onClick={next} role="button" tabIndex={0}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); next() } }}
+        aria-label={`${current.label}, click for next screen`}
+      >
+        {current.src ? (
+          <img src={current.src} alt={current.label} className="phone-screen" />
+        ) : (
+          <div className="phone-placeholder">{current.label}</div>
+        )}
       </div>
       <div className="phone-carousel-nav">
         <button className="carousel-arrow" onClick={prev} aria-label="Previous screen">←</button>
@@ -35,7 +43,7 @@ export default function PhoneCarousel({ screens }) {
         </div>
         <button className="carousel-arrow" onClick={next} aria-label="Next screen">→</button>
       </div>
-      <p className="phone-carousel-label">{screens[index].label}</p>
+      <p className="phone-carousel-label">{current.label}</p>
     </div>
   )
 }

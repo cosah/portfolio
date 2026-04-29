@@ -1,7 +1,8 @@
-export default function CaseStudyFooter({ children }) {
+export default function CaseStudyFooter({ children, slug }) {
   return (
-    <footer className="case-study-footer">
-      <p>{children || 'Anthony Shephard · University of Michigan · 2025'}</p>
+    <footer className="doc-footer">
+      <span className="end-marker">end of document · {slug || 'case-study'}</span>
+      <span>{children || 'anthony.shephard · 2026'}</span>
     </footer>
   )
 }

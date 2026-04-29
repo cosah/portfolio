@@ -1,8 +1,16 @@
-export default function PullQuote({ cite, children }) {
+export default function PullQuote({ id, who, context, ref, cite, children }) {
   return (
-    <blockquote className="pull-quote">
-      <p>{children}</p>
-      {cite && <cite>{cite}</cite>}
-    </blockquote>
+    <div className="quote-block">
+      <div className="meta">
+        {id && <span className="id">{id}</span>}
+        {who && <span>{who}</span>}
+        {context && <span>{context}</span>}
+        {!who && !id && cite && <span>{cite}</span>}
+      </div>
+      <blockquote>{children}</blockquote>
+      <div className="marker">
+        {ref && <span className="ref">{ref}</span>}
+      </div>
+    </div>
   )
 }
