@@ -50,24 +50,14 @@ export default function TableOfContents({ sections }) {
     }
   }, [sections])
 
-  function handleClick(e, id, idx) {
+  function handleClick(e, id) {
     e.preventDefault()
     const sectionEl = document.getElementById(id)
     if (!sectionEl) return
 
-    const labelEl = sectionEl.querySelector('.section-id')
-    const items = navRef.current?.querySelectorAll('.toc-item')
-    const tocItem = items?.[idx]
-
-    if (labelEl && tocItem) {
-      const labelY = labelEl.getBoundingClientRect().top
-      const itemY = tocItem.getBoundingClientRect().top
-      const target = window.scrollY + (labelY - itemY)
-      window.scrollTo({ top: target, behavior: 'smooth' })
-    } else {
-      sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-
+    const top = sectionEl.getBoundingClientRect().top + window.scrollY
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top, behavior: reduceMotion ? 'instant' : 'smooth' })
     history.replaceState(null, '', `#${id}`)
   }
 
@@ -85,7 +75,7 @@ export default function TableOfContents({ sections }) {
             key={s.id}
             className={`toc-item${i === activeIndex ? ' active' : ''}`}
           >
-            <a href={`#${s.id}`} onClick={(e) => handleClick(e, s.id, i)}>
+            <a href={`#${s.id}`} onClick={(e) => handleClick(e, s.id)}>
               <span className="toc-num">{String(s.num).padStart(2, '0')}</span>
               <span className="toc-label">{s.label}</span>
             </a>

@@ -6,6 +6,8 @@ import DecisionCard from '../components/DecisionCard'
 import ContribGrid from '../components/ContribGrid'
 import GridFrames from '../components/GridFrames'
 import ImageSlot from '../components/ImageSlot'
+import BoardCarousel from '../components/BoardCarousel'
+import ScrollFigure from '../components/ScrollFigure'
 import BeforeAfterPair from '../components/BeforeAfterPair'
 import StatRow from '../components/StatRow'
 import TableOfContents from '../components/TableOfContents'
@@ -17,10 +19,32 @@ import imgEvents from '../assets/seed-events-page.png'
 import imgHomepage from '../assets/seed-homepage.png'
 import imgPersona1 from '../assets/seed-persona-2.png'
 import imgPersona2 from '../assets/seed-persona-1.png'
-import imgEvalBoard from '../assets/seed-eval-board.png'
+import imgExpoPoster from '../assets/seed-expo-poster.png'
+import imgFieldStudy from '../assets/seed-field-study.png'
+import imgUserFlow from '../assets/seed-user-flow.png'
+import imgPhysicalV1 from '../assets/seed-physical-v1.png'
+import imgPhysicalV2 from '../assets/seed-physical-v2.png'
+import imgPhysicalV2Instructions from '../assets/seed-physical-v2-instructions.png'
+import methodMatrixSvg from '../assets/seed-method-matrix.svg?raw'
+
+const affinityModules = import.meta.glob('../assets/seed-affinity/*.png', { eager: true })
+const AFFINITY_BOARDS = Object.entries(affinityModules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod], i) => ({
+    src: mod.default,
+    label: `Board ${i + 1}`,
+  }))
+
+const evaluationModules = import.meta.glob('../assets/seed-evaluation/*.png', { eager: true })
+const EVALUATION_BOARDS = Object.entries(evaluationModules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod], i) => ({
+    src: mod.default,
+    label: `Phase ${i + 1}`,
+  }))
 
 const META = [
-  { label: 'Project', value: 'UM Seed Library' },
+  { label: 'Project', value: 'University of Michigan Seed Library' },
   { label: 'Course', value: 'SI 487 Capstone' },
   { label: 'Role', value: 'Researcher, Liaison' },
   { label: 'Owned', value: 'Research Report' },
@@ -35,7 +59,7 @@ const STATS = [
   { label: 'Seed identification', value: '0 / 7', delta: 'pre-design usability', tone: 'warn' },
 ]
 
-const METHODS = ['Field Study (n=185)', 'Moderated Usability (n=7)', 'Campus Survey (n=53)', 'Google Analytics (n=110)', 'Affinity Diagramming', 'Persona + Journey Mapping', 'Wizard of Oz Prototyping']
+const METHODS = ['Field Study (n=185)', 'Moderated Usability (n=7)', 'Campus Survey (n=53)', 'Google Analytics (n=110)', 'Affinity Diagramming', 'Persona + Journey Mapping']
 
 const FINAL_PAGES = [
   { ix: '7.1', name: 'Plant Listing', src: imgPlantListing, alt: 'Plant Listing page', desc: 'QR entry point. Seeds organized by library location, filterable by capsule color.' },
@@ -88,8 +112,9 @@ export default function SeedLibrary({ onHome }) {
         titleEmphasis="redesigned for the people it was built for."
         subtitle="Redesigning the physical and digital experience of a campus seed distribution system, from a gumball machine with a 4% completion rate to a connected ecosystem tested with 355 participants. Winner of the BSI UX Pathway Award at the 2026 UMSI Exposition."
         meta={META}
-        corners={{ tl: '+ 00.00', tr: '21:9 · HERO', bl: 'UM SEED LIBRARY', br: '2025–2026 · SI 487' }}
-        heroLabel="UM Seed Library, final composition"
+        corners={{ tl: '+ 00.00', tr: 'EXPO POSTER', bl: 'UNIVERSITY OF MICHIGAN SEED LIBRARY', br: '2025–2026 · SI 487' }}
+        heroImage={imgExpoPoster}
+        heroImageAlt="University of Michigan Seed Library — 2026 UMSI Exposition poster"
       />
 
       <div className="case-study-layout">
@@ -122,7 +147,13 @@ export default function SeedLibrary({ onHome }) {
               <span key={m} className="tool-tag">{m}</span>
             ))}
           </div>
-          <ImageSlot id="2.1" caption="Research method-to-goal alignment matrix: field study, usability testing, survey, and Google Analytics mapped to discovery, engagement, and usability goals." />
+          <ImageSlot
+            id="2.1"
+            svg={methodMatrixSvg}
+            alt="Research method to goal alignment matrix: field study, usability testing, survey, and Google Analytics mapped to discovery, engagement, and usability issues"
+            caption="Research method-to-goal alignment matrix: field study, usability testing, survey, and Google Analytics mapped to discovery, engagement, and usability goals."
+            aspect="16x9"
+          />
           <div className="body-text">
             <p>Early in the project, I led the alignment conversations with the Seed Library team to confirm we were studying what they actually needed. Two priorities emerged: actionable recommendations rather than a list of problems, and continuity with the program's sustainability mission. This shaped how I framed the requirements later.</p>
           </div>
@@ -136,7 +167,13 @@ export default function SeedLibrary({ onHome }) {
           <div className="body-text">
             <p>We ran four two-hour observation sessions in the Shapiro Library lobby, logging every user interaction against a rainbow spreadsheet of intended and unintended steps. The data told a clear story: 44.8% of passersby approached the machine (strong visual draw), but only 4.32% completed the full intended flow. The drop-off points were consistent. Users got stuck at the seed transfer step, confused by the multi-machine sequencing, and almost no one scanned the QR code.</p>
           </div>
-          <ImageSlot id="3.1" caption="Physical machine setup as deployed: envelope dispenser (left), gumball capsule machine (center), frog receptacle (right)." />
+          <ImageSlot
+            id="3.1"
+            src={imgFieldStudy}
+            alt="Field study rainbow spreadsheet: envelope dispenser interactions logged per user, with error and unfinished-flow counts"
+            caption="Field study, envelope dispenser interactions. 24 users interacted with the machine; 17 did so incorrectly (70.83% error rate); 9 never advanced past it."
+            aspect="16x9"
+          />
 
           <h3>Usability testing exposed the identification crisis</h3>
           <div className="body-text">
@@ -155,6 +192,11 @@ export default function SeedLibrary({ onHome }) {
           <div className="body-text">
             <p>Among 53 respondents (81% undergrad, 7% grad, 12% community), most had never heard of the program. Yet when presented with the concept, 60% expressed interest in community participation and 59% wanted themed community sessions. The interest existed. The pathways to it were missing.</p>
           </div>
+
+          <h3>Analytics traced the physical-to-digital break</h3>
+          <div className="body-text">
+            <p>Google Analytics complemented what users said with what they actually did online. Three findings cut deepest. <strong>1 in 3 visitors arrived via web search</strong> rather than through a direct link — the QR code on the machines was never labeled or described in the on-machine instructions, so users fell back to searching. About half of visitors engaged with the site beyond a glance, and 30% reached the Events page (the strongest pull on the platform). <strong>Only 3 of 107 unique visitors reached the Black Cherry Tomatoes page</strong> matching the seeds dispensed in the machines. The bridge between physical distribution and digital instruction was effectively broken.</p>
+          </div>
         </div>
 
         <div className="section" id="sec-4">
@@ -163,7 +205,12 @@ export default function SeedLibrary({ onHome }) {
           <div className="body-text">
             <p>I led the synthesis through affinity diagramming. The team coded findings from all four methods by touchpoint in the user journey, surfacing patterns that any single method would have missed. The synthesis output was the bridge between research and design: two personas, a user journey map, and a user flow diagram documenting both intended paths and observed error states.</p>
           </div>
-          <ImageSlot id="4.1" caption="Affinity diagram: synthesized findings from all four research methods, coded by theme." />
+          <BoardCarousel
+            id="4.1"
+            caption="Affinity diagram: synthesized findings from all four research methods, coded by theme. Browse all 15 boards."
+            boards={AFFINITY_BOARDS}
+            aspect="16x9"
+          />
 
           <h3>Two personas to ground the design conversation</h3>
           <GridFrames items={PERSONAS} cols={2} aspect="4x3" />
@@ -171,7 +218,14 @@ export default function SeedLibrary({ onHome }) {
             <p>Britt represents the experienced gardener who arrives motivated and curious about community programming, but is blocked by the lack of return mechanisms and inability to find events. Casey represents the curious beginner whose interest is real but fragile, where any friction in the first interaction will prevent a second.</p>
           </div>
 
-          <ImageSlot id="4.2" caption="User flow diagram: intended path (yellow/blue) overlaid with observed error states and deviations (gray)." />
+          <ScrollFigure
+            id="4.2"
+            src={imgUserFlow}
+            alt="User flow diagram: intended path overlaid with observed error states and deviations"
+            caption="User flow diagram: intended path (yellow/blue) overlaid with observed error states and deviations (gray)."
+            naturalAspect={16900 / 6592}
+            pages={2}
+          />
         </div>
 
         <div className="section" id="sec-5">
@@ -243,7 +297,8 @@ export default function SeedLibrary({ onHome }) {
             before={{
               label: 'FIG. 8.1 · V1, Original system',
               tag: '4.32% completion',
-              placeholder: 'V1: 3 machines, loose seeds, no identification',
+              src: imgPhysicalV1,
+              alt: 'Original physical setup: envelope dispenser, gumball capsule machine, and frog return receptacle in the Shapiro Library lobby',
               annotations: [
                 'Three separate machines required in correct sequence.',
                 'Loose seeds transferred between envelope and capsule.',
@@ -253,7 +308,16 @@ export default function SeedLibrary({ onHome }) {
             after={{
               label: 'FIG. 8.2 · V2, Redesigned system',
               tag: 'design for ship',
-              placeholder: 'V2: 1 capsule machine + paper slip with QR + return receptacle',
+              srcs: [
+                {
+                  src: imgPhysicalV2,
+                  alt: 'Redesigned physical setup: single capsule machine with color-coded capsules atop a plant cube, paired with a blue frog return receptacle',
+                },
+                {
+                  src: imgPhysicalV2Instructions,
+                  alt: 'Instructional sign: How to use the Shapiro Undergraduate Seed Library — Obtain, Open, Identify, Return, Scan QR',
+                },
+              ],
               annotations: [
                 'Envelope dispenser eliminated. Two objects total.',
                 'Color-coded capsule maps to a single plant species.',
@@ -267,7 +331,7 @@ export default function SeedLibrary({ onHome }) {
           <SectionLabel num={9}>Testing & iteration</SectionLabel>
           <h2>Three testing phases, fourteen participants.</h2>
           <div className="body-text">
-            <p>The team tested across three iterative phases: a paper-prototype Wizard of Oz test (n=6), followed by two rounds of full physical and digital testing (n=4 each). Each phase refined the system based on observed failures, with findings fed back into both physical and digital components between rounds.</p>
+            <p>The team tested across three iterative phases: a paper-prototype test (n=6), followed by two rounds of full physical and digital testing (n=4 each). Each phase refined the system based on observed failures, with findings fed back into both physical and digital components between rounds.</p>
           </div>
 
           <DecisionCard number={1} title="Color-coded capsules with paper-slip confirmation" rationale="A single identification method is a single point of failure. Redundancy across physical (slip), visual (color), and digital (QR) channels ensures beginners always have a path forward.">
@@ -299,7 +363,7 @@ export default function SeedLibrary({ onHome }) {
               height="640"
               src="https://embed.figma.com/proto/TeVqNi1JLvHd8PC1AJoPDK/UM-Seed-Library?node-id=2002-8223&starting-point-node-id=2002-7910&scaling=min-zoom&content-scaling=fixed&embed-host=share"
               allowFullScreen
-              title="UM Seed Library prototype"
+              title="University of Michigan Seed Library prototype"
             />
           </div>
         </div>
@@ -310,7 +374,12 @@ export default function SeedLibrary({ onHome }) {
           <div className="body-text">
             <p>The evaluation phase compared pre-design usability testing (7 participants on the original system) with post-design testing (8 participants on the redesigned system). The most significant change was seed identification: a task that was completely impossible in the original system became universally successful in the redesign.</p>
           </div>
-          <ImageSlot id="11.1" src={imgEvalBoard} alt="Evaluation phase data: before and after comparison" caption="Evaluation phase data: pre/post comparison across identification, completion, and exploration tasks." aspect="16x9" contain />
+          <BoardCarousel
+            id="11.1"
+            caption="Evaluation phase boards: friction points and positive reactions clustered across each round of testing."
+            boards={EVALUATION_BOARDS}
+            aspect="16x9"
+          />
 
           <Callout
             tone="good"

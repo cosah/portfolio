@@ -10,6 +10,7 @@ import Mintify from './pages/Mintify'
 import Roamio from './pages/Roamio'
 import SeedLibrary from './pages/SeedLibrary'
 import CourtsAudit from './pages/CourtsAudit'
+import LayoutDemo from './pages/LayoutDemo'
 
 const ROUTES = {
   '': Home,
@@ -18,6 +19,7 @@ const ROUTES = {
   'roamio': Roamio,
   'seed-library': SeedLibrary,
   'courts-audit': CourtsAudit,
+  'layout-demo': LayoutDemo,
 }
 
 function getRoute() {
@@ -30,7 +32,7 @@ export default function App() {
   useEffect(() => {
     const onHashChange = () => {
       setRoute(getRoute())
-      window.scrollTo(0, 0)
+      window.scrollTo({ top: 0, behavior: 'instant' })
     }
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)

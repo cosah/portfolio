@@ -6,14 +6,46 @@ import DecisionCard from '../components/DecisionCard'
 import ContribGrid from '../components/ContribGrid'
 import GridFrames from '../components/GridFrames'
 import ImageSlot from '../components/ImageSlot'
+import BoardCarousel from '../components/BoardCarousel'
 import BeforeAfterPair from '../components/BeforeAfterPair'
 import StatRow from '../components/StatRow'
 import TableOfContents from '../components/TableOfContents'
 import CaseStudyFooter from '../components/CaseStudyFooter'
 
-import imgAffinity from '../assets/mintify-affinity.png'
 import imgPersona1 from '../assets/mintify-persona-1.png'
 import imgPersona2 from '../assets/mintify-persona-2.png'
+import imgJourneyBrett from '../assets/mintify-journey-brett.png'
+import imgJourneyAndrew from '../assets/mintify-journey-andrew.png'
+import imgAdviceLofi from '../assets/mintify-advice-lofi.png'
+import imgAdviceRedesign from '../assets/mintify-advice-redesign.png'
+import imgAnswerP1 from '../assets/mintify-answer-p1.png'
+import imgAnswerP2 from '../assets/mintify-answer-p2.png'
+import affinityHtml from '../assets/mintify-affinity.html?raw'
+import imgHeroPoster from '../assets/mintify-hero-poster.png'
+
+const surveyModules = import.meta.glob('../assets/mintify-survey/*.png', { eager: true })
+const SURVEY_BOARDS = Object.entries(surveyModules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod], i) => ({
+    src: mod.default,
+    label: `Question ${i + 1}`,
+  }))
+
+const presentationModules = import.meta.glob('../assets/mintify-presentation/*.png', { eager: true })
+const PRESENTATION_BOARDS = Object.entries(presentationModules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod], i) => ({
+    src: mod.default,
+    label: `Slide ${i + 1}`,
+  }))
+
+const kickoffModules = import.meta.glob('../assets/mintify-kickoff/*.png', { eager: true })
+const KICKOFF_BOARDS = Object.entries(kickoffModules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod], i) => ({
+    src: mod.default,
+    label: `Slide ${i + 1}`,
+  }))
 
 const META = [
   { label: 'Project', value: 'Mintify × MSCJFA' },
@@ -32,8 +64,22 @@ const STATS = [
 ]
 
 const PERSONAS = [
-  { ix: 'P1', name: 'Andrew', src: imgPersona1, alt: 'Andrew persona: engaged defendant', desc: 'Engaged defendant who actively tries to navigate the forms.', contain: true },
-  { ix: 'P2', name: 'Brett', src: imgPersona2, alt: 'Brett persona: overwhelmed defendant', desc: 'Overwhelmed defendant who disengages before completing the form.', contain: true },
+  {
+    ix: 'P1',
+    name: 'Brett',
+    src: imgPersona1,
+    alt: 'Brett persona: 21, U-M senior, anxious and overwhelmed by the form',
+    desc: 'Anxious undergrad who googles unfamiliar terms and wants the form to confirm whether this is real.',
+    contain: true,
+  },
+  {
+    ix: 'P2',
+    name: 'Andrew',
+    src: imgPersona2,
+    alt: 'Andrew persona: 24, masters student, stressed and unfamiliar with the court system',
+    desc: 'Tech-literate masters student hit with an unexpected legal notice; wants to understand his rights and what to do next.',
+    contain: true,
+  },
 ]
 
 const SECTIONS = [
@@ -72,8 +118,10 @@ export default function Mintify({ onHome }) {
         titleEmphasis="We rebuilt them."
         subtitle="A student consulting engagement to redesign the court forms that stand between Michigan debt defendants and access to justice, serving a real government client with a 10-person cross-functional team."
         meta={META}
-        corners={{ tl: '+ 00.00', tr: '21:9 · HERO', bl: 'MINTIFY × MSCJFA', br: 'FALL 2025' }}
-        heroLabel="Mintify × MSCJFA, project banner"
+        corners={{ tl: '+ 00.00', tr: 'TABLING POSTER', bl: 'MINTIFY × MSCJFA', br: 'FALL 2025' }}
+        heroImage={imgHeroPoster}
+        heroImageAlt="Mintify tabling poster: Help everyday people navigate court. Grab a drink or a snack and talk with us for a few minutes."
+        heroImageContain
       />
 
       <div className="case-study-layout">
@@ -117,8 +165,14 @@ export default function Mintify({ onHome }) {
             </div>
           </div>
           <div className="body-text">
-            <p>My job as PM was to keep these three pods coordinated, making sure research findings reached the design team, deliverable scope was clear, and the client stayed informed.</p>
+            <p>My job as PM was to keep these three pods coordinated, making sure research findings reached the design team, deliverable scope was clear, and the client stayed informed. The kickoff deck below is one of the first artifacts I drafted: it framed the engagement for the team, set deliverable expectations, and gave us a shared reference for the work ahead.</p>
           </div>
+          <BoardCarousel
+            id="2.1"
+            caption="Kickoff slide deck: scope, deliverables, timeline, and pod responsibilities established with the team in week one."
+            boards={KICKOFF_BOARDS}
+            aspect="16x9"
+          />
         </div>
 
         <div className="section" id="sec-3">
@@ -127,14 +181,39 @@ export default function Mintify({ onHome }) {
           <div className="body-text">
             <p>The research team's initial tabling attempts at the Ann Arbor library and courthouse produced no participant engagement, a schedule threat I could not let sit. I stepped in: organized sign-ups for a full campus tabling day, assembled the table, prepared the forms, and arranged food and drink incentives. The result was a single high-output day that generated the bulk of our data.</p>
           </div>
-          <ImageSlot id="3.1" src={imgAffinity} alt="Affinity diagram synthesized from 5 interviews" caption="Affinity diagram: synthesized from 5 interviews and coded by theme." aspect="16x9" contain />
+          <ImageSlot
+            id="3.1"
+            html={affinityHtml}
+            alt="Affinity diagram of 84 sticky notes across 20 themed clusters synthesized from 5 interviews"
+            caption="Affinity diagram: 84 sticky notes coded into 20 themes across five interview transcripts."
+          />
           <div className="body-text">
             <p>Three failure modes emerged consistently. First, the legal terminology created a comprehension wall even for educated participants. Words like "plaintiff" and "defendant," used without definition, left interviewees unsure of their own role. Second, the density of information triggered cognitive overload before participants finished reading. Third, the forms buried critical action steps (deadlines, response options) inside blocks of undifferentiated text.</p>
             <p>On the survey, participants ranked plain language and visual deadlines as the most desired improvements, confirming that the core problem wasn't information quantity but information design.</p>
           </div>
-          <ImageSlot id="3.2" caption="Survey data visualization: comprehension and trust ratings across 21 respondents." />
+          <BoardCarousel
+            id="3.2"
+            caption="Campus survey results across 21 respondents. Plain language and visual deadlines led the requested improvements."
+            boards={SURVEY_BOARDS}
+            aspect="16x9"
+          />
+
           <h3>Two personas to brief the design team</h3>
           <GridFrames items={PERSONAS} cols={2} aspect="4x3" />
+
+          <h3>Journey maps for each persona</h3>
+          <div className="body-text">
+            <p>The personas were paired with journey maps tracing each defendant's emotional and decision-making arc from receiving the forms in the mail through preparing for court. The opportunities column at the bottom of each map became the design team's working brief.</p>
+          </div>
+          <ImageSlot
+            id="3.3"
+            srcs={[
+              { src: imgJourneyBrett, alt: 'Brett user journey map across four stages, from receiving the forms to reaching out for help' },
+              { src: imgJourneyAndrew, alt: 'Andrew user journey map across four stages, from receiving the forms to reaching out for help' },
+            ]}
+            caption="User journey maps: Brett (left) and Andrew (right), each mapped across four stages from receipt to court preparation."
+            aspect="4x3"
+          />
         </div>
 
         <div className="section" id="sec-4">
@@ -170,34 +249,27 @@ export default function Mintify({ onHome }) {
           <div className="body-text">
             <p>The original form was a dense, single-column document with no clear visual hierarchy. The redesign reorganized it into three distinct card sections (Steps to Follow, Warning, Find Legal Help) so a defendant could process one section at a time. The warning section got a high-contrast red color block to ensure the deadline and consequences were impossible to overlook. A QR code in the "Find Legal Help" section gave physical-format readers a direct path to legal resources without transcribing a URL.</p>
           </div>
-          <ImageSlot id="5.1" caption="Advice of Rights, redesigned: three card sections (Steps to Follow, Warning, Find Legal Help) with high-contrast warning block and QR code for legal resources." aspect="4x3" />
+          <ImageSlot
+            id="5.1"
+            src={imgAdviceRedesign}
+            alt="Advice of Rights, redesigned: three card sections (Read Your Court Papers, Prepare an Answer, Go to the Hearing) with a high-contrast warning block and QR code"
+            caption="Advice of Rights, redesigned: three card sections (Steps to Follow, Warning, Find Legal Help) with high-contrast warning block and QR code for legal resources."
+            aspect="4x3"
+            contain
+          />
 
           <h3>Answer Form: making two scenarios visibly distinct</h3>
           <div className="body-text">
             <p>The original Answer Form's two primary scenarios ("I do not owe this debt" and "I owe the debt but...") sat stacked in a single column with similar formatting, leaving defendants unsure which section applied to them and how many boxes to check. The redesign split the scenarios horizontally and color-coded them, allowing defendants to compare them simultaneously rather than scrolling between dense paragraphs.</p>
           </div>
-          <BeforeAfterPair
+          <ImageSlot
+            id="5.2"
+            srcs={[
+              { src: imgAnswerP1, alt: 'Redesigned Answer Form page 1: horizontally split, color-coded scenarios (A in orange, B in teal)' },
+              { src: imgAnswerP2, alt: 'Redesigned Answer Form page 2: explanation field and bolded jury demand with link' },
+            ]}
+            caption="Redesigned Answer Form, pages 1 and 2. Scenarios split horizontally and color-coded; jury rights bolded and surfaced with a search prompt."
             aspect="4x3"
-            before={{
-              label: 'FIG. 5.2 · Original Answer Form',
-              tag: 'visually indistinguishable',
-              placeholder: 'V1: stacked single-column scenarios, dense checkbox lists, jury paragraph buried at the bottom',
-              annotations: [
-                'Two response scenarios sit stacked, formatted identically.',
-                'Checkboxes merge visually with no whitespace between options.',
-                'Jury rights paragraph buried at the bottom in body text.',
-              ],
-            }}
-            after={{
-              label: 'FIG. 5.3 · Redesigned Answer Form',
-              tag: 'design for ship',
-              placeholder: 'V2: horizontal split, color-coded scenarios, expanded fields, jury rights surfaced',
-              annotations: [
-                'Scenarios split horizontally and color-coded for simultaneous comparison.',
-                'Whitespace added between checkbox options to prevent visual merging.',
-                'Jury rights bolded with a visual QR-code representation.',
-              ],
-            }}
           />
         </div>
 
@@ -211,7 +283,14 @@ export default function Mintify({ onHome }) {
           <div className="body-text">
             <p>I resolved this by structuring the process in overlapping phases rather than sequential ones. While research was still conducting interviews and analyzing data, I briefed the design team directly with early findings from tabling sessions. This let designers begin lo-fi concept work, exploring layout structures and form components, before the affinity diagram was complete. When research finished their synthesis, the design team had already developed directions to test the findings against, rather than starting from blank screens.</p>
           </div>
-          <ImageSlot id="6.1" caption="Lo-fidelity sketches: initial design directions explored before full research synthesis." />
+          <ImageSlot
+            id="6.1"
+            src={imgAdviceLofi}
+            alt="Lo-fi sketch of the Advice of Rights redesign, with three section blocks and a deadline warning"
+            caption="Lo-fi exploration of the Advice of Rights redesign: section blocking, hierarchy, and warning treatment sketched before the hi-fi pass."
+            aspect="4x3"
+            contain
+          />
           <h3>Managing the client relationship</h3>
           <div className="body-text">
             <p>I served as the primary contact for the MSCJFA throughout. This meant drafting the initial client outreach in week one, scheduling and leading the kickoff, and running the November mid-project alignment call. That call, and the scope clarification that came from it, was the most consequential PM decision of the semester.</p>
@@ -254,7 +333,12 @@ export default function Mintify({ onHome }) {
             <p>At the January handoff meeting, the team delivered a complete package to the MSCJFA Debt Collection Workgroup: high-fidelity redesigns of both forms, a final report documenting the full process and findings, and a presentation summarizing the project.</p>
             <p>The high-fidelity designs were built to be immediately usable as a production reference, not just a prototype. Design decisions were documented with the reasoning behind them so the MSCJFA team could evaluate, adapt, or extend the work without losing context.</p>
           </div>
-          <ImageSlot id="8.1" caption="Final client presentation deck: project summary and form walkthroughs." />
+          <BoardCarousel
+            id="8.1"
+            caption="Final client presentation deck, walked through with the MSCJFA Debt Collection Workgroup at the January handoff."
+            boards={PRESENTATION_BOARDS}
+            aspect="16x9"
+          />
         </div>
 
         <div className="section" id="sec-9">

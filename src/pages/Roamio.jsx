@@ -7,7 +7,6 @@ import ContribGrid from '../components/ContribGrid'
 import GridFrames from '../components/GridFrames'
 import ImageSlot from '../components/ImageSlot'
 import BeforeAfterPair from '../components/BeforeAfterPair'
-import ResearchCarousel from '../components/ResearchCarousel'
 import StatRow from '../components/StatRow'
 import VideoSection from '../components/VideoSection'
 import PullQuote from '../components/PullQuote'
@@ -21,14 +20,12 @@ import imgResearchJourney    from '../assets/SI 311 Project Team Echo User Journ
 import imgResearchBPv1       from '../assets/SI 311 Project Team Echo Service Blueprint v1.png'
 import imgResearchBPv2       from '../assets/SI 311 Project Team Echo Service Blueprint v2.png'
 
-const RESEARCH_SLIDES = [
-  { src: imgResearchIdeation,  label: 'Research synthesis & ideation' },
-  { src: imgResearchLeanCanvas, label: 'Lean canvas' },
-  { src: imgResearchVPC,        label: 'Value proposition canvas' },
-  { src: imgResearchJourney,    label: 'User journey map' },
-  { src: imgResearchBPv1,       label: 'Service blueprint v1' },
-  { src: imgResearchBPv2,       label: 'Service blueprint v2' },
-]
+import imgHomepage      from '../assets/roamio-homepage.png'
+import imgExplore       from '../assets/roamio-explore.png'
+import imgPackageDetail from '../assets/roamio-package-detail.png'
+import imgMyTrip        from '../assets/roamio-my-trip.png'
+import imgCheckoutV1    from '../assets/roamio-checkout-v1.png'
+import imgCheckoutV2    from '../assets/roamio-checkout-v2.png'
 
 const META = [
   { label: 'Project', value: 'Roamio' },
@@ -47,10 +44,10 @@ const STATS = [
 ]
 
 const PILLARS = [
-  { ix: '4.1', name: 'Homepage', label: 'Every Local Knows Something You Don\'t' },
-  { ix: '4.2', name: 'Explore', label: 'Gamified World Map' },
-  { ix: '4.3', name: 'Package Detail', label: 'Agent Profile + Teased Secrets' },
-  { ix: '4.4', name: 'My Trip', label: 'Secrets Unlocked' },
+  { ix: '4.1', name: 'Homepage', src: imgHomepage, alt: 'Roamio homepage: Every Local Knows Something You Don\'t', desc: 'Hero, value pillars, featured packages, and the locals behind the secrets.' },
+  { ix: '4.2', name: 'Explore', src: imgExplore, alt: 'Roamio explore: gamified world map', desc: 'Interactive world map; regions light up as users discover them.' },
+  { ix: '4.3', name: 'Package Detail', src: imgPackageDetail, alt: 'Package detail page: agent profile with teased secrets', desc: 'Named agent, credentials, and a preview of insider secrets locked until booking.' },
+  { ix: '4.4', name: 'My Trip', src: imgMyTrip, alt: 'My trip page: post-booking dashboard with secrets unlocked', desc: 'Post-booking dashboard: full secrets, agent note, and a guide kept forever.' },
 ]
 
 const SECTIONS = [
@@ -102,8 +99,9 @@ export default function Roamio({ onHome }) {
         titleEmphasis="Information design turned out to be a business model problem."
         subtitle="A travel marketplace connecting Gen Z and Millennial travelers with verified local agents who curate trip packages featuring insider secrets, built from scratch in 15 weeks as part of a zero-to-one product design course."
         meta={META}
-        corners={{ tl: '+ 00.00', tr: '21:9 · HERO', bl: 'ROAMIO · TEAM ECHO', br: 'SPRING 2026 · SI 311' }}
-        heroLabel="Roamio, final composition"
+        corners={{ tl: '+ 00.00', tr: 'HOMEPAGE', bl: 'ROAMIO · TEAM ECHO', br: 'SPRING 2026 · SI 311' }}
+        heroImage={imgHomepage}
+        heroImageAlt="Roamio homepage hero: Every Local Knows Something You Don't, with a destination search bar over a coastal scene"
       />
 
       <div className="case-study-layout">
@@ -131,7 +129,15 @@ export default function Roamio({ onHome }) {
             <p>I designed the customer discovery interview guide and co-designed the usability test plan. The interview guide had three modules: warm-up (travel profile and recent trip), a grand tour question (step-by-step planning walkthrough), and two deep focus areas (local recommendations and planning tools). This was deliberate: we wanted participants to surface their real behavior before we introduced Roamio, so their reactions weren't colored by what they thought we wanted to hear.</p>
             <p>The team ran five sessions in total, each pairing a discovery interview with a usability test and a survey. I facilitated and notetook two of the five.</p>
           </div>
-          <ResearchCarousel slides={RESEARCH_SLIDES} lightbox />
+          <ImageSlot
+            id="2.1"
+            srcs={[
+              { src: imgResearchJourney, alt: 'User journey map of the current traveler experience: pain points across discovery, planning, and booking' },
+              { src: imgResearchIdeation, alt: 'Ideation board synthesizing interview findings into directional concepts' },
+            ]}
+            caption="Discovery synthesis: user journey map of the current traveler experience (left) and ideation board converging on directional concepts (right)."
+            aspect="4x3"
+          />
           <div className="body-text">
             <p>The competitive landscape was revealing: Airbnb Experiences offered a marketplace but no curation. Viator handled tour logistics but not insider knowledge. Reddit and TikTok surfaced authentic local content but had no booking. ToursByLocals offered private tours but no hidden-gem mechanic. Nobody combined a named local expert, insider recommendations, and centralized booking in one place.</p>
           </div>
@@ -143,7 +149,49 @@ export default function Roamio({ onHome }) {
           <div className="body-text">
             <p>Roamio is a two-sided marketplace: travelers pay for curated packages with insider secrets, local agents create and sell those packages, and Roamio takes a 15–25% platform commission. Revenue streams include package commissions, premium add-ons, and a la carte secrets.</p>
           </div>
-          <ImageSlot id="3.1" caption="Lean Business Canvas: problem, solution, key metrics, UVP, channels, customer segments, revenue streams, cost structure." />
+          <ImageSlot
+            id="3.1"
+            src={imgResearchLeanCanvas}
+            alt="Roamio Lean Business Canvas covering problem, solution, key metrics, UVP, channels, customer segments, revenue streams, cost structure"
+            caption="Lean Business Canvas: problem, solution, key metrics, UVP, channels, customer segments, revenue streams, cost structure."
+            aspect="16x9"
+          />
+          <div className="body-text">
+            <p>The Value Proposition Canvas mapped the customer's jobs, pains, and gains against the product's pain relievers and gain creators, anchoring every downstream design decision to a specific user need.</p>
+          </div>
+          <ImageSlot
+            id="3.2"
+            src={imgResearchVPC}
+            alt="Value Proposition Canvas: customer jobs, pains, and gains mapped against the product's pain relievers and gain creators"
+            caption="Value Proposition Canvas: customer jobs, pains, and gains mapped to the product's pain relievers and gain creators."
+            aspect="16x9"
+          />
+          <div className="body-text">
+            <p>I co-owned the Service Blueprint deliverable, mapping the marketplace's two-sided flow from traveler discovery through agent payout. The v2 blueprint folded in the synthesis findings, tightening the agent onboarding swimlane that the v1 had left under-specified.</p>
+          </div>
+          <BeforeAfterPair
+            aspect="16x9"
+            before={{
+              label: 'FIG. 3.3 · Service Blueprint v1',
+              tag: 'pre-synthesis',
+              src: imgResearchBPv1,
+              alt: 'Service Blueprint v1 mapping traveler discovery through agent payout, before synthesis findings',
+              annotations: [
+                'Marketplace flow drafted before research synthesis.',
+                'Agent onboarding swimlane left under-specified.',
+              ],
+            }}
+            after={{
+              label: 'FIG. 3.4 · Service Blueprint v2',
+              tag: 'post-synthesis',
+              src: imgResearchBPv2,
+              alt: 'Service Blueprint v2 with the agent onboarding swimlane tightened after synthesis',
+              annotations: [
+                'Onboarding swimlane tightened with synthesis findings folded in.',
+                'Touchpoints renumbered against the ten testable hypotheses.',
+              ],
+            }}
+          />
           <div className="body-text">
             <p>The team grounded the strategy in ten testable hypotheses across two dimensions: desirability (D1–D5) and viability (V1–V5). Each interview question, usability task, and survey item mapped to at least one hypothesis. Going into testing, the most critical question was D1: would travelers actually prefer a named human expert over algorithmic alternatives? The entire value proposition depended on the answer being yes.</p>
           </div>
@@ -251,11 +299,12 @@ export default function Roamio({ onHome }) {
           </div>
 
           <BeforeAfterPair
-            aspect="9x16"
+            aspect="4x3"
             before={{
               label: 'FIG. 7.1 · V1, Pre-test checkout',
               tag: 'P1 reversed in 30s',
-              placeholder: 'V1: package price only, no line items, included/excluded items unclear',
+              src: imgCheckoutV1,
+              alt: 'Original Roamio checkout: single bundled price with no itemization or inclusions',
               annotations: [
                 'Single price with no breakdown of agent fee, hotel, or activities.',
                 'Inclusions and exclusions (e.g., flights) not surfaced until asked.',
@@ -265,7 +314,8 @@ export default function Roamio({ onHome }) {
             after={{
               label: 'FIG. 7.2 · V2, Revised checkout',
               tag: 'design for ship',
-              placeholder: 'V2: itemized line items, hotel selector, exclusions explicit, customization options',
+              src: imgCheckoutV2,
+              alt: 'Revised Roamio checkout: itemized line items, hotel selector, and explicit exclusions',
               annotations: [
                 'Complete line-item breakdown: agent fee, hotel, activities.',
                 'Exclusions (flights, meals) called out explicitly above the total.',
@@ -317,8 +367,8 @@ export default function Roamio({ onHome }) {
           <h2>Demo Day video tour.</h2>
           <VideoSection
             description="A guided tour of the final Roamio prototype presented at SI 311 Demo Day, April 2026."
-            mp4="roamio-demo.mp4"
-            mov="roamio-demo.mov"
+            mp4={`${import.meta.env.BASE_URL}roamio-demo.mp4`}
+            maxWidth="100%"
           />
         </div>
 

@@ -1,3 +1,6 @@
+import { useLayoutEffect, useRef, useState } from 'react'
+import Lightbox from './Lightbox'
+
 export default function CaseStudyHero({
   kicker,
   title,
@@ -7,8 +10,20 @@ export default function CaseStudyHero({
   corners = {},
   heroImage,
   heroImageAlt,
+  heroImageContain,
   heroLabel,
 }) {
+  const [open, setOpen] = useState(false)
+  const frameRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const frame = frameRef.current
+    if (!frame) return
+    const bottom = frame.getBoundingClientRect().bottom + window.scrollY
+    const target = bottom - window.innerHeight / 2
+    if (target > 0) window.scrollTo({ top: target, behavior: 'instant' })
+  }, [])
+
   const tl = corners.tl || '+ 00.00'
   const tr = corners.tr || '21:9 · HERO'
   const bl = corners.bl
@@ -16,23 +31,35 @@ export default function CaseStudyHero({
 
   return (
     <section className="hero" aria-labelledby="case-study-title">
-      <div
-        className={`hero-frame${heroImage ? ' has-image' : ''}`}
-        role={heroImage ? 'img' : undefined}
-        aria-label={heroImage ? heroImageAlt : undefined}
-      >
+      <div ref={frameRef} className={`hero-frame${heroImage ? ' has-image' : ''}${heroImage && heroImageContain ? ' contain' : ''}`}>
         <span className="hero-corner tl" aria-hidden="true">{tl}</span>
         <span className="hero-corner tr" aria-hidden="true">{tr}</span>
         {bl && <span className="hero-corner bl" aria-hidden="true">{bl}</span>}
         {br && <span className="hero-corner br" aria-hidden="true">{br}</span>}
         {heroImage ? (
-          <img src={heroImage} alt={heroImageAlt || ''} />
+          <button
+            type="button"
+            className="zoom-trigger"
+            onClick={() => setOpen(true)}
+            aria-label={`Enlarge: ${heroImageAlt || heroLabel || 'hero image'}`}
+          >
+            <img src={heroImage} alt={heroImageAlt || ''} />
+          </button>
         ) : (
           heroLabel && <span aria-hidden="true">[ {heroLabel} ]</span>
         )}
       </div>
+      {heroImage && (
+        <Lightbox
+          src={heroImage}
+          alt={heroImageAlt}
+          label={heroImageAlt || heroLabel}
+          isOpen={open}
+          onClose={() => setOpen(false)}
+        />
+      )}
       <div className="hero-meta">
-        <div>
+        <div className="hero-title-block">
           {kicker && <p className="kicker">{kicker}</p>}
           <h1 id="case-study-title">
             {title}

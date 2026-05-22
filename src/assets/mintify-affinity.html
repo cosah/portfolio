@@ -1,0 +1,226 @@
+<h2 class="sr-only">Affinity diagram restructured into a compact grid of 20 themed clusters containing 84 participant sticky notes, color-coded by participant.</h2>
+<style>
+.aff-wrap { padding: 1rem 0; font-family: var(--sans); color: var(--ink); }
+.aff-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media (max-width: 720px) { .aff-grid { grid-template-columns: repeat(2, 1fr); } }
+.cluster { border: 1px solid var(--rule); border-radius: 6px; padding: 10px 10px 12px; background: var(--surface); display:flex; flex-direction:column; }
+.cluster h3 { font-size: 13px; font-weight: 500; margin: 0 0 8px; color: var(--ink); text-align:center; line-height:1.3; }
+.cluster .count { font-size: 11px; font-weight: 400; color: var(--ink-soft); margin-left: 4px; }
+.notes { display:grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.notes.single { grid-template-columns: 1fr; }
+.note { border-radius: 6px; padding: 6px 7px; font-size: 11px; line-height: 1.35; min-height: 44px; }
+.note.blue   { background:#B5D4F4; color:#042C53; }
+.note.coral  { background:#F5C4B3; color:#4A1B0C; }
+.note.green  { background:#C0DD97; color:#173404; }
+.note.yellow { background:#FAC775; color:#412402; }
+.note.purple { background:#CECBF6; color:#26215C; }
+</style>
+<div class="aff-wrap">
+  <div class="aff-grid">
+
+    <div class="cluster">
+      <h3>Identity<span class="count"> · 4</span></h3>
+      <div class="notes">
+        <div class="note purple">I'm a student at University of Michigan</div>
+        <div class="note yellow">I am a sophomore from LA studying economics</div>
+        <div class="note coral">I just transferred to U-M!</div>
+        <div class="note blue">I am a University of Michigan student, Major in Computer Science</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>English main language<span class="count"> · 3</span></h3>
+      <div class="notes">
+        <div class="note blue">My preferred language is English</div>
+        <div class="note purple">English is my preferred language</div>
+        <div class="note green">English is my preferred language</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Design competency<span class="count"> · 1</span></h3>
+      <div class="notes single">
+        <div class="note coral">I have a strong sense for design</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Time management<span class="count"> · 1</span></h3>
+      <div class="notes single">
+        <div class="note coral">I'm engaged with my school outside the classroom and able to take on responsibility while managing time strategically</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Experience with court<span class="count"> · 5</span></h3>
+      <div class="notes">
+        <div class="note green">No experience with court systems in Michigan or Boston (hometown)</div>
+        <div class="note coral">No personal experience with Michigan's court system</div>
+        <div class="note purple">Some familiarity with the court system; have family who are attorneys</div>
+        <div class="note yellow">No experience with the court system in Michigan</div>
+        <div class="note blue">No experience with the court system in Michigan</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Legal document use<span class="count"> · 3</span></h3>
+      <div class="notes">
+        <div class="note blue">Experience reading and signing lease agreements</div>
+        <div class="note green">Have only filled out rent/lease legal paperwork before</div>
+        <div class="note coral">Not involved in a court case but dealt with paperwork for driver's license/passport renewal</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Image of Summons<span class="count"> · 2</span></h3>
+      <div class="notes">
+        <div class="note green">AR: I don't know what the drawing of the form is for</div>
+        <div class="note coral">[AR] Am I currently looking at the summons document? Why is there an image of one on here?</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Why am I being sued?<span class="count"> · 2</span></h3>
+      <div class="notes">
+        <div class="note yellow">(AR) Unclear why I'm being sued; the document doesn't seem to notify me</div>
+        <div class="note purple">Advice of Rights: when I look at the AR form, I'm unsure what I'm being sued for</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>"You are being sued!"<span class="count"> · 3</span></h3>
+      <div class="notes">
+        <div class="note yellow">(AR) The big letters "You are being sued" and the separated titles + sections stand out most</div>
+        <div class="note blue">AoR: eyes drawn to top-left text "You are being sued"; also drawn to the hazard sign, which emphasizes the text</div>
+        <div class="note green">AR I feel the bold statement of "You are being sued" feels fake</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Urgency of court documents<span class="count"> · 5</span></h3>
+      <div class="notes">
+        <div class="note coral">[AR] I'm being sued?!</div>
+        <div class="note blue">Would read court documents right away if I knew the consequences for not reading</div>
+        <div class="note purple">Would prefer to read court documents right away</div>
+        <div class="note green">Feel the need to open court forms to figure out what's going on, like with jury duty</div>
+        <div class="note yellow">(RF) The big you-are-being-sued!</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Fancy words are too fancy<span class="count"> · 4</span></h3>
+      <div class="notes">
+        <div class="note coral">[AR] What's a plaintiff?</div>
+        <div class="note coral">[AR] What are these steps telling me to do? I'm confused, I'm a UX student not in law school</div>
+        <div class="note coral">[AR] What do these words mean?</div>
+        <div class="note coral">[RF] Expected for legal documents to be dry and tough to read, but I wish this wasn't the standard</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Intuitive!<span class="count"> · 5</span></h3>
+      <div class="notes">
+        <div class="note yellow">(AR) I feel like the tone is formal and intuitive</div>
+        <div class="note coral">[RF] Overall, I can navigate this form! I understand what it's wanting me to do</div>
+        <div class="note yellow">(AR) The Advice or Rights form helps me understand my rights</div>
+        <div class="note yellow">I think the form gives you all the information you would want</div>
+        <div class="note yellow">I feel confident I understand my rights while reading this form</div>
+      </div>
+    </div>
+
+    <div class="cluster" style="grid-column: span 2;">
+      <h3>Form authenticity??<span class="count"> · 7</span></h3>
+      <div class="notes">
+        <div class="note purple">Advice of Rights: Nothing on this form makes it seem official or from the government. The form seems like a joke or a scam.</div>
+        <div class="note green">I feel very official-looking documents feel fake, I think because I'm unfamiliar with them</div>
+        <div class="note blue">Layout / Advice of Rights Form: The form does not feel like official court documents because of color and symbols</div>
+        <div class="note purple">Advice of rights: I think some wording and formatting (bold/italicized text) seems unprofessional</div>
+        <div class="note blue">Advice of Rights Form/Layout: Feels not threatening to the point that it doesn't seem official</div>
+        <div class="note blue">Advice of Rights Form/Layout: Compared to another form that is not as pretty looking, I don't take it as serious. It seems more like a flyer.</div>
+        <div class="note purple">Advice of Rights Form / Info: Would feel less inclined to follow steps because it feels like this form is out of nowhere</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Happy little form<span class="count"> · 1</span></h3>
+      <div class="notes single">
+        <div class="note blue">I think the form is almost less threatening than I would expect</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Unclear about rights<span class="count"> · 5</span></h3>
+      <div class="notes">
+        <div class="note coral">[AR] It's nice that the steps to take are laid out, but what are my rights in this situation?</div>
+        <div class="note blue">Legal Rights: I feel like it does not tell me my rights, just steps to follow</div>
+        <div class="note purple">Advice of Rights: would find it easier to understand if "my rights" were grouped together in an easy list</div>
+        <div class="note coral">[RF] What is the consequence of my choices, the boxes I check?</div>
+        <div class="note green">AR I don't think I understand my rights or how to protect myself after reading this, although I have instructions on what to do next</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Next steps are clear<span class="count"> · 3</span></h3>
+      <div class="notes">
+        <div class="note yellow">(AR) My first step after receiving this would be to call a lawyer</div>
+        <div class="note blue">AR: I think the form is trying to tell you how to inform you why you are getting sued, and telling you what you have to do to get this resolved</div>
+        <div class="note blue">Answer Form / Response: This form does a good job at explaining how to respond to the Advice of Rights form</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Next steps are unclear<span class="count"> · 4</span></h3>
+      <div class="notes">
+        <div class="note green">AR I feel like I have a general idea of what the form is trying to tell me, but I'm confused on what exactly I need to do</div>
+        <div class="note purple">Advice of Rights: I don't understand what comes after I respond; the AoR form doesn't tell me that</div>
+        <div class="note purple">Advice of Rights: To find out if the documents are legit and to find out what to do next, I would contact the court or legal help</div>
+        <div class="note green">RF I didn't understand the jury request section, and feel it's not encouraging seeking a jury</div>
+      </div>
+    </div>
+
+    <div class="cluster" style="grid-column: span 2;">
+      <h3>Overwhelming<span class="count"> · 8</span></h3>
+      <div class="notes">
+        <div class="note blue">Answer form / Layout: Gives a lot of scenarios and answers to choose from, feels overwhelming</div>
+        <div class="note purple">Response Form: Overwhelmed by the number of options, but grateful to have them listed and available</div>
+        <div class="note green">RF I thought the sections looked like they were bleeding onto the next page when I first looked</div>
+        <div class="note purple">Response Form: This is a lot to fill out, and I don't really want to do all that</div>
+        <div class="note green">AR I had a hard time focusing to read it the first time</div>
+        <div class="note green">AR I feel overwhelmed by this stressful situation, and possibly because I have ADHD, I would avoid this task</div>
+        <div class="note coral">If I were to receive a form from the government in the mail, it'd be hard for me to remember what I read</div>
+        <div class="note coral">[RF] So. Many. Words. Blending. Together.</div>
+      </div>
+    </div>
+
+    <div class="cluster" style="grid-column: span 2;">
+      <h3>Formatting is helpful<span class="count"> · 8</span></h3>
+      <div class="notes">
+        <div class="note purple">Advice of Rights: Having a numbered list 1, 2, 3 helps me understand the process of what I need to do</div>
+        <div class="note purple">Response Form: The bold and underlined text helps me understand what I should be responding to</div>
+        <div class="note yellow">(RF) The format of the document helps me understand what's happening</div>
+        <div class="note yellow">(AR) I think the layout is great. It very clearly states exactly what I need to know and what is happening. Everything is very clear</div>
+        <div class="note green">AR I like when the information sections are in their own boxes</div>
+        <div class="note yellow">(RF) My eyes go directly to the bolded information on the paper</div>
+        <div class="note blue">Answer Form / Feelings: I do not mind that there is a lot of text or checkboxes for more freedom of answer</div>
+        <div class="note green">RF I liked how many options there were and how you could elaborate in the next box; feel this doc is more focused on the debtor's experience than the AoR form</div>
+      </div>
+    </div>
+
+    <div class="cluster" style="grid-column: span 2;">
+      <h3>Formatting suggestion<span class="count"> · 10</span></h3>
+      <div class="notes">
+        <div class="note blue">AF: Make the checkboxes different shapes (like the select-all compared to normal ones) and close together to be easily read</div>
+        <div class="note green">RF I feel the written lines are too small and close together to be easily read by people with difficulty reading things</div>
+        <div class="note green">RF I didn't like the bold and underlined look, though I think it's helpful that they are emphasized in some way</div>
+        <div class="note blue">Redesign Answer Form: I would also condense the answers in some way to make less wordy</div>
+        <div class="note green">Advice of Rights / Redesign: I would make there be less color and make it feel less casual</div>
+        <div class="note purple">Response Form: I'd appreciate a little more structure or page lines in the text box</div>
+        <div class="note green">AR I think the plaintiff / defendant info at the top should be emphasized more</div>
+        <div class="note green">AR The 2 column design feels hard to read</div>
+        <div class="note blue">Answer Form / Design: I feel the select-all box compared to the select-one box is confusing</div>
+        <div class="note green">AR I dislike some of the bolding in the Next Steps section, since I think it's not as attention-grabbing in a sentence and makes it more visually confusing to read</div>
+      </div>
+    </div>
+
+  </div>
+</div>

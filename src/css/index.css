@@ -113,6 +113,27 @@
   font-family: var(--sans);
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+}
+.case-study-card .card-image-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 88px;
+  width: 55%;
+  background-size: cover;
+  background-position: top right;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(100deg, transparent 0%, transparent 28%, #000 65%, #000 100%);
+  mask-image: linear-gradient(100deg, transparent 0%, transparent 28%, #000 65%, #000 100%);
+}
+.case-study-card .card-index,
+.case-study-card .card-body,
+.case-study-card .card-arrow {
+  position: relative;
+  z-index: 1;
 }
 .case-study-card:hover {
   border-color: var(--good);

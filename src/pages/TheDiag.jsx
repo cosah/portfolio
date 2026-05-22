@@ -13,11 +13,15 @@ import PullQuote from '../components/PullQuote'
 import TableOfContents from '../components/TableOfContents'
 import CaseStudyFooter from '../components/CaseStudyFooter'
 
+import imgHero from '../assets/diag-hero.png'
 import imgEventsFeed from '../assets/diag-events-feed.png'
 import imgMap from '../assets/diag-map.png'
 import imgCalendar from '../assets/diag-calendar.png'
-import imgAwards from '../assets/diag-awards.png'
+import imgProfile from '../assets/diag-profile-final.png'
 import imgCreateEventNew from '../assets/diag-create-event-2.png'
+import imgNlpDefault from '../assets/diag-nlp-default.png'
+import imgNlpFilled from '../assets/diag-nlp-filled.png'
+import imgVisionBoard from '../assets/diag-vision-board.png'
 
 const META = [
   { label: 'Project', value: 'The Diag' },
@@ -33,7 +37,7 @@ const PILLARS = [
   { ix: '3.1', name: 'Discover', src: imgEventsFeed, alt: 'Discovery feed', desc: 'Personalized feed: suggested events plus events from followed orgs.' },
   { ix: '3.2', name: 'Map', src: imgMap, alt: 'Map view', desc: 'Pinned events with proximity-driven discovery and navigation handoff.' },
   { ix: '3.3', name: 'Calendar', src: imgCalendar, alt: 'Calendar view', desc: 'Week view with day-level granularity for personal scheduling.' },
-  { ix: '3.4', name: 'Awards', src: imgAwards, alt: 'Awards view', desc: 'Attendance milestones at 5, 10, 15, and 25 events for retention.' },
+  { ix: '3.4', name: 'Profile', src: imgProfile, alt: 'Profile view: friends, orgs, awards, and upcoming/attended events', desc: 'Engagement hub: friends, followed orgs, earned awards, and a feed of upcoming and attended events.' },
 ]
 
 const DETAIL_STATS = [
@@ -82,8 +86,10 @@ export default function TheDiag({ onHome }) {
         titleEmphasis="The rebuild ran the marketplace."
         subtitle="A native iOS app for campus event discovery at the University of Michigan. I owned the Create Event flow end to end. After our first usability test, no participant could finish it. This is the diagnosis and the rebuild."
         meta={META}
-        corners={{ tl: '+ 00.00', tr: '21:9 · HERO', bl: 'THE DIAG · iOS', br: 'FALL 2025 · SI 407' }}
-        heroLabel="The Diag, final hero composition"
+        corners={{ tl: '+ 00.00', tr: 'iOS · iPhone 13 Pro', bl: 'THE DIAG · iOS', br: 'FALL 2025 · SI 407' }}
+        heroImage={imgHero}
+        heroImageAlt="The Diag final composition: three iPhone 13 Pro screens showing Discover Events, Maize Pages org profile, and the Map view"
+        heroImageContain
       />
 
       <div className="case-study-layout">
@@ -105,9 +111,8 @@ export default function TheDiag({ onHome }) {
         <div className="section" id="sec-2">
           <SectionLabel num={2}>Existing tools, audited</SectionLabel>
           <h2>Information-dense, insight-poor. The same failure pattern across every platform.</h2>
-          <ImageSlot id="2.1" caption="Maize Pages competitive audit, web and mobile, annotated. Three failure patterns repeated: undifferentiated listings, no personalization, and supply-side friction at posting." />
           <div className="body-text">
-            <p>Three failure patterns repeated across every existing tool. Listings were undifferentiated and overwhelming. There was no personalization or social layer to help students prioritize. And the org-leader posting flow was so heavy that supply itself was suppressed.</p>
+            <p>We ran a competitive analysis across three existing platforms students used to find campus events — Maize Pages, GroupMe, and Instagram — and the same three failure patterns repeated across every one. Listings were undifferentiated and overwhelming. There was no personalization or social layer to help students prioritize. And the org-leader posting flow was so heavy that supply itself was suppressed.</p>
             <p>From the audit, three design criteria emerged: limit information overload, prioritize visual presentation, and surface a live interactive map for proximity.</p>
           </div>
         </div>
@@ -118,7 +123,14 @@ export default function TheDiag({ onHome }) {
           <div className="body-text">
             <p>I defined the business goals in our Product Vision Board, anchoring the team around two measurable outcomes: grow online visibility for campus organizations, and increase org applications by 20%. These were not vanity metrics. They reflected the core thesis that if students could find events worth attending, they would engage more deeply with campus life.</p>
           </div>
-          <ImageSlot id="3.1" caption="Product Vision Board: target group, needs, product, business goals, competitors, revenue, costs, channels." />
+          <ImageSlot
+            id="3.1"
+            src={imgVisionBoard}
+            alt="Product Vision Board with target group, needs, product, business goals, competitors, revenue streams, costs, and channels filled in"
+            caption="Product Vision Board: target group, needs, product, business goals, competitors, revenue, costs, channels."
+            aspect="16x9"
+            contain
+          />
         </div>
 
         <div className="section" id="sec-4">
@@ -126,7 +138,7 @@ export default function TheDiag({ onHome }) {
           <h2>Four pillars: discover, locate, track, and engage.</h2>
           <GridFrames items={PILLARS} cols={4} aspect="9x16" />
           <div className="body-text">
-            <p>Each pillar maps to a specific behavior surfaced in research: discovery (a personalized feed), locate (a campus map with event pins and navigation handoff), track (a calendar synced to followed orgs), and engage (a milestone system that gives students visible progress and gives orgs a reason to keep posting).</p>
+            <p>Each pillar maps to a specific behavior surfaced in research: discovery (a personalized feed), locate (a campus map with event pins and navigation handoff), track (a calendar synced to followed orgs), and engage (a profile that surfaces friends, followed orgs, earned awards, and a personal record of upcoming and attended events).</p>
           </div>
         </div>
 
@@ -136,7 +148,15 @@ export default function TheDiag({ onHome }) {
           <div className="body-text">
             <p>I owned Create Event end to end: sketches, wireframes, hi-fi screens, the usability test, and the post-test rebuild. The first design used a natural-language input field that would auto-parse pasted event copy. The thinking was that org leaders already had this content written for emails and social posts, so why make them retype it.</p>
           </div>
-          <ImageSlot id="5.1" caption="V1 wireframes. Top NLP input field accepts pasted event description, parsed into structured fields below." />
+          <ImageSlot
+            id="5.1"
+            srcs={[
+              { src: imgNlpDefault, alt: 'V1 Create Event, default state: NLP input field at the top awaiting pasted event copy' },
+              { src: imgNlpFilled, alt: 'V1 Create Event, expanded and filled state: NLP field with pasted text parsed into structured fields below' },
+            ]}
+            caption="V1 Create Event: NLP input in its default state (left) and expanded with pasted event copy parsed into structured fields (right)."
+            aspect="9x16"
+          />
         </div>
 
         <div className="section" id="sec-6">
@@ -179,7 +199,8 @@ export default function TheDiag({ onHome }) {
             before={{
               label: 'FIG. 8.1 · V1, Initial design',
               tag: '0/5 completed',
-              placeholder: 'V1: NLP-driven single input',
+              src: imgNlpDefault,
+              alt: 'V1 Create Event: NLP input field in default state, the design that produced a 0/5 completion rate in usability testing',
               annotations: [
                 'NLP field violates standard form mental model.',
                 'Create button low-contrast, did not read as tappable.',

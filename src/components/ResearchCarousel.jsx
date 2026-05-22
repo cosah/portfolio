@@ -1,23 +1,10 @@
-import { useState, useEffect } from 'react'
-import { createPortal } from 'react-dom'
+import { useState } from 'react'
+import Lightbox from './Lightbox'
 
-export default function ResearchCarousel({ slides, lightbox = false }) {
+export default function ResearchCarousel({ slides, lightbox = true }) {
   const [openIndex, setOpenIndex] = useState(-1)
-
-  useEffect(() => {
-    if (openIndex < 0) return
-    const onKey = (e) => {
-      if (e.key === 'Escape') setOpenIndex(-1)
-      if (e.key === 'ArrowRight') setOpenIndex(i => (i + 1) % slides.length)
-      if (e.key === 'ArrowLeft') setOpenIndex(i => (i - 1 + slides.length) % slides.length)
-    }
-    document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', onKey)
-    return () => {
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', onKey)
-    }
-  }, [openIndex, slides.length])
+  const total = slides.length
+  const current = openIndex >= 0 ? slides[openIndex] : null
 
   return (
     <>
@@ -39,22 +26,16 @@ export default function ResearchCarousel({ slides, lightbox = false }) {
         ))}
       </div>
 
-      {openIndex >= 0 && createPortal(
-        <div className="img-modal-overlay" onClick={() => setOpenIndex(-1)}>
-          <div className="img-modal-card" onClick={e => e.stopPropagation()}>
-            <img
-              src={slides[openIndex].src}
-              alt={slides[openIndex].label}
-              className="img-modal-image"
-              onClick={() => setOpenIndex(i => (i + 1) % slides.length)}
-            />
-            <div className="img-modal-footer">
-              <span className="img-modal-label">{slides[openIndex].label}</span>
-              <button className="img-modal-close" onClick={() => setOpenIndex(-1)} aria-label="Close">×</button>
-            </div>
-          </div>
-        </div>,
-        document.body
+      {current && (
+        <Lightbox
+          src={current.src}
+          alt={current.label}
+          label={current.label}
+          isOpen={openIndex >= 0}
+          onClose={() => setOpenIndex(-1)}
+          onPrev={total > 1 ? () => setOpenIndex((i) => (i - 1 + total) % total) : undefined}
+          onNext={total > 1 ? () => setOpenIndex((i) => (i + 1) % total) : undefined}
+        />
       )}
     </>
   )

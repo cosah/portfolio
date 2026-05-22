@@ -21,7 +21,10 @@
   --sans: 'Inter', system-ui, sans-serif;
   --mono: 'JetBrains Mono', monospace;
 
-  --max-width: 1320px;
+  --max-width: 1464px;
+  --content-w: 840px;
+  --rail-w: 240px;
+  --rail-gap: 40px;
 
   color-scheme: dark;
 }
