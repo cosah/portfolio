@@ -3,6 +3,7 @@ import './css/global.css'
 import './css/layout.css'
 import './css/components.css'
 import './css/index.css'
+import './css/about.css'
 
 import Home from './pages/Home'
 import TheDiag from './pages/TheDiag'
@@ -11,6 +12,8 @@ import Roamio from './pages/Roamio'
 import SeedLibrary from './pages/SeedLibrary'
 import CourtsAudit from './pages/CourtsAudit'
 import LayoutDemo from './pages/LayoutDemo'
+import About from './pages/About'
+import { CASE_STUDIES } from './data/caseStudies'
 
 const ROUTES = {
   '': Home,
@@ -20,6 +23,7 @@ const ROUTES = {
   'seed-library': SeedLibrary,
   'courts-audit': CourtsAudit,
   'layout-demo': LayoutDemo,
+  'about': About,
 }
 
 function getRoute() {
@@ -47,10 +51,35 @@ export default function App() {
   }
 
   const Page = ROUTES[route] ?? Home
+  const heroPreloads = CASE_STUDIES.filter((c) => c.heroImage)
 
-  if (Page === Home) {
-    return <Home onNavigate={navigate} />
-  }
-
-  return <Page onHome={goHome} />
+  return (
+    <>
+      {Page === Home ? (
+        <Home onNavigate={navigate} />
+      ) : (
+        <Page onHome={goHome} />
+      )}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          width: 0,
+          height: 0,
+          overflow: 'hidden',
+          pointerEvents: 'none',
+        }}
+      >
+        {heroPreloads.map((c) => (
+          <img
+            key={c.id}
+            src={c.heroImage}
+            alt=""
+            loading="eager"
+            decoding="async"
+          />
+        ))}
+      </div>
+    </>
+  )
 }

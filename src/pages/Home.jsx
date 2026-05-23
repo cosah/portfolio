@@ -13,6 +13,7 @@ export default function Home({ onNavigate }) {
       <a href="#case-studies" className="skip-link">Skip to case studies</a>
 
       <div className="home-corner-links">
+        <a href="#/about">About</a>
         <a href="https://www.linkedin.com/in/anthony-shephard/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a href="mailto:antshep@umich.edu">Email</a>
       </div>

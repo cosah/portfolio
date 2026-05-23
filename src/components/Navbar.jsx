@@ -72,6 +72,7 @@ export default function Navbar({ onHome, label, slug }) {
         {label ? ` / ${label}` : ''}
       </span>
       <span className="nav-links">
+        {/* <a href="#/about">About</a> -- hidden, page not ready */}
         <a
           href="https://www.linkedin.com/in/anthony-shephard/"
           target="_blank"

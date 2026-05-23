@@ -25,7 +25,7 @@ import imgVisionBoard from '../assets/diag-vision-board.png'
 
 const META = [
   { label: 'Project', value: 'The Diag' },
-  { label: 'Course', value: 'SI 407' },
+  { label: 'Course', value: 'SI 407 · Advanced UX Design' },
   { label: 'Role', value: 'UX, Strategy' },
   { label: 'Owned', value: 'Create Event' },
   { label: 'Team', value: '5 designers' },
@@ -86,7 +86,7 @@ export default function TheDiag({ onHome }) {
         titleEmphasis="The rebuild ran the marketplace."
         subtitle="A native iOS app for campus event discovery at the University of Michigan. I owned the Create Event flow end to end. After our first usability test, no participant could finish it. This is the diagnosis and the rebuild."
         meta={META}
-        corners={{ tl: '+ 00.00', tr: 'iOS · iPhone 13 Pro', bl: 'THE DIAG · iOS', br: 'FALL 2025 · SI 407' }}
+        corners={{ tl: '+ 00.00', tr: 'iOS · iPhone 13 Pro', bl: 'THE DIAG · iOS', br: 'FALL 2025 · SI 407 · ADVANCED UX DESIGN' }}
         heroImage={imgHero}
         heroImageAlt="The Diag final composition: three iPhone 13 Pro screens showing Discover Events, Maize Pages org profile, and the Map view"
         heroImageContain

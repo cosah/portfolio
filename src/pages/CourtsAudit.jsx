@@ -12,7 +12,7 @@ import CaseStudyFooter from '../components/CaseStudyFooter'
 
 const META = [
   { label: 'Project', value: 'MI Courts Audit' },
-  { label: 'Course', value: 'SI 338' },
+  { label: 'Course', value: 'SI 338 · Accessibility & Web Dev' },
   { label: 'Role', value: 'Presentation Lead' },
   { label: 'Owned', value: 'Site 4 Audit' },
   { label: 'Team', value: '4 members' },
@@ -82,7 +82,7 @@ export default function CourtsAudit({ onHome }) {
         titleEmphasis="audited against the standard Michigan adopted."
         subtitle="A WCAG 2.1 AA compliance audit of the Michigan Courts website, evaluating seven pages for barriers faced by users with disabilities and delivering a prioritized remediation roadmap to a real government client."
         meta={META}
-        corners={{ tl: '+ 00.00', tr: '21:9 · HERO', bl: 'MI COURTS · WCAG 2.1 AA', br: 'FALL 2025 · SI 338' }}
+        corners={{ tl: '+ 00.00', tr: '21:9 · HERO', bl: 'MI COURTS · WCAG 2.1 AA', br: 'FALL 2025 · SI 338 · ACCESSIBILITY & WEB DEV' }}
         heroLabel="MI Courts accessibility audit, project banner"
       />
 

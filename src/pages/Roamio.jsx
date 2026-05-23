@@ -29,7 +29,7 @@ import imgCheckoutV2    from '../assets/roamio-checkout-v2.png'
 
 const META = [
   { label: 'Project', value: 'Roamio' },
-  { label: 'Course', value: 'SI 311' },
+  { label: 'Course', value: 'SI 311 · Product Design' },
   { label: 'Role', value: 'Researcher, Strategy' },
   { label: 'Owned', value: 'Customer Discovery' },
   { label: 'Team', value: '4 (Team Echo)' },
@@ -99,7 +99,7 @@ export default function Roamio({ onHome }) {
         titleEmphasis="Information design turned out to be a business model problem."
         subtitle="A travel marketplace connecting Gen Z and Millennial travelers with verified local agents who curate trip packages featuring insider secrets, built from scratch in 15 weeks as part of a zero-to-one product design course."
         meta={META}
-        corners={{ tl: '+ 00.00', tr: 'HOMEPAGE', bl: 'ROAMIO · TEAM ECHO', br: 'SPRING 2026 · SI 311' }}
+        corners={{ tl: '+ 00.00', tr: 'HOMEPAGE', bl: 'ROAMIO · TEAM ECHO', br: 'SPRING 2026 · SI 311 · PRODUCT DESIGN' }}
         heroImage={imgHomepage}
         heroImageAlt="Roamio homepage hero: Every Local Knows Something You Don't, with a destination search bar over a coastal scene"
       />
@@ -125,7 +125,7 @@ export default function Roamio({ onHome }) {
           <SectionLabel num={2}>Discovery</SectionLabel>
           <h2>Why existing tools fail, and what travelers actually want instead.</h2>
           <div className="body-text">
-            <p>SI 311 is a zero-to-one product design course built around five sequential phases. Team Echo's research phase ran across phases three and four, spanning customer discovery interviews, moderated usability tests, and a post-session survey.</p>
+            <p>SI 311 (Product Design) is a zero-to-one product design course built around five sequential phases. Team Echo's research phase ran across phases three and four, spanning customer discovery interviews, moderated usability tests, and a post-session survey.</p>
             <p>I designed the customer discovery interview guide and co-designed the usability test plan. The interview guide had three modules: warm-up (travel profile and recent trip), a grand tour question (step-by-step planning walkthrough), and two deep focus areas (local recommendations and planning tools). This was deliberate: we wanted participants to surface their real behavior before we introduced Roamio, so their reactions weren't colored by what they thought we wanted to hear.</p>
             <p>The team ran five sessions in total, each pairing a discovery interview with a usability test and a survey. I facilitated and notetook two of the five.</p>
           </div>
@@ -249,6 +249,53 @@ export default function Roamio({ onHome }) {
             <p>I brought this finding into the team's synthesis session, and it aligned with what was surfacing across the other three sessions. P2 couldn't find hotel information on the package detail page. P3 said outright that she "would not book if I didn't know what I was booking." The pattern was unmistakable.</p>
           </div>
 
+          <div className="issues-table" role="table" aria-label="Four critical issues identified across the five usability sessions">
+            <div className="issues-row header" role="row">
+              <div role="columnheader">ID</div>
+              <div role="columnheader">Critical issue</div>
+              <div role="columnheader">Affecting</div>
+              <div role="columnheader">Identified via</div>
+              <div role="columnheader">Cited by</div>
+            </div>
+            <div className="issues-row" role="row">
+              <div className="issue-id" role="cell">C1</div>
+              <div className="issue-title" role="cell">No itemized checkout breakdown</div>
+              <div className="issue-touchpoint" role="cell">Checkout</div>
+              <div className="issue-method" role="cell">Usability test (observed)</div>
+              <div className="issue-participants" role="cell">
+                <span className="participant-chip">P1</span>
+              </div>
+            </div>
+            <div className="issues-row" role="row">
+              <div className="issue-id" role="cell">C2</div>
+              <div className="issue-title" role="cell">Blind booking — package info opacity before purchase</div>
+              <div className="issue-touchpoint" role="cell">Package Detail</div>
+              <div className="issue-method" role="cell">Interview + usability</div>
+              <div className="issue-participants" role="cell">
+                <span className="participant-chip">P2</span>
+                <span className="participant-chip">P3</span>
+              </div>
+            </div>
+            <div className="issues-row" role="row">
+              <div className="issue-id" role="cell">C3</div>
+              <div className="issue-title" role="cell">No package customization (hotel swap, à la carte secrets)</div>
+              <div className="issue-touchpoint" role="cell">Checkout / Package</div>
+              <div className="issue-method" role="cell">Cross-session synthesis</div>
+              <div className="issue-participants" role="cell">
+                <span className="participant-chip">Multiple</span>
+              </div>
+            </div>
+            <div className="issues-row" role="row">
+              <div className="issue-id" role="cell">C4</div>
+              <div className="issue-title" role="cell">Text-only secret reveal (no maps, photos, or pins)</div>
+              <div className="issue-touchpoint" role="cell">My Trip / Reveal</div>
+              <div className="issue-method" role="cell">Interview (direct request)</div>
+              <div className="issue-participants" role="cell">
+                <span className="participant-chip">P2</span>
+              </div>
+            </div>
+          </div>
+
           <Callout
             tone="info"
             stat="4"
@@ -366,7 +413,7 @@ export default function Roamio({ onHome }) {
           <SectionLabel num={9}>Walkthrough</SectionLabel>
           <h2>Demo Day video tour.</h2>
           <VideoSection
-            description="A guided tour of the final Roamio prototype presented at SI 311 Demo Day, April 2026."
+            description="A guided tour of the final Roamio prototype presented at SI 311 (Product Design) Demo Day, April 2026."
             mp4={`${import.meta.env.BASE_URL}roamio-demo.mp4`}
             maxWidth="100%"
           />
