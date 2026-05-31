@@ -11,7 +11,7 @@ export const CASE_STUDIES = [
     subtitle:
       'Redesigning a campus seed distribution system from a 4% completion rate to a connected physical-digital ecosystem, tested with 355 participants across four research methods.',
     tags: ['UX Research', 'Client Liaison', 'Figma', 'Fall 2025 – Winter 2026'],
-    award: 'BSI UX Pathway Award',
+    award: 'UMSI Expo 26 BSI UX Pathway Award',
     heroImage: seedHero,
   },
   {

@@ -107,10 +107,10 @@ export default function SeedLibrary({ onHome }) {
       <Navbar onHome={onHome} slug="seed-library" />
 
       <CaseStudyHero
-        kicker="Case Study · UX Research & Design · BSI UX Pathway Award"
+        kicker="Case Study · UX Research & Design · UMSI Expo 26 BSI UX Pathway Award"
         title="A program nobody knew about,"
         titleEmphasis="redesigned for the people it was built for."
-        subtitle="Redesigning the physical and digital experience of a campus seed distribution system, from a gumball machine with a 4% completion rate to a connected ecosystem tested with 355 participants. Winner of the BSI UX Pathway Award at the 2026 UMSI Exposition."
+        subtitle="Redesigning the physical and digital experience of a campus seed distribution system, from a gumball machine with a 4% completion rate to a connected ecosystem tested with 355 participants. Winner of the UMSI Expo 26 BSI UX Pathway Award."
         meta={META}
         corners={{ tl: '+ 00.00', tr: 'EXPO POSTER', bl: 'UNIVERSITY OF MICHIGAN SEED LIBRARY', br: '2025–2026 · SI 487' }}
         heroImage={imgExpoPoster}
@@ -393,8 +393,8 @@ export default function SeedLibrary({ onHome }) {
           <Callout
             tone="good"
             stat="★"
-            label="2026 UMSI Exposition · BSI UX Pathway Award"
-            title="Selected as the BSI UX Pathway Award winner."
+            label="UMSI Expo 26 · BSI UX Pathway Award"
+            title="Selected as the UMSI Expo 26 BSI UX Pathway Award winner."
           >
             <p>Judged by a panel of UMSI alumni and industry experts, the award recognizes excellence in user experience research and design, clear execution, and feasible, valuable recommendations to the client organization.</p>
           </Callout>
