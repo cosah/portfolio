@@ -108,7 +108,7 @@ export default function SeedLibrary({ onHome }) {
 
       <CaseStudyHero
         kicker="Case Study · UX Research & Design · UMSI Expo 26 BSI UX Pathway Award"
-        title="A program nobody knew about,"
+        title="An underutilized resource,"
         titleEmphasis="redesigned for the people it was built for."
         subtitle="Redesigning the physical and digital experience of a campus seed distribution system, from a gumball machine with a 4% completion rate to a connected ecosystem tested with 355 participants. Winner of the UMSI Expo 26 BSI UX Pathway Award."
         meta={META}
@@ -288,9 +288,9 @@ export default function SeedLibrary({ onHome }) {
 
         <div className="section" id="sec-8">
           <SectionLabel num={8}>The pivotal physical redesign</SectionLabel>
-          <h2>Three machines became one. Plus a paper slip.</h2>
+          <h2>Two machines became one. Plus a paper slip.</h2>
           <div className="body-text">
-            <p>The original flow required three machines and multiple transfer steps. The redesign eliminated the envelope dispenser entirely, replacing it with a small paper envelope designed to fit inside the existing capsules. Each capsule color now maps to a specific plant, and a paper slip inside confirms the plant name and includes a QR code linking directly to that plant's detail page.</p>
+            <p>The original flow required two machines and a return receptacle, with multiple transfer steps between them. The redesign eliminated the envelope dispenser entirely, replacing it with a small paper envelope designed to fit inside the existing capsules. Each capsule color now maps to a specific plant, and a paper slip inside confirms the plant name and includes a QR code linking directly to that plant's detail page.</p>
           </div>
           <BeforeAfterPair
             aspect="4x3"
@@ -300,7 +300,7 @@ export default function SeedLibrary({ onHome }) {
               src: imgPhysicalV1,
               alt: 'Original physical setup: envelope dispenser, gumball capsule machine, and frog return receptacle in the Shapiro Library lobby',
               annotations: [
-                'Three separate machines required in correct sequence.',
+                'Two machines plus a return receptacle, required in correct sequence.',
                 'Loose seeds transferred between envelope and capsule.',
                 'No mechanism to identify the contents of any capsule.',
               ],
