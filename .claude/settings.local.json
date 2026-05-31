@@ -60,10 +60,12 @@
       "Bash(rm 'src/assets/Mintify/Kickoff meeting slide deck.pdf' 'src/assets/Mintify/Mid-project expert review session slide deck.pdf' 'src/assets/Mintify/Response form lo fi.png' src/assets/Mintify/justice_for_all_affinity_grid_no_names.html 'src/assets/Roamio/Interview Script.docx' src/assets/Roamio/Roamio_Usability_Test_Plan_v2.docx src/assets/ce-calendar.png src/assets/ce-friends.png src/assets/ce-nlp-filled.png src/assets/ce-org-select.png src/assets/diag-awards.png src/assets/diag-create-event-before.png src/assets/diag-create-event-new.png src/assets/diag-event-detail.png src/assets/diag-org-page.png src/assets/diag-profile-anthony.png src/assets/diag-profile.png src/assets/figjam-page2-overview.png src/assets/fj-161-231.png src/assets/hero.png src/assets/mintify-affinity.png src/assets/mintify-journey-map.png src/assets/react.svg src/assets/research-blueprint.png src/assets/research-ideation.png src/assets/seed-eval-board.png src/assets/vite.svg)",
       "Bash(rmdir src/assets/Mintify src/assets/Roamio)",
       "Bash(git fetch *)",
-      "Bash(git restore *)"
+      "Bash(git restore *)",
+      "Bash(cd \"c:\\\\Site Make\\\\Portfolio\\\\portfolio\" && mv src/assets/favicon/* public/ && rmdir src/assets/favicon && rm public/favicon.svg && ls public/)"
     ],
     "additionalDirectories": [
-      "C:\\Site Make\\Portfolio\\portfolio\\src\\assets"
+      "C:\\Site Make\\Portfolio\\portfolio\\src\\assets",
+      "C:\\Site Make\\Portfolio\\portfolio\\src\\assets\\favicon"
     ]
   }
 }
