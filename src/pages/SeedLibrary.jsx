@@ -109,7 +109,7 @@ export default function SeedLibrary({ onHome }) {
       <CaseStudyHero
         kicker="Case Study · UX Research & Design · UMSI Expo 26 BSI UX Pathway Award"
         title="An underutilized resource,"
-        titleEmphasis="redesigned for the people it was built for."
+        titleEmphasis="redesigned to fit its community."
         subtitle="Redesigning the physical and digital experience of a campus seed distribution system, from a gumball machine with a 4% completion rate to a connected ecosystem tested with 355 participants. Winner of the UMSI Expo 26 BSI UX Pathway Award."
         meta={META}
         corners={{ tl: '+ 00.00', tr: 'EXPO POSTER', bl: 'UNIVERSITY OF MICHIGAN SEED LIBRARY', br: '2025–2026 · SI 487' }}
