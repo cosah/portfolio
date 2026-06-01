@@ -1,9 +1,10 @@
 import { CASE_STUDIES } from '../data/caseStudies'
+import Navbar from '../components/Navbar'
 
 const HOME_META = [
   { label: 'Role', value: 'PM, UX, Research' },
   { label: 'School', value: 'University of Michigan' },
-  { label: 'Program', value: 'BS Information' },
+  { label: 'Program', value: 'Bachelor of Science in Information' },
   { label: 'Year', value: '2026' },
 ]
 
@@ -12,11 +13,10 @@ export default function Home({ onNavigate }) {
     <div className="home-page">
       <a href="#case-studies" className="skip-link">Skip to case studies</a>
 
-      <div className="home-corner-links">
-        {/* <a href="#/about">About</a> -- hidden, page not ready */}
-        <a href="https://www.linkedin.com/in/anthony-shephard/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="mailto:antshep@umich.edu">Email</a>
-      </div>
+      <Navbar
+        crumbOverride="Anthony Shephard's Portfolio"
+        hideProgress
+      />
 
       <header className="home-header">
         <div>

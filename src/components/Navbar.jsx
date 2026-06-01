@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { CASE_STUDIES } from '../data/caseStudies'
 
-export default function Navbar({ onHome, label, slug }) {
+export default function Navbar({ onHome, label, slug, crumbOverride, hideProgress }) {
   const [frac, setFrac] = useState(0)
 
   useEffect(() => {
+    if (hideProgress) return
     function update() {
       const total = document.documentElement.scrollHeight - window.innerHeight
       setFrac(total > 0 ? Math.min(1, Math.max(0, window.scrollY / total)) : 0)
@@ -16,7 +17,7 @@ export default function Navbar({ onHome, label, slug }) {
       window.removeEventListener('scroll', update)
       window.removeEventListener('resize', update)
     }
-  }, [])
+  }, [hideProgress])
 
   const current = CASE_STUDIES.find((c) => c.id === slug)
   const others = CASE_STUDIES.filter((c) => c.id !== slug)
@@ -24,10 +25,15 @@ export default function Navbar({ onHome, label, slug }) {
 
   return (
     <header className="sys-header" role="banner">
+      <div className="sys-header-inner">
       <button className="name" onClick={onHome} aria-label="Anthony Shephard, home">
         anthony.shephard
       </button>
       <span className="crumbs" aria-hidden="true">
+        {crumbOverride ? (
+          <span className="here">{crumbOverride}</span>
+        ) : (
+          <>
         work /{' '}
         {current ? (
           <span className="crumbs-dropdown">
@@ -70,6 +76,8 @@ export default function Navbar({ onHome, label, slug }) {
           <span className="here">{hereLabel}</span>
         )}
         {label ? ` / ${label}` : ''}
+          </>
+        )}
       </span>
       <span className="nav-links">
         {/* <a href="#/about">About</a> -- hidden, page not ready */}
@@ -82,15 +90,18 @@ export default function Navbar({ onHome, label, slug }) {
         </a>
         <a href="mailto:antshep@umich.edu">Email</a>
       </span>
-      <div
-        className="progress-bar"
-        role="progressbar"
-        aria-label="Reading progress"
-        aria-valuenow={Math.round(frac * 100)}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        style={{ width: `${frac * 100}%` }}
-      />
+      </div>
+      {!hideProgress && (
+        <div
+          className="progress-bar"
+          role="progressbar"
+          aria-label="Reading progress"
+          aria-valuenow={Math.round(frac * 100)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          style={{ width: `${frac * 100}%` }}
+        />
+      )}
     </header>
   )
 }
