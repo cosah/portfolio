@@ -26,6 +26,14 @@
   text-decoration: none;
   letter-spacing: -0.01em;
   justify-self: start;
+  padding: 6px 10px;
+  margin: -6px -10px;
+  border-radius: 3px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.sys-header .name:hover {
+  background: rgba(232, 197, 71, 0.1);
+  color: var(--good);
 }
 .sys-header .crumbs {
   color: var(--ink-mid);
@@ -116,15 +124,21 @@
 .sys-header .nav-links {
   display: flex;
   justify-content: flex-end;
-  gap: 16px;
+  gap: 4px;
   justify-self: end;
+  margin: -6px 0;
 }
 .sys-header .nav-links a {
   color: var(--ink-mid);
   text-decoration: none;
-  transition: color 0.15s ease;
+  padding: 6px 10px;
+  border-radius: 3px;
+  transition: background 0.15s ease, color 0.15s ease;
 }
-.sys-header .nav-links a:hover { color: var(--good); }
+.sys-header .nav-links a:hover {
+  background: rgba(232, 197, 71, 0.1);
+  color: var(--good);
+}
 .sys-header .progress-bar {
   position: absolute;
   left: 0;
@@ -344,19 +358,26 @@
   display: flex;
   gap: 10px;
   align-items: center;
+  align-self: stretch;
   width: 100%;
+  padding: 0 8px;
+  margin: 0 -8px;
+  border-radius: 2px;
   font-family: var(--mono);
   font-size: 11px;
   color: var(--ink-soft);
   text-decoration: none;
   letter-spacing: 0.02em;
-  transition: color 0.15s ease;
+  transition: color 0.15s ease, background 0.15s ease;
   white-space: nowrap;
   overflow: hidden;
 }
 .toc-item.active a { color: var(--ink); }
 .toc-item.active .toc-num { color: var(--good); }
-.toc-item a:hover { color: var(--good); }
+.toc-item a:hover {
+  background: rgba(232, 197, 71, 0.1);
+  color: var(--good);
+}
 .toc-item a:hover .toc-num { color: var(--good); }
 .toc-num {
   color: var(--ink-mid);

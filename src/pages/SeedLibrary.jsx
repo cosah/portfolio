@@ -69,8 +69,8 @@ const FINAL_PAGES = [
 ]
 
 const PERSONAS = [
-  { ix: 'P1', name: 'Britt', src: imgPersona1, alt: 'Britt — experienced gardener seeking community connection', desc: 'Experienced gardener seeking community connection.', contain: true },
-  { ix: 'P2', name: 'Casey', src: imgPersona2, alt: 'Casey — curious beginner looking for a low-effort hobby', desc: 'Curious beginner looking for a low-effort hobby.', contain: true },
+  { ix: 'P1', name: 'Britt', src: imgPersona1, alt: 'Britt, experienced gardener seeking community connection', desc: 'Experienced gardener seeking community connection.', contain: true },
+  { ix: 'P2', name: 'Casey', src: imgPersona2, alt: 'Casey, curious beginner looking for a low-effort hobby', desc: 'Curious beginner looking for a low-effort hobby.', contain: true },
 ]
 
 const SECTIONS = [
@@ -114,7 +114,7 @@ export default function SeedLibrary({ onHome }) {
         meta={META}
         corners={{ tl: '+ 00.00', tr: 'EXPO POSTER', bl: 'UNIVERSITY OF MICHIGAN SEED LIBRARY', br: '2025–2026 · SI 487' }}
         heroImage={imgExpoPoster}
-        heroImageAlt="University of Michigan Seed Library — 2026 UMSI Exposition poster"
+        heroImageAlt="University of Michigan Seed Library, 2026 UMSI Exposition poster"
       />
 
       <div className="case-study-layout">
@@ -129,7 +129,7 @@ export default function SeedLibrary({ onHome }) {
           <h2>A sustainability resource that nearly everyone walks past.</h2>
           <div className="body-text">
             <p>The University of Michigan Seed Library is a campus initiative that offers free seeds through a novel distribution method: gumball machines placed in campus libraries. Users turn a knob, receive a capsule with seeds inside, and are meant to continue online for growing instructions and community programming. The program supports sustainability education, connects people to gardening, and aims to build a circular seed-sharing community.</p>
-            <p>The concept was compelling. The execution had gaps. The physical flow required users to interact with multiple machines, transfer seeds between containers, and infer sequencing from spatial proximity. The digital platform offered information but did not connect back to the physical experience. And 85% of the campus community had never heard of the program at all.</p>
+            <p>The concept was compelling. The execution had gaps. The physical flow required users to interact with multiple machines, transfer seeds between containers, and infer sequencing from spatial proximity. The digital platform offered information but did not connect back to the physical experience. And <strong>85% of the campus community had never heard of the program at all</strong>.</p>
             <p>As a two-semester capstone (SI 487), our four-person team partnered with the Seed Library to understand where the experience was breaking down and design solutions across both physical and digital touchpoints. The project ran in three phases (research, design, evaluation), with a real client expecting actionable recommendations they could implement.</p>
           </div>
           <StatRow stats={STATS} />
@@ -165,7 +165,7 @@ export default function SeedLibrary({ onHome }) {
 
           <h3>Field study established the baseline</h3>
           <div className="body-text">
-            <p>We ran four two-hour observation sessions in the Shapiro Library lobby, logging every user interaction against a rainbow spreadsheet of intended and unintended steps. The data told a clear story: 44.8% of passersby approached the machine (strong visual draw), but only 4.32% completed the full intended flow. The drop-off points were consistent. Users got stuck at the seed transfer step, confused by the multi-machine sequencing, and almost no one scanned the QR code.</p>
+            <p>We ran four two-hour observation sessions in the Shapiro Library lobby, logging every user interaction against a rainbow spreadsheet of intended and unintended steps. The data told a clear story: 44.8% of passersby approached the machine (strong visual draw), but <strong>only 4.32% completed the full intended flow</strong>. The drop-off points were consistent. Users got stuck at the seed transfer step, confused by the multi-machine sequencing, and almost no one scanned the QR code.</p>
           </div>
           <ImageSlot
             id="3.1"
@@ -177,7 +177,7 @@ export default function SeedLibrary({ onHome }) {
 
           <h3>Usability testing exposed the identification crisis</h3>
           <div className="body-text">
-            <p>All seven usability participants required facilitator intervention at some point during the flow. More critically, zero out of seven could identify which seed they had received. They searched labels, shook capsules, and asked the facilitator directly. The physical system gave them seeds but no way to know what they were holding. The analytics confirmed it: only 3 of 110 site visitors reached the specific plant page for the seeds in the machines.</p>
+            <p>All seven usability participants required facilitator intervention at some point during the flow. More critically, <strong>zero out of seven could identify which seed they had received</strong>. They searched labels, shook capsules, and asked the facilitator directly. The physical system gave them seeds but no way to know what they were holding. The analytics confirmed it: only 3 of 110 site visitors reached the specific plant page for the seeds in the machines.</p>
           </div>
 
           <Callout
@@ -195,7 +195,7 @@ export default function SeedLibrary({ onHome }) {
 
           <h3>Analytics traced the physical-to-digital break</h3>
           <div className="body-text">
-            <p>Google Analytics complemented what users said with what they actually did online. Three findings cut deepest. <strong>1 in 3 visitors arrived via web search</strong> rather than through a direct link — the QR code on the machines was never labeled or described in the on-machine instructions, so users fell back to searching. About half of visitors engaged with the site beyond a glance, and 30% reached the Events page (the strongest pull on the platform). <strong>Only 3 of 107 unique visitors reached the Black Cherry Tomatoes page</strong> matching the seeds dispensed in the machines. The bridge between physical distribution and digital instruction was effectively broken.</p>
+            <p>Google Analytics complemented what users said with what they actually did online. Three findings cut deepest. <strong>1 in 3 visitors arrived via web search</strong> rather than through a direct link. The QR code on the machines was never labeled or described in the on-machine instructions, so users fell back to searching. About half of visitors engaged with the site beyond a glance, and 30% reached the Events page (the strongest pull on the platform). <strong>Only 3 of 107 unique visitors reached the Black Cherry Tomatoes page</strong> matching the seeds dispensed in the machines. The bridge between physical distribution and digital instruction was effectively broken.</p>
           </div>
         </div>
 
@@ -215,7 +215,7 @@ export default function SeedLibrary({ onHome }) {
           <h3>Two personas to ground the design conversation</h3>
           <GridFrames items={PERSONAS} cols={2} aspect="4x3" />
           <div className="body-text">
-            <p>Britt represents the experienced gardener who arrives motivated and curious about community programming, but is blocked by the lack of return mechanisms and inability to find events. Casey represents the curious beginner whose interest is real but fragile, where any friction in the first interaction will prevent a second.</p>
+            <p>Britt represents the experienced gardener who arrives motivated and curious about community programming, but is blocked by the lack of return mechanisms and inability to find events. Casey represents the curious beginner whose interest is real but fragile, where <strong>any friction in the first interaction will prevent a second</strong>.</p>
           </div>
 
           <ScrollFigure
@@ -273,7 +273,7 @@ export default function SeedLibrary({ onHome }) {
             label="The core insight · field-observed flows"
             title="Ninety-six percent of observed user flows were incomplete."
           >
-            <p>The system's most persistent failure was not any single interaction, but the accumulation of small uncertainties: what is this machine? Which part do I use first? What seed did I get? Where do I go next? Each unanswered question increased the likelihood of abandonment. Solving for completion meant solving for compounding doubt, not any single step.</p>
+            <p>The system's most persistent failure was not any single interaction, but the accumulation of small uncertainties: what is this machine? Which part do I use first? What seed did I get? Where do I go next? Each unanswered question increased the likelihood of abandonment. <strong>Solving for completion meant solving for compounding doubt, not any single step.</strong></p>
           </Callout>
         </div>
 
@@ -315,7 +315,7 @@ export default function SeedLibrary({ onHome }) {
                 },
                 {
                   src: imgPhysicalV2Instructions,
-                  alt: 'Instructional sign: How to use the Shapiro Undergraduate Seed Library — Obtain, Open, Identify, Return, Scan QR',
+                  alt: 'Instructional sign: How to use the Shapiro Undergraduate Seed Library. Obtain, Open, Identify, Return, Scan QR',
                 },
               ],
               annotations: [
@@ -335,7 +335,7 @@ export default function SeedLibrary({ onHome }) {
           </div>
 
           <DecisionCard number={1} title="Color-coded capsules with paper-slip confirmation" rationale="A single identification method is a single point of failure. Redundancy across physical (slip), visual (color), and digital (QR) channels ensures beginners always have a path forward.">
-            <p>The redesign mapped each capsule color to one plant and included a paper slip with the plant name and QR code. In post-design testing, 100% of participants identified their seed: paper slip (100%), website (87.5%), capsule color (37.5%). Redundancy across three channels meant every participant succeeded through at least one path.</p>
+            <p>The redesign mapped each capsule color to one plant and included a paper slip with the plant name and QR code. In post-design testing, <strong>100% of participants identified their seed</strong>: paper slip (100%), website (87.5%), capsule color (37.5%). Redundancy across three channels meant every participant succeeded through at least one path.</p>
           </DecisionCard>
           <DecisionCard number={2} title="Eliminated the envelope machine" rationale="Every additional component multiplies the places a user can get lost. Reducing the machine count addressed the sequencing confusion at its source rather than papering over it with better signage.">
             <p>The team eliminated the envelope dispenser and designed a paper envelope to fit inside the existing capsules. The interaction went from three objects to two, and the seed-transfer step was removed entirely.</p>
@@ -387,7 +387,7 @@ export default function SeedLibrary({ onHome }) {
             label="The turnaround · seed identification"
             title="A task that was impossible in the original system became universally successful in the redesign."
           >
-            <p>Obtaining seeds required prompting for 43% of participants before and 0% after. Caretaking completion improved from 85.7% to 100%. The exploration task, unmeasurable on the original system because community features were undiscoverable, achieved 87.5% in the redesign.</p>
+            <p>Obtaining seeds required prompting for <strong>43% of participants before and 0% after</strong>. Caretaking completion improved from 85.7% to 100%. The exploration task, unmeasurable on the original system because community features were undiscoverable, achieved 87.5% in the redesign.</p>
           </Callout>
 
           <Callout

@@ -61,11 +61,14 @@
       "Bash(rmdir src/assets/Mintify src/assets/Roamio)",
       "Bash(git fetch *)",
       "Bash(git restore *)",
-      "Bash(cd \"c:\\\\Site Make\\\\Portfolio\\\\portfolio\" && mv src/assets/favicon/* public/ && rmdir src/assets/favicon && rm public/favicon.svg && ls public/)"
+      "Bash(cd \"c:\\\\Site Make\\\\Portfolio\\\\portfolio\" && mv src/assets/favicon/* public/ && rmdir src/assets/favicon && rm public/favicon.svg && ls public/)",
+      "Bash(cd \"c:\\\\Site Make\\\\Portfolio\\\\portfolio\" && mv \"src/assets/ShephardAnthony_Resume_May26-1.pdf\" \"public/anthony-shephard-resume.pdf\" && ls public/ | grep -i resume)",
+      "Bash(grep -v \"//\")"
     ],
     "additionalDirectories": [
       "C:\\Site Make\\Portfolio\\portfolio\\src\\assets",
-      "C:\\Site Make\\Portfolio\\portfolio\\src\\assets\\favicon"
+      "C:\\Site Make\\Portfolio\\portfolio\\src\\assets\\favicon",
+      "c:\\Site Make\\Portfolio\\portfolio\\src\\assets"
     ]
   }
 }

@@ -99,7 +99,7 @@ export default function CourtsAudit({ onHome }) {
           <div className="body-text">
             <p>The Michigan Courts System website serves a wide range of users: attorneys filing motions, journalists tracking decisions, and members of the public navigating legal processes with varying degrees of familiarity. It hosts court rules, hearing schedules, filing portals, and data dashboards, often as the primary point of contact between citizens and the court system.</p>
             <p>We audited seven distinct pages across the Michigan Courts site to document where it conforms, where it falls short, and what the path to full compliance looks like.</p>
-            <p>Accessibility on a legal information site carries real weight. Barriers that prevent a screen reader user from navigating a form, or a keyboard user from identifying which element is focused, have consequences beyond inconvenience.</p>
+            <p>Accessibility on a legal information site carries real weight. Barriers that prevent a screen reader user from navigating a form, or a keyboard user from identifying which element is focused, have <strong>consequences beyond inconvenience</strong>.</p>
           </div>
           <StatRow stats={STATS} />
         </div>
@@ -108,7 +108,7 @@ export default function CourtsAudit({ onHome }) {
           <SectionLabel num={2}>Discovery</SectionLabel>
           <h2>Three testing methods, seven pages, one consistent pattern.</h2>
           <div className="body-text">
-            <p>Our team audited seven pages of the Michigan Courts site using a layered testing approach. We started with automated tools for broad coverage, moved to manual keyboard-only navigation for interaction fidelity, and ended with VoiceOver screen reader testing on both desktop and mobile for the most nuanced findings. No single tool catches everything.</p>
+            <p>Our team audited seven pages of the Michigan Courts site using a layered testing approach. We started with automated tools for broad coverage, moved to manual keyboard-only navigation for interaction fidelity, and ended with VoiceOver screen reader testing on both desktop and mobile for the most nuanced findings. <strong>No single tool catches everything.</strong></p>
           </div>
           <div className="tool-row">
             {TOOLS.map(tool => (
@@ -142,7 +142,7 @@ export default function CourtsAudit({ onHome }) {
             label="Worst single-page result · Interactive Court Data Dashboard"
             title="A public-facing data dashboard with seventy-nine contrast errors."
           >
-            <p>The dashboard's color-coded visualizations had ratios as low as 1:1, well below WCAG AA's 3:1 minimum for non-text elements. For users with color-vision deficiencies, the data was effectively unreadable, with no accessible table fallback surfaced anywhere on the page. Across all seven pages this was the single worst result, and it was on a tool meant to make court data more transparent to the public.</p>
+            <p>The dashboard's color-coded visualizations had <strong>ratios as low as 1:1</strong>, well below WCAG AA's 3:1 minimum for non-text elements. For users with color-vision deficiencies, the data was effectively unreadable, with no accessible table fallback surfaced anywhere on the page. Across all seven pages this was the single worst result, and it was on a tool meant to make court data more transparent to the public.</p>
           </Callout>
         </div>
 
@@ -151,7 +151,7 @@ export default function CourtsAudit({ onHome }) {
           <h2>Framing findings for a government client, not a design team.</h2>
           <div className="body-text">
             <p>Our deliverable was a written audit report and a 15-minute live presentation to the Michigan Courts client team. As Presentation Lead, I was responsible for deciding how to structure those 15 minutes. The audience wasn't designers or engineers; it was a government team that needed to understand the scope of the problem and what to prioritize.</p>
-            <p>I made two structural decisions early. First, the presentation would be organized around personas rather than WCAG criteria numbers. Citing WCAG 1.4.3 to a client audience is opaque. Showing how a specific user with blue-yellow colorblindness can't read the data dashboard is concrete. Second, I insisted on grounding each finding in the specific page and user context where we found it.</p>
+            <p>I made two structural decisions early. First, <strong>the presentation would be organized around personas rather than WCAG criteria numbers</strong>. Citing WCAG 1.4.3 to a client audience is opaque. Showing how a specific user with blue-yellow colorblindness can't read the data dashboard is concrete. Second, I insisted on grounding each finding in the specific page and user context where we found it.</p>
             <p>The audit report organized findings into a four-tier remediation roadmap: immediate (navigation and focus), short-term (screen reader compatibility), medium-term (form accessibility and link labeling), long-term (mobile responsiveness and user-preference support).</p>
           </div>
           <ImageSlot id="3.1" caption="Team presentation slides: cover, agenda, personas, per-page findings, and recommendations." />
@@ -191,7 +191,7 @@ export default function CourtsAudit({ onHome }) {
             label="The outlier finding · Site 4"
             title="Zero meaningful WAVE errors detected on Site 4."
           >
-            <p>While every other page in the audit had between 9 and 80+ errors flagged by automated tools, this page had zero. The contrast passed, the structure was sound, and the screen reader experience was genuinely good. This was worth understanding, not just noting.</p>
+            <p>While every other page in the audit had between 9 and 80+ errors flagged by automated tools, <strong>this page had zero</strong>. The contrast passed, the structure was sound, and the screen reader experience was genuinely good. This was worth understanding, not just noting.</p>
           </Callout>
 
           <h3>What it got wrong anyway</h3>
@@ -216,7 +216,7 @@ export default function CourtsAudit({ onHome }) {
           </div>
 
           <DecisionCard number={1} title="Add descriptive alt text to all images and buttons" rationale="'Image' as alt text is not neutral. It actively misleads. Descriptive alt text is the baseline of web accessibility, and it was failing site-wide.">
-            <p>Every page had some form of alt-text failure: generic "image" labels, missing alt attributes on SVG icons, functional buttons with no accessible name. The homepage alone had 79 empty buttons. This was the single most pervasive issue across the site and the most straightforward to fix.</p>
+            <p>Every page had some form of alt-text failure: generic "image" labels, missing alt attributes on SVG icons, functional buttons with no accessible name. <strong>The homepage alone had 79 empty buttons.</strong> This was the single most pervasive issue across the site and the most straightforward to fix.</p>
           </DecisionCard>
           <DecisionCard number={2} title="Add captions or transcripts to all audio-video content" rationale="Multimedia without captions excludes an entire disability population. This isn't a nuanced conformance question; it's a binary fail against a clearly defined criterion.">
             <p>The For Filers in Trial Courts page hosts video resources with zero captions or transcripts. A hard-of-hearing user has no access to that content. WCAG 1.2.2 requires captions for all prerecorded synchronized media. This wasn't a partial failure; it was a complete absence of compliance.</p>

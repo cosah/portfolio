@@ -114,9 +114,9 @@ export default function Mintify({ onHome }) {
 
       <CaseStudyHero
         kicker="Case Study · Project Management · Government Client"
-        title="Two forms stand between defendants and due process."
+        title="Two proposed forms could decide whether defendants get due process."
         titleEmphasis="We rebuilt them."
-        subtitle="A student consulting engagement to redesign the court forms that stand between Michigan debt defendants and access to justice, serving a real government client with a 10-person cross-functional team."
+        subtitle="A student consulting engagement to redesign two proposed court forms intended to give Michigan debt defendants a usable path into the legal process, serving a real government client with a 10-person cross-functional team."
         meta={META}
         corners={{ tl: '+ 00.00', tr: 'TABLING POSTER', bl: 'MINTIFY × MSCJFA', br: 'FALL 2025' }}
         heroImage={imgHeroPoster}
@@ -135,12 +135,12 @@ export default function Mintify({ onHome }) {
           <SectionLabel num={1}>The problem</SectionLabel>
           <h2>Seventy percent of Michigan debt defendants never get to tell their side of the story.</h2>
           <div className="body-text">
-            <p>When a debt collector files a complaint in Michigan, the defendant receives two court documents: an Advice of Rights notice and an Answer Form. These two pieces of paper are the only bridge between the defendant and their ability to participate in the legal process.</p>
-            <p>Most never use them, not because they don't have a defense, but because the forms are dense, jargon-heavy, and cognitively overwhelming enough that many give up before they start. The power imbalance is stark: over 90% of plaintiffs are represented by attorneys. For most defendants, the form <em>is</em> the system.</p>
+            <p>When a debt collector files a complaint in Michigan, the defendant has little structured guidance for how to respond, and the result shows up downstream as default judgments. The Michigan Supreme Court's Justice For All Commission (MSCJFA) is workshopping two new court documents to close that gap: an Advice of Rights notice and an Answer Form, intended to be the bridge between a defendant and their ability to participate in the legal process.</p>
+            <p>But in their initial drafts, the forms were dense, jargon-heavy, and cognitively overwhelming enough that participants gave up before they started. Exactly the failure mode the forms were meant to solve. The power imbalance is stark: <strong>over 90% of plaintiffs are represented by attorneys</strong>. For most defendants, the form <em>is</em> the system.</p>
           </div>
           <StatRow stats={STATS} />
           <div className="body-text">
-            <p>The Michigan Supreme Court Justice For All Commission (MSCJFA) engaged Mintify to study the barriers and redesign both forms. The goal: make these documents clear enough that defendants can actually use them.</p>
+            <p>The MSCJFA engaged Mintify to study the barriers, test the drafts with users, and rebuild both forms before they enter production. The goal: make these documents clear enough that defendants can actually use them.</p>
           </div>
         </div>
 
@@ -189,7 +189,7 @@ export default function Mintify({ onHome }) {
           />
           <div className="body-text">
             <p>Three failure modes emerged consistently. First, the legal terminology created a comprehension wall even for educated participants. Words like "plaintiff" and "defendant," used without definition, left interviewees unsure of their own role. Second, the density of information triggered cognitive overload before participants finished reading. Third, the forms buried critical action steps (deadlines, response options) inside blocks of undifferentiated text.</p>
-            <p>On the survey, participants ranked plain language and visual deadlines as the most desired improvements, confirming that the core problem wasn't information quantity but information design.</p>
+            <p>On the survey, participants ranked plain language and visual deadlines as the most desired improvements, confirming that <strong>the core problem wasn't information quantity but information design</strong>.</p>
           </div>
           <BoardCarousel
             id="3.2"

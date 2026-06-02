@@ -17,7 +17,7 @@ export default function ScrollFigure({
   const goPrev = () => setPage((p) => Math.max(0, p - 1))
   const goNext = () => setPage((p) => Math.min(pages - 1, p + 1))
 
-  const figLabel = id ? `FIG. ${id} — ${caption || ''}`.trim() : caption
+  const figLabel = id ? `FIG. ${id}: ${caption || ''}`.trim() : caption
   const counter = `${String(page + 1).padStart(2, '0')} / ${String(pages).padStart(2, '0')}`
   const frameAspect = naturalAspect ? naturalAspect / pages : null
 

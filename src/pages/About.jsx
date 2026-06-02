@@ -67,7 +67,7 @@ export default function About({ onHome }) {
               <em>[a one-line tagline about who you are]</em>
             </h1>
             <p className="about-lead">
-              [Two or three sentences about who you are when you're not building portfolios. Show some range — the curiosity, the hobbies, the things you'd talk about over a beer.]
+              [Two or three sentences about who you are when you're not building portfolios. Show some range. The curiosity, the hobbies, the things you'd talk about over a beer.]
             </p>
           </div>
           <aside className="about-specs">

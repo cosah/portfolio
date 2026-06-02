@@ -116,7 +116,7 @@ export default function Roamio({ onHome }) {
           <h2>Planning a trip today means juggling five apps and trusting strangers on the internet.</h2>
           <div className="body-text">
             <p>Gen Z and Millennial travelers want authentic, locally informed experiences. What they get instead is a research spiral: Reddit threads, TikTok saves, Google Maps lists, travel blogs, booking platforms, and group chats, all running in parallel, all pointing to different places, none of them trustworthy enough to book without second-guessing.</p>
-            <p>The core tension is a trust problem. 42% of Gen Z booked a guided tour last year, and 72% say they want to immerse themselves in local culture. But no platform gives them a named, accountable person whose expertise they can evaluate. Anonymous reviews have no skin in the game. AI-generated itineraries are indistinguishable from each other. And tools that surface local knowledge don't connect to booking.</p>
+            <p>The core tension is a trust problem. <strong>42% of Gen Z booked a guided tour last year, and 72% say they want to immerse themselves in local culture.</strong> But no platform gives them a named, accountable person whose expertise they can evaluate. Anonymous reviews have no skin in the game. AI-generated itineraries are indistinguishable from each other. And tools that surface local knowledge don't connect to booking.</p>
           </div>
           <StatRow stats={STATS} />
         </div>
@@ -139,7 +139,7 @@ export default function Roamio({ onHome }) {
             aspect="4x3"
           />
           <div className="body-text">
-            <p>The competitive landscape was revealing: Airbnb Experiences offered a marketplace but no curation. Viator handled tour logistics but not insider knowledge. Reddit and TikTok surfaced authentic local content but had no booking. ToursByLocals offered private tours but no hidden-gem mechanic. Nobody combined a named local expert, insider recommendations, and centralized booking in one place.</p>
+            <p>The competitive landscape was revealing: Airbnb Experiences offered a marketplace but no curation. Viator handled tour logistics but not insider knowledge. Reddit and TikTok surfaced authentic local content but had no booking. ToursByLocals offered private tours but no hidden-gem mechanic. <strong>Nobody combined a named local expert, insider recommendations, and centralized booking in one place.</strong></p>
           </div>
         </div>
 
@@ -147,7 +147,7 @@ export default function Roamio({ onHome }) {
           <SectionLabel num={3}>Strategy</SectionLabel>
           <h2>A two-sided marketplace built on the premise that the local agent is the product.</h2>
           <div className="body-text">
-            <p>Roamio is a two-sided marketplace: travelers pay for curated packages with insider secrets, local agents create and sell those packages, and Roamio takes a 15–25% platform commission. Revenue streams include package commissions, premium add-ons, and a la carte secrets.</p>
+            <p>Roamio is a two-sided marketplace: travelers pay for curated packages with insider secrets, local agents create and sell those packages, and Roamio takes a <strong>15–25% platform commission</strong>. Revenue streams include package commissions, premium add-ons, and a la carte secrets.</p>
           </div>
           <ImageSlot
             id="3.1"
@@ -241,7 +241,7 @@ export default function Roamio({ onHome }) {
           </PullQuote>
 
           <div className="body-text">
-            <p>Within thirty seconds, P1 had gone from willing to pay to completely unwilling, and the reason had nothing to do with the price itself. It was the absence of an itemized breakdown. He couldn't evaluate value because he couldn't see what he was buying.</p>
+            <p><strong>Within thirty seconds, P1 had gone from willing to pay to completely unwilling</strong>, and the reason had nothing to do with the price itself. It was the absence of an itemized breakdown. He couldn't evaluate value because he couldn't see what he was buying.</p>
           </div>
 
           <h3>The pattern across sessions</h3>
@@ -268,7 +268,7 @@ export default function Roamio({ onHome }) {
             </div>
             <div className="issues-row" role="row">
               <div className="issue-id" role="cell">C2</div>
-              <div className="issue-title" role="cell">Blind booking — package info opacity before purchase</div>
+              <div className="issue-title" role="cell">Blind booking: package info opacity before purchase</div>
               <div className="issue-touchpoint" role="cell">Package Detail</div>
               <div className="issue-method" role="cell">Interview + usability</div>
               <div className="issue-participants" role="cell">
@@ -334,7 +334,7 @@ export default function Roamio({ onHome }) {
           </div>
 
           <div className="body-text">
-            <p>The strongest signal was D1: human curation over algorithmic recs. Every participant, unprompted, articulated some version of the same preference. The most important conditional finding was V1: willingness to pay is real, but it is gated behind transparency. Travelers know what they want to pay once they understand what they're getting. The product's job is to close that information gap before checkout.</p>
+            <p>The strongest signal was D1: human curation over algorithmic recs. Every participant, unprompted, articulated some version of the same preference. The most important conditional finding was V1: <strong>willingness to pay is real, but it is gated behind transparency</strong>. Travelers know what they want to pay once they understand what they're getting. The product's job is to close that information gap before checkout.</p>
           </div>
         </div>
 
@@ -435,7 +435,7 @@ export default function Roamio({ onHome }) {
           </div>
           <h3>If Roamio continued</h3>
           <div className="body-text">
-            <p>The immediate next steps are supply-side validation: recruit and interview local agents in two or three candidate pilot cities to test the commission model. The agent onboarding flow is the product that makes all the other product work. Without a usable creation experience, there are no packages to browse, no secrets to unlock, and no marketplace. The local agent is the product. Everything else is infrastructure.</p>
+            <p>The immediate next steps are supply-side validation: recruit and interview local agents in two or three candidate pilot cities to test the commission model. The agent onboarding flow is the product that makes all the other product work. Without a usable creation experience, there are no packages to browse, no secrets to unlock, and no marketplace. <strong>The local agent is the product. Everything else is infrastructure.</strong></p>
           </div>
         </div>
 

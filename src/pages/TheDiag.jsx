@@ -103,7 +103,7 @@ export default function TheDiag({ onHome }) {
           <SectionLabel num={1}>The problem</SectionLabel>
           <h2>1,600 organizations. Thousands of events. No central place to find them.</h2>
           <div className="body-text">
-            <p>The University of Michigan has more than 1,600 student organizations running thousands of events every semester. Event information was scattered across Maize Pages (the official org portal), GroupMe chats, email chains, Instagram stories, and word of mouth. Students had no reliable way to discover them.</p>
+            <p>The University of Michigan has <strong>more than 1,600 student organizations</strong> running thousands of events every semester. Event information was scattered across Maize Pages (the official org portal), GroupMe chats, email chains, Instagram stories, and word of mouth. Students had no reliable way to discover them.</p>
             <p>The result: low attendance at events students would have wanted to attend. Organizations struggling to be seen. The product had to solve <strong>both sides of the marketplace</strong>, demand and supply, in one experience.</p>
           </div>
         </div>
@@ -112,7 +112,7 @@ export default function TheDiag({ onHome }) {
           <SectionLabel num={2}>Existing tools, audited</SectionLabel>
           <h2>Information-dense, insight-poor. The same failure pattern across every platform.</h2>
           <div className="body-text">
-            <p>We ran a competitive analysis across three existing platforms students used to find campus events — Maize Pages, GroupMe, and Instagram — and the same three failure patterns repeated across every one. Listings were undifferentiated and overwhelming. There was no personalization or social layer to help students prioritize. And the org-leader posting flow was so heavy that supply itself was suppressed.</p>
+            <p>We ran a competitive analysis across three existing platforms students used to find campus events (Maize Pages, GroupMe, and Instagram), and the same three failure patterns repeated across every one. Listings were undifferentiated and overwhelming. There was no personalization or social layer to help students prioritize. And the org-leader posting flow was so heavy that supply itself was suppressed.</p>
             <p>From the audit, three design criteria emerged: limit information overload, prioritize visual presentation, and surface a live interactive map for proximity.</p>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function TheDiag({ onHome }) {
           <SectionLabel num={3}>Strategy</SectionLabel>
           <h2>Defining what success looks like before designing it.</h2>
           <div className="body-text">
-            <p>I defined the business goals in our Product Vision Board, anchoring the team around two measurable outcomes: grow online visibility for campus organizations, and increase org applications by 20%. These were not vanity metrics. They reflected the core thesis that if students could find events worth attending, they would engage more deeply with campus life.</p>
+            <p>I defined the business goals in our Product Vision Board, anchoring the team around two measurable outcomes: grow online visibility for campus organizations, and <strong>increase org applications by 20%</strong>. These were not vanity metrics. They reflected the core thesis that if students could find events worth attending, they would engage more deeply with campus life.</p>
           </div>
           <ImageSlot
             id="3.1"
@@ -168,7 +168,7 @@ export default function TheDiag({ onHome }) {
             label="Completion rate · n=5"
             title="Zero of five participants completed the Create Event flow."
           >
-            <p>Every participant got stuck. The NLP field confused them. The create button did not read as tappable. They did not know how to advance after selecting an organization. This was the highest-friction flow in the entire app, and the one feature the rest of the marketplace depended on.</p>
+            <p><strong>Every participant got stuck.</strong> The NLP field confused them. The create button did not read as tappable. They did not know how to advance after selecting an organization. This was the highest-friction flow in the entire app, and the one feature the rest of the marketplace depended on.</p>
           </Callout>
 
           <StatRow stats={DETAIL_STATS} />
@@ -220,7 +220,7 @@ export default function TheDiag({ onHome }) {
             }}
           />
           <div className="body-text">
-            <p>The rebuild kept nothing from V1 except the org-selection step. The NLP field was removed entirely. The form was broken into discrete labeled steps mapping directly to mobile data-entry conventions. A preview screen lets the creator verify before publishing. A friend-invite step encourages distribution at the moment of creation, when the organizer's energy is highest and their social graph is freshest in mind.</p>
+            <p><strong>The rebuild kept nothing from V1 except the org-selection step.</strong> The NLP field was removed entirely. The form was broken into discrete labeled steps mapping directly to mobile data-entry conventions. A preview screen lets the creator verify before publishing. A friend-invite step encourages distribution at the moment of creation, when the organizer's energy is highest and their social graph is freshest in mind.</p>
           </div>
         </div>
 
@@ -290,7 +290,7 @@ export default function TheDiag({ onHome }) {
           <SectionLabel num={14}>Reflection</SectionLabel>
           <h2>Test against the mental model first, not the engineering shortcut.</h2>
           <div className="body-text">
-            <p>The lesson: engineering elegance that doesn't match user expectation is just friction by another name. If I were running this project again, I'd prototype the standard form alongside the NLP field and run a comparative test before committing to either. The cost would have been a few hours. The savings would have been an entire usability cycle.</p>
+            <p>The lesson: engineering elegance that doesn't match user expectation is just friction by another name. If I were running this project again, I'd prototype the standard form alongside the NLP field and run a comparative test before committing to either. <strong>The cost would have been a few hours. The savings would have been an entire usability cycle.</strong></p>
             <p>This is the kind of decision a PM gets paid to make: not which design is more clever, but which design users will actually be able to use without help.</p>
           </div>
         </div>

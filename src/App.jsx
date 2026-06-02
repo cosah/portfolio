@@ -4,6 +4,7 @@ import './css/layout.css'
 import './css/components.css'
 import './css/index.css'
 import './css/about.css'
+import './css/resume.css'
 
 import Home from './pages/Home'
 import TheDiag from './pages/TheDiag'
@@ -13,6 +14,7 @@ import SeedLibrary from './pages/SeedLibrary'
 import CourtsAudit from './pages/CourtsAudit'
 import LayoutDemo from './pages/LayoutDemo'
 import About from './pages/About'
+import Resume from './pages/Resume'
 import { CASE_STUDIES } from './data/caseStudies'
 
 const ROUTES = {
@@ -24,6 +26,7 @@ const ROUTES = {
   'courts-audit': CourtsAudit,
   'layout-demo': LayoutDemo,
   'about': About,
+  'resume': Resume,
 }
 
 function getRoute() {

@@ -19,7 +19,7 @@ export default function BoardCarousel({
 
   const current = boards[index]
   const counter = `${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`
-  const figLabel = id ? `FIG. ${id} — ${caption || ''}`.trim() : caption
+  const figLabel = id ? `FIG. ${id}: ${caption || ''}`.trim() : caption
 
   return (
     <figure className="figure">

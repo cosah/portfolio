@@ -137,7 +137,7 @@ function Wireframe() {
         {/* col 2: title block */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <Box w="100%" h={26} color="#E8C547" label={`KICKER · CONTENT COL = ${CONTENT_W}px`} />
-          <Box w="100%" h={80} color="#F2EFE8" bg="rgba(232,197,71,0.04)" label="HERO TITLE — fills centered column" />
+          <Box w="100%" h={80} color="#F2EFE8" bg="rgba(232,197,71,0.04)" label="HERO TITLE: fills centered column" />
           <Box w="100%" h={48} dashed color="#A4A29A" label="Lead / subtitle paragraph" />
         </div>
         {/* col 3: specs (right rail) */}

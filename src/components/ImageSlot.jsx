@@ -18,7 +18,7 @@ export default function ImageSlot({
   const [openIdx, setOpenIdx] = useState(-1)
   const aspectClass = phone ? 'aspect-9x16' : `aspect-${aspect}`
   const captionText = caption || label
-  const figLabel = id ? `FIG. ${id} — ${captionText || ''}`.trim() : captionText
+  const figLabel = id ? `FIG. ${id}: ${captionText || ''}`.trim() : captionText
 
   const images = Array.isArray(srcs) && srcs.length > 0
     ? srcs.map((img) => (typeof img === 'string' ? { src: img, alt: alt || captionText } : { ...img, alt: img.alt || alt || captionText }))

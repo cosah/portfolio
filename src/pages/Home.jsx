@@ -13,10 +13,7 @@ export default function Home({ onNavigate }) {
     <div className="home-page">
       <a href="#case-studies" className="skip-link">Skip to case studies</a>
 
-      <Navbar
-        crumbOverride="Anthony Shephard's Portfolio"
-        hideProgress
-      />
+      <Navbar crumbOverride="Home" hideProgress />
 
       <header className="home-header">
         <div>
