@@ -21,9 +21,9 @@ export default function Home({ onNavigate }) {
           <h1>
             Anthony Shephard.
             <br/>
-            <em>Five case studies.</em>
+            <em>Product designer.</em>
           </h1>
-          <p>Product management, UX research, and design. Real clients, real tests, real failures, and the rebuilds that followed.</p>
+          <p>Five case studies in product design, project management, and UX research and design. Real clients, real tests, real failures, and the rebuilds that followed.</p>
         </div>
         <div className="home-meta">
           {HOME_META.map(({ label, value }) => (
