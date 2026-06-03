@@ -63,7 +63,11 @@
       "Bash(git restore *)",
       "Bash(cd \"c:\\\\Site Make\\\\Portfolio\\\\portfolio\" && mv src/assets/favicon/* public/ && rmdir src/assets/favicon && rm public/favicon.svg && ls public/)",
       "Bash(cd \"c:\\\\Site Make\\\\Portfolio\\\\portfolio\" && mv \"src/assets/ShephardAnthony_Resume_May26-1.pdf\" \"public/anthony-shephard-resume.pdf\" && ls public/ | grep -i resume)",
-      "Bash(grep -v \"//\")"
+      "Bash(grep -v \"//\")",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:5174/portfolio/ -o /dev/null -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:5174/portfolio/src/pages/AccessibilityAudit.jsx)",
+      "Bash(curl -s http://localhost:5174/src/pages/AccessibilityAudit.jsx)"
     ],
     "additionalDirectories": [
       "C:\\Site Make\\Portfolio\\portfolio\\src\\assets",

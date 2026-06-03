@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CASE_STUDIES } from '../data/caseStudies'
 
 export default function Navbar({
@@ -10,6 +10,8 @@ export default function Navbar({
   hideProgress,
 }) {
   const [frac, setFrac] = useState(0)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const dropdownRef = useRef(null)
 
   useEffect(() => {
     if (hideProgress) return
@@ -25,6 +27,24 @@ export default function Navbar({
       window.removeEventListener('resize', update)
     }
   }, [hideProgress])
+
+  useEffect(() => {
+    if (!dropdownOpen) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') setDropdownOpen(false)
+    }
+    const onOutside = (e) => {
+      if (!dropdownRef.current?.contains(e.target)) {
+        setDropdownOpen(false)
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('mousedown', onOutside)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('mousedown', onOutside)
+    }
+  }, [dropdownOpen])
 
   const current = CASE_STUDIES.find((c) => c.id === slug)
   const displayLabel = crumbOverride || current?.title || slug || 'case-study'
@@ -42,15 +62,20 @@ export default function Navbar({
         <button className="name" onClick={onHome} aria-label="Anthony Shephard, home">
           anthony.shephard
         </button>
-        <span className="crumbs" aria-hidden="true">
-          {showWorkPrefix && <>work / </>}
+        <span className="crumbs">
+          {showWorkPrefix && <span aria-hidden="true">work / </span>}
           {showDropdown ? (
-            <span className="crumbs-dropdown">
+            <span
+              ref={dropdownRef}
+              className={`crumbs-dropdown${dropdownOpen ? ' is-open' : ''}`}
+            >
               <button
                 type="button"
                 className="crumbs-trigger"
-                aria-haspopup="true"
+                aria-haspopup="menu"
+                aria-expanded={dropdownOpen}
                 aria-label={`${displayLabel}, switch case study`}
+                onClick={() => setDropdownOpen((o) => !o)}
               >
                 <span className="here">{displayLabel}</span>
                 <svg
@@ -75,6 +100,7 @@ export default function Navbar({
                     href={`#/${cs.id}`}
                     className="dropdown-item"
                     role="menuitem"
+                    onClick={() => setDropdownOpen(false)}
                   >
                     {cs.title}
                   </a>
@@ -84,7 +110,7 @@ export default function Navbar({
           ) : (
             <span className="here">{displayLabel}</span>
           )}
-          {label ? ` / ${label}` : ''}
+          {label ? <span aria-hidden="true">{` / ${label}`}</span> : ''}
         </span>
         <span className="nav-links">
           {/* <a href="#/about">About</a> -- hidden, page not ready */}

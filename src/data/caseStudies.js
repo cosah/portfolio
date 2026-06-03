@@ -29,7 +29,7 @@ export const CASE_STUDIES = [
     eyebrow: 'Product Design · Customer Discovery',
     subtitle:
       'Led the ideation, design, and strategy of a travel marketplace connecting travelers with verified local agents. Owned customer discovery research from scratch: 5 sessions, 10 hypotheses, and a research pivot that changed the product.',
-    tags: ['Hypothesis Testing', 'Two-Sided Marketplace', 'Figma Make', 'Spring 2026'],
+    tags: ['Hypothesis Testing', 'Two-Sided Marketplace', 'Figma Make', 'Winter 2026'],
     heroImage: roamioHero,
   },
   {

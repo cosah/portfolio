@@ -55,7 +55,7 @@ export default function BoardCarousel({
           disabled={atStart}
           aria-label="Previous board"
         >
-          <span className="arrow-chip">←</span>
+          <span className="arrow-chip" aria-hidden="true">{atStart ? '·' : '←'}</span>
         </button>
         <div className="carousel-dots">
           {boards.map((b, i) => (
@@ -73,10 +73,10 @@ export default function BoardCarousel({
           disabled={atEnd}
           aria-label="Next board"
         >
-          <span className="arrow-chip">→</span>
+          <span className="arrow-chip" aria-hidden="true">{atEnd ? '·' : '→'}</span>
         </button>
       </div>
-      <p className="board-carousel-label">
+      <p className="board-carousel-label" aria-live="polite" aria-atomic="true">
         <span className="counter">{counter}</span>
         {current.label && <span className="label">{current.label}</span>}
       </p>

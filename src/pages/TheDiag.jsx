@@ -275,8 +275,9 @@ export default function TheDiag({ onHome }) {
           <h2>Video tour of the final app.</h2>
           <VideoSection
             description="A guided tour of key flows and interactions across discovery, map, calendar, and create."
-            mp4="407demovid.mp4"
-            mov="407demovid.mov"
+            mp4={`${import.meta.env.BASE_URL}the-diag-demo.mp4`}
+            maxWidth="100%"
+            responsiveHeight
           />
         </div>
 

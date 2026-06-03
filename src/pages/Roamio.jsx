@@ -34,7 +34,7 @@ const META = [
   { label: 'Owned', value: 'Customer Discovery' },
   { label: 'Team', value: '4 (Team Echo)' },
   { label: 'Duration', value: '15 weeks' },
-  { label: 'Year', value: 'Spring 2026' },
+  { label: 'Year', value: 'Winter 2026' },
 ]
 
 const STATS = [
@@ -94,12 +94,12 @@ export default function Roamio({ onHome }) {
       <Navbar onHome={onHome} slug="roamio" />
 
       <CaseStudyHero
-        kicker="Case Study · Customer Discovery · Spring 2026"
+        kicker="Case Study · Customer Discovery · Winter 2026"
         title="The market wants what Roamio promises."
         titleEmphasis="Information design turned out to be a business model problem."
         subtitle="A travel marketplace connecting Gen Z and Millennial travelers with verified local agents who curate trip packages featuring insider secrets, built from scratch in 15 weeks as part of a zero-to-one product design course."
         meta={META}
-        corners={{ tl: '+ 00.00', tr: 'HOMEPAGE', bl: 'ROAMIO · TEAM ECHO', br: 'SPRING 2026 · SI 311 · PRODUCT DESIGN' }}
+        corners={{ tl: '+ 00.00', tr: 'HOMEPAGE', bl: 'ROAMIO · TEAM ECHO', br: 'WINTER 2026 · SI 311 · PRODUCT DESIGN' }}
         heroImage={imgHomepage}
         heroImageAlt="Roamio homepage hero: Every Local Knows Something You Don't, with a destination search bar over a coastal scene"
       />

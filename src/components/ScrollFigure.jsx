@@ -57,7 +57,7 @@ export default function ScrollFigure({
           disabled={atStart}
           aria-label="Previous page"
         >
-          <span className="arrow-chip">←</span>
+          <span className="arrow-chip" aria-hidden="true">{atStart ? '·' : '←'}</span>
         </button>
         <div className="carousel-dots">
           {Array.from({ length: pages }, (_, i) => (
@@ -75,10 +75,10 @@ export default function ScrollFigure({
           disabled={atEnd}
           aria-label="Next page"
         >
-          <span className="arrow-chip">→</span>
+          <span className="arrow-chip" aria-hidden="true">{atEnd ? '·' : '→'}</span>
         </button>
       </div>
-      <p className="board-carousel-label">
+      <p className="board-carousel-label" aria-live="polite" aria-atomic="true">
         <span className="counter">{counter}</span>
       </p>
 

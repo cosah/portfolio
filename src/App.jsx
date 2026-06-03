@@ -5,6 +5,7 @@ import './css/components.css'
 import './css/index.css'
 import './css/about.css'
 import './css/resume.css'
+import './css/audit.css'
 
 import Home from './pages/Home'
 import TheDiag from './pages/TheDiag'
@@ -15,6 +16,7 @@ import CourtsAudit from './pages/CourtsAudit'
 import LayoutDemo from './pages/LayoutDemo'
 import About from './pages/About'
 import Resume from './pages/Resume'
+import AccessibilityAudit from './pages/AccessibilityAudit'
 import { CASE_STUDIES } from './data/caseStudies'
 
 const ROUTES = {
@@ -27,10 +29,29 @@ const ROUTES = {
   'layout-demo': LayoutDemo,
   'about': About,
   'resume': Resume,
+  'audit': AccessibilityAudit,
 }
 
 function getRoute() {
   return window.location.hash.replace(/^#\/?/, '')
+}
+
+const SITE_NAME = "Anthony Shephard's Portfolio"
+const STATIC_TITLES = {
+  '': SITE_NAME,
+  resume: 'Resume',
+  about: 'About',
+  audit: 'Accessibility Audit',
+  'layout-demo': 'Layout Demo',
+}
+
+function titleForRoute(routeKey) {
+  if (routeKey in STATIC_TITLES) {
+    const v = STATIC_TITLES[routeKey]
+    return v === SITE_NAME ? v : `${v} · ${SITE_NAME}`
+  }
+  const cs = CASE_STUDIES.find((c) => c.id === routeKey)
+  return cs ? `${cs.title} · ${SITE_NAME}` : SITE_NAME
 }
 
 export default function App() {
@@ -44,6 +65,10 @@ export default function App() {
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
+
+  useEffect(() => {
+    document.title = titleForRoute(route)
+  }, [route])
 
   function navigate(id) {
     window.location.hash = id ? `/${id}` : ''

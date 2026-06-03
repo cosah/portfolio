@@ -38,7 +38,7 @@ export default function PhoneCarousel({ screens }) {
       </div>
       <div className="phone-carousel-nav">
         <button className="carousel-arrow prev" onClick={prev} aria-label="Previous screen">
-          <span className="arrow-chip">←</span>
+          <span className="arrow-chip" aria-hidden="true">←</span>
         </button>
         <div className="carousel-dots">
           {screens.map((s, i) => (
@@ -51,10 +51,10 @@ export default function PhoneCarousel({ screens }) {
           ))}
         </div>
         <button className="carousel-arrow next" onClick={next} aria-label="Next screen">
-          <span className="arrow-chip">→</span>
+          <span className="arrow-chip" aria-hidden="true">→</span>
         </button>
       </div>
-      <p className="phone-carousel-label">{current.label}</p>
+      <p className="phone-carousel-label" aria-live="polite" aria-atomic="true">{current.label}</p>
 
       {current.src && (
         <Lightbox

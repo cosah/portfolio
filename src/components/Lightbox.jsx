@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 export default function Lightbox({
@@ -15,12 +15,35 @@ export default function Lightbox({
   canNext = true,
   accent,
 }) {
+  const cardRef = useRef(null)
+  const previouslyFocusedRef = useRef(null)
+
   useEffect(() => {
     if (!isOpen) return
     const onKey = (e) => {
       if (e.key === 'Escape') onClose()
       else if (e.key === 'ArrowRight' && onNext && canNext) onNext()
       else if (e.key === 'ArrowLeft' && onPrev && canPrev) onPrev()
+      else if (e.key === 'Tab') {
+        // Focus trap
+        const card = cardRef.current
+        if (!card) return
+        const focusable = Array.from(
+          card.querySelectorAll(
+            'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+          )
+        )
+        if (focusable.length === 0) return
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          last.focus()
+          e.preventDefault()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          first.focus()
+          e.preventDefault()
+        }
+      }
     }
     document.body.style.overflow = 'hidden'
     window.addEventListener('keydown', onKey)
@@ -30,11 +53,35 @@ export default function Lightbox({
     }
   }, [isOpen, onClose, onPrev, onNext, canPrev, canNext])
 
+  // Focus management: capture previous focus on open, move focus into dialog,
+  // restore previous focus on close.
+  useEffect(() => {
+    if (isOpen) {
+      previouslyFocusedRef.current = document.activeElement
+      // Defer to next frame so the dialog has rendered before we focus into it.
+      const id = requestAnimationFrame(() => {
+        const card = cardRef.current
+        if (!card) return
+        const closeBtn = card.querySelector('.img-modal-close')
+        const fallback = card.querySelector('button, a[href], [tabindex]:not([tabindex="-1"])')
+        ;(closeBtn || fallback)?.focus()
+      })
+      return () => cancelAnimationFrame(id)
+    } else if (previouslyFocusedRef.current) {
+      const el = previouslyFocusedRef.current
+      previouslyFocusedRef.current = null
+      if (el && typeof el.focus === 'function') {
+        el.focus()
+      }
+    }
+  }, [isOpen])
+
   if (!isOpen) return null
 
   const imgClick = onNext && canNext ? onNext : onClose
   const hasArrows = !!(onPrev || onNext)
   const overlayStyle = accent ? { '--lightbox-accent': `var(--${accent})` } : undefined
+  const dialogLabel = label || alt || 'Image preview'
   const stop = (fn) => (e) => {
     e.stopPropagation()
     fn?.()
@@ -59,7 +106,14 @@ export default function Lightbox({
           </svg>
         </button>
       )}
-      <div className="img-modal-card" onClick={(e) => e.stopPropagation()}>
+      <div
+        ref={cardRef}
+        className="img-modal-card"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={dialogLabel}
+      >
         <div className="img-modal-stage">
           {html ? (
             <div

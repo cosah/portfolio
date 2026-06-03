@@ -43,7 +43,7 @@ export default function Resume({ onHome }) {
         <iframe
           id="resume-frame"
           className="resume-frame"
-          src={`${PDF_URL}#toolbar=0&navpanes=0`}
+          src={PDF_URL}
           title="Anthony Shephard, Resume"
         />
 
