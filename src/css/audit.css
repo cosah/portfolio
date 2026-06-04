@@ -348,6 +348,24 @@
   color: var(--ink);
   border-bottom-color: var(--ink);
 }
+.audit-status {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 2px;
+  margin-right: 8px;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.audit-status--in-progress {
+  background: rgba(107, 179, 255, 0.14);
+  color: var(--info);
+  border: 1px solid rgba(107, 179, 255, 0.3);
+}
 .audit-row--todo {
   grid-template-columns: 50px 70px 110px 2.4fr 3fr;
 }

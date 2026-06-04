@@ -62,13 +62,6 @@ const TODOS = [
     notes: 'All three are unlisted but publicly accessible if anyone guesses the URL. Options: leave as-is, password-gate them, or remove from the deploy build via a `NODE_ENV` check.',
   },
   {
-    id: 'T12',
-    pri: 'p3',
-    cat: 'Design',
-    task: '90\'s AOL / Geocities style page.',
-    notes: 'Alternative presentation of a case study (or a dedicated playground route) in retro web aesthetic: marquee, animated GIFs, glitter dividers, frames, MIDI loop, visitor counter, "under construction" banner. Stylistic detour that signals range; pair with a "view classic mode" toggle on a single case study.',
-  },
-  {
     id: 'T13',
     pri: 'p3',
     cat: 'Design',
@@ -165,6 +158,11 @@ export default function Todo({ onHome }) {
               </div>
               <div className="audit-wcag" role="cell">{t.cat}</div>
               <div className="audit-failure" role="cell">
+                {t.status && (
+                  <span className={`audit-status audit-status--${t.status}`}>
+                    {t.status.replace('-', ' ')}
+                  </span>
+                )}
                 <CodeMark text={t.task} />
               </div>
               <div className="audit-where" role="cell">
