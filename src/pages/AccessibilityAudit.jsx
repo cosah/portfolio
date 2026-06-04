@@ -109,7 +109,10 @@ export default function AccessibilityAudit({ onHome }) {
             WCAG 2.1 AA · Self-review by code audit · 0 open findings
           </p>
           <p className="audit-prev">
-            <strong>All 11 findings resolved across two passes.</strong> Pass 1 closed 7 via non-visual code changes. Pass 2 closed the remaining 4: C1 (N/A — silent video), S1 (token retired), M3 (stop glyph), M4 (PDF toolbar restored).
+            <strong>All 11 findings resolved across two passes.</strong> Pass 1 closed 7 via non-visual code changes. Pass 2 closed the remaining 4: C1 (N/A · silent video), S1 (token retired), M3 (stop glyph), M4 (PDF toolbar restored).
+          </p>
+          <p className="audit-prev">
+            Sibling page: <a href="#/todo" className="audit-link">Open todos</a> · content, perf, SEO, and follow-up engineering work.
           </p>
           <ul className="audit-counts">
             <li className="count count--good">

@@ -17,7 +17,9 @@ import LayoutDemo from './pages/LayoutDemo'
 import About from './pages/About'
 import Resume from './pages/Resume'
 import AccessibilityAudit from './pages/AccessibilityAudit'
+import Todo from './pages/Todo'
 import { CASE_STUDIES } from './data/caseStudies'
+import seedHero from './assets/seed-expo-poster.png'
 
 const ROUTES = {
   '': Home,
@@ -30,6 +32,7 @@ const ROUTES = {
   'about': About,
   'resume': Resume,
   'audit': AccessibilityAudit,
+  'todo': Todo,
 }
 
 function getRoute() {
@@ -37,13 +40,27 @@ function getRoute() {
 }
 
 const SITE_NAME = "Anthony Shephard's Portfolio"
+const DEFAULT_DESCRIPTION = "Five case studies in product design, project management, and UX research and design by Anthony Shephard. Real clients, tests, insights, and the rebuilds that followed."
+
 const STATIC_TITLES = {
   '': SITE_NAME,
   resume: 'Resume',
   about: 'About',
   audit: 'Accessibility Audit',
+  todo: 'Todo',
   'layout-demo': 'Layout Demo',
 }
+
+const PAGE_DESCRIPTIONS = {
+  '': DEFAULT_DESCRIPTION,
+  resume: "Anthony Shephard's resume. Bachelor of Science in Information (User Experience Design) at the University of Michigan. PM, UX, research, and design.",
+  about: "About Anthony Shephard. Off-the-clock dossier and what I'm into right now.",
+  audit: "Internal accessibility audit of this portfolio site. WCAG 2.1 AA, self-review.",
+  todo: "Internal open todos: content, accessibility, performance, engineering.",
+  'layout-demo': "Internal layout demo for the symmetric content-column system.",
+}
+
+const INTERNAL_ROUTES = new Set(['audit', 'todo', 'layout-demo'])
 
 function titleForRoute(routeKey) {
   if (routeKey in STATIC_TITLES) {
@@ -52,6 +69,37 @@ function titleForRoute(routeKey) {
   }
   const cs = CASE_STUDIES.find((c) => c.id === routeKey)
   return cs ? `${cs.title} · ${SITE_NAME}` : SITE_NAME
+}
+
+function metaForRoute(routeKey) {
+  const cs = CASE_STUDIES.find((c) => c.id === routeKey)
+  return {
+    title: titleForRoute(routeKey),
+    description:
+      cs?.subtitle ||
+      PAGE_DESCRIPTIONS[routeKey] ||
+      DEFAULT_DESCRIPTION,
+    image: cs?.heroImage || seedHero,
+    noindex: INTERNAL_ROUTES.has(routeKey),
+  }
+}
+
+function setMeta(key, value, attr = 'name') {
+  if (value == null || value === '') return
+  let tag = document.head.querySelector(`meta[${attr}="${key}"]`)
+  if (!tag) {
+    tag = document.createElement('meta')
+    tag.setAttribute(attr, key)
+    document.head.appendChild(tag)
+  }
+  tag.setAttribute('content', value)
+}
+
+function absoluteUrl(path) {
+  if (!path) return path
+  if (/^https?:\/\//.test(path)) return path
+  const sep = path.startsWith('/') ? '' : '/'
+  return `${window.location.origin}${sep}${path}`
 }
 
 export default function App() {
@@ -67,7 +115,28 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    document.title = titleForRoute(route)
+    const { title, description, image, noindex } = metaForRoute(route)
+    const imageUrl = absoluteUrl(image)
+
+    document.title = title
+
+    setMeta('description', description, 'name')
+    setMeta('og:title', title, 'property')
+    setMeta('og:description', description, 'property')
+    setMeta('og:image', imageUrl, 'property')
+    setMeta('og:url', window.location.href, 'property')
+    setMeta('twitter:title', title, 'name')
+    setMeta('twitter:description', description, 'name')
+    setMeta('twitter:image', imageUrl, 'name')
+    setMeta('robots', noindex ? 'noindex, nofollow' : 'index, follow', 'name')
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', {
+        page_title: title,
+        page_path: `/${route}`,
+        page_location: window.location.href,
+      })
+    }
   }, [route])
 
   function navigate(id) {
