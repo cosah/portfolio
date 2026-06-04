@@ -23,7 +23,7 @@ export default function Home({ onNavigate }) {
             <br/>
             <em>Product designer.</em>
           </h1>
-          <p>Five case studies in product design, project management, and UX research and design. Real clients, real tests, real failures, and the rebuilds that followed.</p>
+          <p>Five case studies in product design, project management, and UX research and design. Real clients, tests, insights, and the rebuilds that followed.</p>
         </div>
         <div className="home-meta">
           {HOME_META.map(({ label, value }) => (
