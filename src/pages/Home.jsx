@@ -76,7 +76,7 @@ export default function Home({ onNavigate }) {
 
       <footer className="home-footer">
         <span className="end-marker">end of index · anthony.shephard</span>
-        <span>university of michigan · 2026</span>
+        <span>thanks for visiting &#x1F604;</span>
       </footer>
     </div>
   )

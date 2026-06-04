@@ -986,6 +986,21 @@
   max-height: calc(100vh - 64px - 48px); /* viewport - vertical padding - footer */
   cursor: pointer;
 }
+/* Tall / portrait images: clamp width, let stage scroll vertically */
+.img-modal-stage.is-tall {
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 64px - 48px);
+  width: 100%;
+}
+.img-modal-stage.is-tall .img-modal-image {
+  max-height: none;
+  width: clamp(320px, 30vw, 500px);
+  max-width: min(calc(100vw - 64px - var(--modal-arrow-gutter)), 500px);
+  height: auto;
+}
 .img-modal-arrow {
   flex-shrink: 0;
   width: 44px;

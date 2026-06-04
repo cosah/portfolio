@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 export default function Lightbox({
@@ -17,6 +17,20 @@ export default function Lightbox({
 }) {
   const cardRef = useRef(null)
   const previouslyFocusedRef = useRef(null)
+  const stageRef = useRef(null)
+  const [isTall, setIsTall] = useState(false)
+
+  // Reset tall detection + scroll position whenever the displayed source changes
+  useEffect(() => {
+    setIsTall(false)
+    if (stageRef.current) stageRef.current.scrollTop = 0
+  }, [src, svg, html])
+
+  const onImageLoad = (e) => {
+    const img = e.currentTarget
+    if (!img.naturalWidth || !img.naturalHeight) return
+    setIsTall(img.naturalHeight / img.naturalWidth > 1.6)
+  }
 
   useEffect(() => {
     if (!isOpen) return
@@ -114,7 +128,10 @@ export default function Lightbox({
         aria-modal="true"
         aria-label={dialogLabel}
       >
-        <div className="img-modal-stage">
+        <div
+          ref={stageRef}
+          className={`img-modal-stage${isTall ? ' is-tall' : ''}`}
+        >
           {html ? (
             <div
               className="img-modal-image html-wrap"
@@ -136,6 +153,7 @@ export default function Lightbox({
               alt={alt || label || ''}
               className="img-modal-image"
               onClick={imgClick}
+              onLoad={onImageLoad}
             />
           )}
         </div>
