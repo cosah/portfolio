@@ -6,6 +6,7 @@ import './css/index.css'
 import './css/about.css'
 import './css/resume.css'
 import './css/audit.css'
+import './css/docs.css'
 
 import Home from './pages/Home'
 import TheDiag from './pages/TheDiag'
@@ -18,7 +19,9 @@ import About from './pages/About'
 import Resume from './pages/Resume'
 import AccessibilityAudit from './pages/AccessibilityAudit'
 import Todo from './pages/Todo'
+import Docs from './pages/Docs'
 import { CASE_STUDIES } from './data/caseStudies'
+import { findDocsPage } from './data/docsNav'
 import seedHero from './assets/seed-expo-poster.png'
 
 const ROUTES = {
@@ -33,6 +36,7 @@ const ROUTES = {
   'resume': Resume,
   'audit': AccessibilityAudit,
   'todo': Todo,
+  'docs': Docs,
 }
 
 function getRoute() {
@@ -49,6 +53,7 @@ const STATIC_TITLES = {
   audit: 'Accessibility Audit',
   todo: 'Todo',
   'layout-demo': 'Layout Demo',
+  docs: 'Docs',
 }
 
 const PAGE_DESCRIPTIONS = {
@@ -58,11 +63,18 @@ const PAGE_DESCRIPTIONS = {
   audit: "Internal accessibility audit of this portfolio site. WCAG 2.1 AA, self-review.",
   todo: "Internal open todos: content, accessibility, performance, engineering.",
   'layout-demo': "Internal layout demo for the symmetric content-column system.",
+  docs: "Documentation for this portfolio repository — architecture, design system, patterns, and every reusable component.",
 }
 
 const INTERNAL_ROUTES = new Set(['audit', 'todo', 'layout-demo'])
 
 function titleForRoute(routeKey) {
+  if (routeKey === 'docs' || routeKey.startsWith('docs/')) {
+    const subPath = routeKey === 'docs' ? '' : routeKey.slice('docs/'.length)
+    const page = findDocsPage(subPath)
+    const docsTitle = page ? `${page.title} · Docs` : 'Docs'
+    return `${docsTitle} · ${SITE_NAME}`
+  }
   if (routeKey in STATIC_TITLES) {
     const v = STATIC_TITLES[routeKey]
     return v === SITE_NAME ? v : `${v} · ${SITE_NAME}`
@@ -73,14 +85,16 @@ function titleForRoute(routeKey) {
 
 function metaForRoute(routeKey) {
   const cs = CASE_STUDIES.find((c) => c.id === routeKey)
+  const routeRoot = routeKey.split('/')[0]
   return {
     title: titleForRoute(routeKey),
     description:
       cs?.subtitle ||
       PAGE_DESCRIPTIONS[routeKey] ||
+      PAGE_DESCRIPTIONS[routeRoot] ||
       DEFAULT_DESCRIPTION,
     image: cs?.heroImage || seedHero,
-    noindex: INTERNAL_ROUTES.has(routeKey),
+    noindex: INTERNAL_ROUTES.has(routeKey) || INTERNAL_ROUTES.has(routeRoot),
   }
 }
 
@@ -139,21 +153,17 @@ export default function App() {
     }
   }, [route])
 
-  function navigate(id) {
-    window.location.hash = id ? `/${id}` : ''
-  }
-
   function goHome() {
-    navigate('')
+    window.location.hash = ''
   }
 
-  const Page = ROUTES[route] ?? Home
+  const Page = ROUTES[route] ?? ROUTES[route.split('/')[0]] ?? Home
   const heroPreloads = CASE_STUDIES.filter((c) => c.heroImage)
 
   return (
     <>
       {Page === Home ? (
-        <Home onNavigate={navigate} />
+        <Home />
       ) : (
         <Page onHome={goHome} />
       )}

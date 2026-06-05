@@ -61,13 +61,6 @@ const TODOS = [
     task: 'Decide what to do with `/layout-demo` and `/audit` / `/todo` routes pre-ship.',
     notes: 'All three are unlisted but publicly accessible if anyone guesses the URL. Options: leave as-is, password-gate them, or remove from the deploy build via a `NODE_ENV` check.',
   },
-  {
-    id: 'T13',
-    pri: 'p3',
-    cat: 'Design',
-    task: 'Single full-page carousel layout for case studies.',
-    notes: 'Alternative case-study presentation where each section becomes a slide in a horizontal (or vertical) carousel that fills the viewport. Reads like a deck rather than a long-scroll article. Could be an opt-in "presentation mode" via a toggle on the existing case-study pages, or a standalone route.',
-  },
 ]
 
 const CATEGORIES = {

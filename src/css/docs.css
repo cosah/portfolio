@@ -1,0 +1,619 @@
+/* ============================================================
+   DOCS SITE
+   Sibling to the portfolio. Sticky sidebar + readable column.
+   Reuses the same palette / fonts; new layout.
+   ============================================================ */
+
+.docs-page {
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+.docs-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  gap: 48px;
+  align-items: start;
+}
+
+/* ============================================================
+   Sidebar
+   ============================================================ */
+.docs-sidebar {
+  position: sticky;
+  top: 64px;
+  align-self: start;
+  padding: 32px 0 48px;
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+  border-right: 1px solid var(--rule);
+  padding-right: 16px;
+}
+
+.docs-sidebar-section {
+  margin-bottom: 22px;
+}
+
+.docs-sidebar-section h3 {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  margin: 0 0 6px;
+  padding: 0 8px;
+  font-weight: 600;
+}
+
+.docs-sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.docs-sidebar-list a {
+  display: block;
+  padding: 5px 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink-mid);
+  text-decoration: none;
+  border-radius: 3px;
+  border-left: 2px solid transparent;
+  line-height: 1.4;
+}
+
+.docs-sidebar-list a:hover {
+  color: var(--ink);
+  background: var(--surface);
+}
+
+.docs-sidebar-list a[aria-current='page'] {
+  color: var(--good);
+  border-left-color: var(--good);
+  background: var(--surface);
+  font-weight: 500;
+}
+
+/* Scrollbar styling for sidebar */
+.docs-sidebar::-webkit-scrollbar { width: 6px; }
+.docs-sidebar::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 3px; }
+.docs-sidebar::-webkit-scrollbar-track { background: transparent; }
+
+/* ============================================================
+   Content area
+   ============================================================ */
+.docs-content {
+  padding: 40px 8px 96px;
+  max-width: 760px;
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+/* Eyebrow at top of each page */
+.docs-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+
+/* Page title */
+.docs-content h1 {
+  font-family: var(--serif);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+
+/* Lede paragraph (first p after h1) */
+.docs-content h1 + p,
+.docs-lede {
+  font-size: 17px;
+  color: var(--ink-mid);
+  line-height: 1.55;
+  margin: 0 0 32px;
+  max-width: 65ch;
+}
+
+/* H2 — section */
+.docs-content h2 {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 48px 0 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--rule);
+}
+
+.docs-content h2:first-of-type {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 32px;
+}
+
+/* H3 — subsection */
+.docs-content h3 {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--ink);
+  margin: 28px 0 8px;
+}
+
+/* H4 — minor heading */
+.docs-content h4 {
+  font-family: var(--mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  font-weight: 600;
+  margin: 20px 0 6px;
+}
+
+.docs-content p {
+  margin: 0 0 14px;
+  max-width: 70ch;
+}
+
+.docs-content ul, .docs-content ol {
+  margin: 0 0 14px;
+  padding-left: 22px;
+}
+
+.docs-content li {
+  margin-bottom: 6px;
+}
+
+.docs-content strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.docs-content em {
+  color: var(--ink-mid);
+  font-style: italic;
+}
+
+.docs-content a {
+  color: var(--info);
+  text-decoration: underline;
+  text-decoration-color: rgba(107, 179, 255, 0.4);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.15s ease;
+}
+
+.docs-content a:hover {
+  text-decoration-color: var(--info);
+}
+
+/* Inline code */
+.docs-content code,
+.docs-prose code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: var(--ink);
+}
+
+/* Code block */
+.docs-code {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin: 12px 0 20px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink);
+  position: relative;
+}
+
+/* Copy button */
+.docs-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  z-index: 1;
+}
+.docs-code:hover .docs-copy,
+.docs-copy:focus-visible {
+  opacity: 1;
+}
+.docs-copy:hover {
+  opacity: 1;
+  color: var(--ink);
+  border-color: var(--rule-strong);
+}
+.docs-copy.is-copied {
+  opacity: 1;
+  color: var(--good);
+  border-color: rgba(232, 197, 71, 0.4);
+}
+.docs-copy-icon {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.docs-code code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+.docs-code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  padding: 6px 12px;
+  margin-bottom: 0;
+}
+
+.docs-code-head + .docs-code {
+  border-radius: 0 0 6px 6px;
+  margin-top: 0;
+}
+
+/* Simple syntax tint */
+.docs-code .tag { color: var(--info); }
+.docs-code .attr { color: var(--good); }
+.docs-code .str { color: var(--warn); }
+.docs-code .com { color: var(--ink-soft); font-style: italic; }
+.docs-code .kw { color: var(--info); }
+
+/* ============================================================
+   Props table
+   ============================================================ */
+.docs-props {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 24px;
+  font-size: 13px;
+}
+
+.docs-props th,
+.docs-props td {
+  text-align: left;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+.docs-props thead th {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule-strong);
+  font-weight: 600;
+}
+
+.docs-props tbody tr:nth-child(even) td {
+  background: rgba(29, 31, 35, 0.35);
+}
+
+.docs-props td:first-child {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--good);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.docs-props td:nth-child(2) {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--info);
+  white-space: nowrap;
+}
+
+.docs-props td:nth-child(3) {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.docs-props .req {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  background: rgba(255, 124, 58, 0.16);
+  color: var(--warn);
+  border: 1px solid rgba(255, 124, 58, 0.3);
+  padding: 1px 5px;
+  border-radius: 2px;
+  margin-left: 6px;
+  vertical-align: 1px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ============================================================
+   Notes / callouts
+   ============================================================ */
+.docs-note {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--info);
+  border-radius: 4px;
+  padding: 12px 14px;
+  margin: 16px 0 20px;
+  font-size: 14px;
+  color: var(--ink-mid);
+}
+
+.docs-note--warn { border-left-color: var(--warn); }
+.docs-note--good { border-left-color: var(--good); }
+
+.docs-note .docs-note-mark {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--info);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-top: 1px;
+}
+
+.docs-note--warn .docs-note-mark { color: var(--warn); }
+.docs-note--good .docs-note-mark { color: var(--good); }
+
+.docs-note p { margin: 0 0 6px; }
+.docs-note p:last-child { margin: 0; }
+
+/* ============================================================
+   Token / color swatches
+   ============================================================ */
+.docs-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 16px 0 28px;
+}
+
+.docs-swatch {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+
+.docs-swatch-chip {
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  border: 1px solid var(--rule-strong);
+}
+
+.docs-swatch-meta { min-width: 0; }
+.docs-swatch-name {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink);
+  display: block;
+  font-weight: 500;
+}
+.docs-swatch-val {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  display: block;
+}
+
+/* ============================================================
+   Pager (prev/next at bottom of page)
+   ============================================================ */
+.docs-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+}
+
+.docs-pager-link {
+  display: block;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.docs-pager-link:hover {
+  border-color: var(--rule-strong);
+  background: var(--surface-2);
+}
+
+.docs-pager-link--next { grid-column: 2; text-align: right; }
+.docs-pager-link--prev { grid-column: 1; }
+
+.docs-pager-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 4px;
+  text-decoration: none;
+}
+
+.docs-pager-title {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* ============================================================
+   Misc
+   ============================================================ */
+.docs-content hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 32px 0;
+}
+
+.docs-content blockquote {
+  border-left: 3px solid var(--rule-strong);
+  padding-left: 16px;
+  margin: 16px 0;
+  color: var(--ink-mid);
+  font-style: italic;
+}
+
+.docs-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 2px 6px;
+  margin-left: 8px;
+  vertical-align: 2px;
+}
+
+.docs-content .docs-toc {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 14px 16px;
+  margin: 0 0 28px;
+  font-size: 13px;
+}
+
+.docs-content .docs-toc h4 {
+  margin: 0 0 8px;
+}
+
+.docs-content .docs-toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.docs-content .docs-toc a {
+  color: var(--ink-mid);
+  text-decoration: none;
+}
+
+.docs-content .docs-toc a:hover {
+  color: var(--info);
+}
+
+/* ============================================================
+   Mobile (sidebar becomes a top dropdown-ish list)
+   ============================================================ */
+@media (max-width: 880px) {
+  .docs-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 0 16px;
+  }
+
+  .docs-sidebar {
+    position: static;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+    padding: 16px 0 20px;
+  }
+
+  .docs-sidebar-section {
+    margin-bottom: 14px;
+  }
+
+  .docs-content {
+    padding: 24px 0 64px;
+    font-size: 14px;
+  }
+
+  .docs-pager {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-pager-link--next {
+    grid-column: 1;
+    text-align: left;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .docs-content a,
+  .docs-pager-link {
+    transition: none;
+  }
+}

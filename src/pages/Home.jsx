@@ -8,7 +8,7 @@ const HOME_META = [
   { label: 'Year', value: '2026' },
 ]
 
-export default function Home({ onNavigate }) {
+export default function Home() {
   return (
     <div className="home-page">
       <a href="#case-studies" className="skip-link">Skip to case studies</a>
@@ -38,10 +38,10 @@ export default function Home({ onNavigate }) {
       <main id="case-studies" className="case-studies-section">
         <p className="case-studies-eyebrow"><span className="num">01</span> · Selected work</p>
         {CASE_STUDIES.map(({ id, title, eyebrow, subtitle, tags, award, heroImage, heroImagePosition, heroImageSize }, i) => (
-          <button
+          <a
             key={id}
             className="case-study-card"
-            onClick={() => onNavigate(id)}
+            href={`#/${id}`}
             aria-label={`View ${title} case study`}
           >
             {heroImage && (
@@ -70,7 +70,7 @@ export default function Home({ onNavigate }) {
               </div>
             </div>
             <span className="card-arrow" aria-hidden="true">→</span>
-          </button>
+          </a>
         ))}
       </main>
 

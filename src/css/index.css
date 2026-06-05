@@ -114,6 +114,8 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  color: inherit;
+  text-decoration: none;
 }
 .case-study-card .card-image-bg {
   position: absolute;
