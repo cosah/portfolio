@@ -986,21 +986,9 @@
   max-height: calc(100vh - 64px - 48px); /* viewport - vertical padding - footer */
   cursor: pointer;
 }
-/* Tall / portrait images: clamp width, let stage scroll vertically */
-.img-modal-stage.is-tall {
-  align-items: flex-start;
-  justify-content: center;
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: calc(100vh - 64px - 48px);
-  width: 100%;
-}
-.img-modal-stage.is-tall .img-modal-image {
-  max-height: none;
-  width: clamp(320px, 30vw, 500px);
-  max-width: min(calc(100vw - 64px - var(--modal-arrow-gutter)), 500px);
-  height: auto;
-}
+/* Tall / portrait images: on desktop these use the default object-fit: contain
+   (fill longest dimension). Mobile gets the clamped-width + scroll treatment
+   inside the mobile media query below. */
 .img-modal-arrow {
   flex-shrink: 0;
   width: 44px;
@@ -1091,17 +1079,8 @@
   cursor: pointer;
 }
 
-/* Tall slides — clamp width, allow vertical scroll within the slide */
-.img-modal-slide.is-tall-slide {
-  align-items: flex-start;
-  overflow-y: auto;
-}
-.img-modal-slide.is-tall-slide img {
-  width: clamp(320px, 30vw, 500px);
-  max-width: calc(100vw - 64px - var(--modal-arrow-gutter));
-  max-height: none;
-  height: auto;
-}
+/* Tall slides — on desktop they fall back to object-fit: contain (fill longest
+   dimension). The mobile media query below clamps width + adds vertical scroll. */
 
 @media (prefers-reduced-motion: reduce) {
   .img-modal-track {
@@ -1143,14 +1122,20 @@
     max-width: 100vw;
     max-height: 100vh;
   }
-  /* Tall-image mode (single-image): keep scroll, use full width */
+  /* Tall-image mode (single-image): full width, vertical scroll */
   .img-modal-stage.is-tall {
-    max-height: 100vh;
+    align-items: flex-start;
+    justify-content: center;
     overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100vh;
+    width: 100%;
   }
   .img-modal-stage.is-tall .img-modal-image {
     width: 100vw;
     max-width: 100vw;
+    max-height: none;
+    height: auto;
   }
 
   /* Track mode on mobile: full-bleed slides */
@@ -1162,10 +1147,15 @@
     max-width: 100vw;
     max-height: 100vh;
   }
+  .img-modal-slide.is-tall-slide {
+    align-items: flex-start;
+    overflow-y: auto;
+  }
   .img-modal-slide.is-tall-slide img {
     width: 100vw;
     max-width: 100vw;
     max-height: none;
+    height: auto;
   }
 
   /* Footer becomes just the floating close button */
