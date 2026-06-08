@@ -90,13 +90,16 @@ export default function BeforeAfterPair({ before, after, aspect = '9x16' }) {
 
       {current?.src && (
         <Lightbox
-          src={current.src}
+          items={hasNav ? allImages.map((it) => ({ src: it.src, alt: it.alt || it.label || '' })) : undefined}
+          src={!hasNav ? current.src : undefined}
           alt={current.alt || current.label}
           label={current.label}
           isOpen={openIdx >= 0}
           onClose={() => setOpenIdx(-1)}
           onPrev={hasNav ? () => setOpenIdx((i) => (i - 1 + total) % total) : undefined}
           onNext={hasNav ? () => setOpenIdx((i) => (i + 1) % total) : undefined}
+          index={hasNav ? openIdx : undefined}
+          total={hasNav ? total : undefined}
           accent={current.kind === 'before' ? 'warn' : 'good'}
         />
       )}

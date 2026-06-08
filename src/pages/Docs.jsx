@@ -1067,23 +1067,26 @@ const COMPONENT_DOCS = {
     title: 'Lightbox',
     file: 'src/components/Lightbox.jsx',
     blurb:
-      'Full-screen image modal with optional prev/next arrows. Used by every image component for zoom. Detects portrait images and switches to scrollable mode.',
+      'Full-screen image modal with two render modes. Single-image mode (pass src / svg / html) for one-shot zooms. Track mode (pass items[]) for carousels — renders every slide in a flex track and translates it on navigation, matching the in-page carousel transition.',
     props: [
-      { name: 'src', type: 'string', desc: 'Image src. Mutually exclusive with svg / html.' },
-      { name: 'svg', type: 'string', desc: 'Raw SVG markup (dangerouslySetInnerHTML).' },
-      { name: 'html', type: 'string', desc: 'Raw HTML markup.' },
+      { name: 'items', type: 'Array<{ src, alt }>', desc: 'Track mode. When provided, every slide is rendered side-by-side and the track is translated based on index. Use for carousels so navigation animates smoothly instead of swapping images.' },
+      { name: 'src', type: 'string', desc: 'Single-image mode. Mutually exclusive with svg / html / items.' },
+      { name: 'svg', type: 'string', desc: 'Raw SVG markup (dangerouslySetInnerHTML). Single-image mode.' },
+      { name: 'html', type: 'string', desc: 'Raw HTML markup. Single-image mode.' },
       { name: 'alt', type: 'string', desc: 'Alt text / fallback aria-label.' },
       { name: 'label', type: 'string', desc: 'Footer label and aria-label for the dialog.' },
       { name: 'isOpen', type: 'boolean', required: true, desc: 'Controlled state. Renders nothing when false.' },
       { name: 'onClose', type: '() => void', required: true, desc: 'Called on Esc, outside click, X button, or arrow click when there\'s no next.' },
-      { name: 'onPrev', type: '() => void', desc: 'Called on left arrow / ArrowLeft.' },
-      { name: 'onNext', type: '() => void', desc: 'Called on right arrow / image click / ArrowRight.' },
-      { name: 'canPrev', type: 'boolean', default: 'true', desc: 'Disable the prev arrow without removing it (e.g. at the start of a finite series).' },
-      { name: 'canNext', type: 'boolean', default: 'true', desc: 'Disable the next arrow.' },
+      { name: 'onPrev', type: '() => void', desc: 'Called on left arrow / ArrowLeft / swipe-right.' },
+      { name: 'onNext', type: '() => void', desc: 'Called on right arrow / image click / ArrowRight / swipe-left.' },
+      { name: 'canPrev', type: 'boolean', default: 'true', desc: 'Disable the prev arrow without removing it (e.g. at the start of a finite series). Also gates swipe-right.' },
+      { name: 'canNext', type: 'boolean', default: 'true', desc: 'Disable the next arrow. Also gates swipe-left.' },
+      { name: 'index', type: 'number', desc: 'Current slide index. Required for track mode; optional for single-image mode (used by the mobile counter).' },
+      { name: 'total', type: 'number', desc: 'Total slide count. Drives the mobile counter ("2 / 5"). Required to render the counter.' },
       { name: 'accent', type: '"good" | "info" | "warn"', desc: 'Color accent for arrows / close button.' },
     ],
-    usage: `const [open, setOpen] = useState(false)
-
+    usage: `// Single-image:
+const [open, setOpen] = useState(false)
 return (
   <>
     <button onClick={() => setOpen(true)}>Zoom</button>
@@ -1095,18 +1098,57 @@ return (
       onClose={() => setOpen(false)}
     />
   </>
+)
+
+// Carousel (track mode):
+const [open, setOpen] = useState(false)
+const [i, setI] = useState(0)
+const total = boards.length
+return (
+  <Lightbox
+    items={boards.map((b, ix) => ({ src: b.src, alt: b.label || \`Board \${ix + 1}\` }))}
+    label="FIG. 4.1 · Affinity boards"
+    isOpen={open}
+    onClose={() => setOpen(false)}
+    onPrev={() => setI((n) => Math.max(0, n - 1))}
+    onNext={() => setI((n) => Math.min(total - 1, n + 1))}
+    canPrev={i > 0}
+    canNext={i < total - 1}
+    index={i}
+    total={total}
+  />
 )`,
     notes: (
       <>
         <p>
-          On open: captures <code>document.activeElement</code>, focuses the close
-          button on the next animation frame, traps Tab/Shift+Tab inside the dialog.
-          On close: restores the captured focus.
+          <strong>Track mode.</strong> Every slide is rendered up front so the browser
+          can use its image cache (which is already warm from the in-page carousel that
+          triggered the lightbox). Navigation is a pure CSS transform — no fetch, no
+          paint gap, no abrupt swap. Matches the in-page carousel transition exactly.
         </p>
         <p>
-          Tall images (naturalHeight / naturalWidth &gt; 1.6) get a clamped width{' '}
-          (<code>clamp(320px, 30vw, 500px)</code>) and the stage becomes vertically
-          scrollable.
+          <strong>Tall images.</strong> Each slide's aspect ratio is captured on{' '}
+          <code>onLoad</code>. When naturalHeight / naturalWidth &gt; 1.6, that slide
+          gets <code>.is-tall-slide</code> — clamped width{' '}
+          (<code>clamp(320px, 30vw, 500px)</code>) and independent vertical scroll. Per-slide,
+          not global, so a portrait slide next to a landscape slide both render correctly.
+        </p>
+        <p>
+          <strong>Touch.</strong> Horizontal swipe (≥50px and dominating vertical movement
+          by 1.5×) triggers <code>onPrev</code> / <code>onNext</code> with respect for{' '}
+          <code>canPrev</code> / <code>canNext</code>. Vertical swipe scrolls the
+          underlying tall slide if applicable.
+        </p>
+        <p>
+          <strong>Mobile.</strong> Under 720px wide, or landscape phones under 540px
+          tall, the lightbox goes full-bleed: no card chrome, no caption, floating
+          close/arrows/counter. Track-mode transitions still play.
+        </p>
+        <p>
+          <strong>Focus management.</strong> On open: captures{' '}
+          <code>document.activeElement</code>, focuses the close button on the next
+          animation frame, traps Tab/Shift+Tab inside the dialog. On close: restores the
+          captured focus.
         </p>
       </>
     ),

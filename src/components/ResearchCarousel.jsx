@@ -28,7 +28,9 @@ export default function ResearchCarousel({ slides, lightbox = true }) {
 
       {current && (
         <Lightbox
-          src={current.src}
+          items={slides
+            .filter((s) => s.src)
+            .map((s) => ({ src: s.src, alt: s.label || '' }))}
           alt={current.label}
           label={current.label}
           isOpen={openIndex >= 0}

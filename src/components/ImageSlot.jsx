@@ -87,7 +87,8 @@ export default function ImageSlot({
       </div>
       {hasMedia && (
         <Lightbox
-          src={current?.src || images[0]?.src}
+          items={isMulti ? images : undefined}
+          src={!isMulti ? (current?.src || images[0]?.src) : undefined}
           svg={svg}
           html={html}
           alt={current?.alt || alt || captionText}

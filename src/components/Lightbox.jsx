@@ -16,39 +16,24 @@ export default function Lightbox({
   accent,
   index,
   total,
+  items,
 }) {
   const cardRef = useRef(null)
   const previouslyFocusedRef = useRef(null)
   const stageRef = useRef(null)
   const touchStartRef = useRef(null)
-  const prevIndexRef = useRef(index)
+  const swipedRef = useRef(false)
   const [isTall, setIsTall] = useState(false)
-  const [slideDir, setSlideDir] = useState(null)
+  // Per-slide aspect ratios — used to flip individual track slides into "tall" mode
+  const [aspects, setAspects] = useState({})
+
+  const useTrack = Array.isArray(items) && items.length > 0
+  const safeIndex = useTrack
+    ? Math.max(0, Math.min(items.length - 1, index ?? 0))
+    : 0
 
   const showCounter =
     typeof index === 'number' && typeof total === 'number' && total > 1
-
-  // Detect index changes (from swipe, arrows, or keyboard) and pick a direction
-  // so the new image animates in from the correct side.
-  // Toggle null → dir across a frame so the CSS animation re-triggers without
-  // remounting the img element (which would cause a paint gap / "blink").
-  useEffect(() => {
-    const prev = prevIndexRef.current
-    if (
-      typeof index === 'number' &&
-      typeof prev === 'number' &&
-      index !== prev
-    ) {
-      const dir = index > prev ? 'next' : 'prev'
-      setSlideDir(null)
-      const rafId = requestAnimationFrame(() => setSlideDir(dir))
-      prevIndexRef.current = index
-      return () => cancelAnimationFrame(rafId)
-    }
-    prevIndexRef.current = index
-  }, [index])
-
-  const swipedRef = useRef(false)
 
   const onTouchStart = (e) => {
     if (e.touches.length !== 1) return
@@ -82,16 +67,32 @@ export default function Lightbox({
     fn?.()
   }
 
-  // Reset tall detection + scroll position whenever the displayed source changes
+  // Reset is-tall + scroll position when the displayed content changes
   useEffect(() => {
-    setIsTall(false)
+    if (!useTrack) {
+      setIsTall(false)
+    }
     if (stageRef.current) stageRef.current.scrollTop = 0
-  }, [src, svg, html])
+  }, [src, svg, html, useTrack])
 
-  const onImageLoad = (e) => {
+  // In track mode, sync is-tall to the current slide's known aspect
+  useEffect(() => {
+    if (!useTrack) return
+    const aspect = aspects[safeIndex]
+    setIsTall(typeof aspect === 'number' ? aspect > 1.6 : false)
+  }, [safeIndex, aspects, useTrack])
+
+  const onSingleImageLoad = (e) => {
     const img = e.currentTarget
     if (!img.naturalWidth || !img.naturalHeight) return
     setIsTall(img.naturalHeight / img.naturalWidth > 1.6)
+  }
+
+  const onSlideImageLoad = (i, e) => {
+    const img = e.currentTarget
+    if (!img.naturalWidth || !img.naturalHeight) return
+    const aspect = img.naturalHeight / img.naturalWidth
+    setAspects((a) => (a[i] === aspect ? a : { ...a, [i]: aspect }))
   }
 
   useEffect(() => {
@@ -101,7 +102,6 @@ export default function Lightbox({
       else if (e.key === 'ArrowRight' && onNext && canNext) onNext()
       else if (e.key === 'ArrowLeft' && onPrev && canPrev) onPrev()
       else if (e.key === 'Tab') {
-        // Focus trap
         const card = cardRef.current
         if (!card) return
         const focusable = Array.from(
@@ -129,12 +129,9 @@ export default function Lightbox({
     }
   }, [isOpen, onClose, onPrev, onNext, canPrev, canNext])
 
-  // Focus management: capture previous focus on open, move focus into dialog,
-  // restore previous focus on close.
   useEffect(() => {
     if (isOpen) {
       previouslyFocusedRef.current = document.activeElement
-      // Defer to next frame so the dialog has rendered before we focus into it.
       const id = requestAnimationFrame(() => {
         const card = cardRef.current
         if (!card) return
@@ -197,44 +194,68 @@ export default function Lightbox({
         aria-modal="true"
         aria-label={dialogLabel}
       >
-        <div
-          ref={stageRef}
-          className={`img-modal-stage${isTall ? ' is-tall' : ''}`}
-        >
-          {(() => {
-            const slideClass = slideDir ? ` slide-in-${slideDir}` : ''
-            if (html) {
-              return (
-                <div
-                  className={`img-modal-image html-wrap${slideClass}`}
-                  role="img"
-                  aria-label={alt || label || ''}
-                  dangerouslySetInnerHTML={{ __html: html }}
-                />
-              )
-            }
-            if (svg) {
-              return (
-                <div
-                  className={`img-modal-image svg-wrap${slideClass}`}
-                  role="img"
-                  aria-label={alt || label || ''}
-                  onClick={guard(imgClick)}
-                  dangerouslySetInnerHTML={{ __html: svg }}
-                />
-              )
-            }
-            return (
+        {useTrack ? (
+          <div
+            ref={stageRef}
+            className={`img-modal-stage img-modal-stage--track${isTall ? ' is-tall' : ''}`}
+          >
+            <div
+              className="img-modal-track"
+              style={{ transform: `translate3d(${-safeIndex * 100}%, 0, 0)` }}
+            >
+              {items.map((item, i) => {
+                const aspect = aspects[i]
+                const slideIsTall = typeof aspect === 'number' && aspect > 1.6
+                return (
+                  <div
+                    key={i}
+                    className={`img-modal-slide${slideIsTall ? ' is-tall-slide' : ''}`}
+                    aria-hidden={i !== safeIndex}
+                  >
+                    <img
+                      src={item.src}
+                      alt={i === safeIndex ? (item.alt || alt || label || '') : ''}
+                      className="img-modal-image"
+                      onClick={i === safeIndex ? guard(imgClick) : undefined}
+                      onLoad={(e) => onSlideImageLoad(i, e)}
+                      draggable={false}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        ) : (
+          <div
+            ref={stageRef}
+            className={`img-modal-stage${isTall ? ' is-tall' : ''}`}
+          >
+            {html ? (
+              <div
+                className="img-modal-image html-wrap"
+                role="img"
+                aria-label={alt || label || ''}
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
+            ) : svg ? (
+              <div
+                className="img-modal-image svg-wrap"
+                role="img"
+                aria-label={alt || label || ''}
+                onClick={guard(imgClick)}
+                dangerouslySetInnerHTML={{ __html: svg }}
+              />
+            ) : (
               <img
                 src={src}
                 alt={alt || label || ''}
-                className={`img-modal-image${slideClass}`}
+                className="img-modal-image"
                 onClick={guard(imgClick)}
-                onLoad={onImageLoad}
+                onLoad={onSingleImageLoad}
               />
-            )
-          })()}
-        </div>
+            )}
+          </div>
+        )}
         <div className="img-modal-footer">
           <span className="img-modal-label">{label || alt || ''}</span>
           <button

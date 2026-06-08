@@ -42,7 +42,9 @@ export default function GridFrames({ items, cols = 4, aspect = '9x16' }) {
 
       {current && (
         <Lightbox
-          src={current.src}
+          items={items
+            .filter((it) => it.src)
+            .map((it) => ({ src: it.src, alt: it.alt || it.name || it.label || '' }))}
           alt={current.alt || current.name || current.label}
           label={labelOf(current)}
           isOpen={openIdx >= 0}

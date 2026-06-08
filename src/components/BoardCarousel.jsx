@@ -82,7 +82,10 @@ export default function BoardCarousel({
       </p>
 
       <Lightbox
-        src={current.src}
+        items={boards.map((b, i) => ({
+          src: b.src,
+          alt: b.label || `Board ${i + 1}`,
+        }))}
         alt={current.label || `Board ${index + 1}`}
         label={figLabel ? `${figLabel} · ${counter}` : counter}
         isOpen={open}

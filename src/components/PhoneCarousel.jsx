@@ -58,7 +58,9 @@ export default function PhoneCarousel({ screens }) {
 
       {current.src && (
         <Lightbox
-          src={current.src}
+          items={screens
+            .filter((s) => s.src)
+            .map((s) => ({ src: s.src, alt: s.label || '' }))}
           alt={current.label}
           label={current.label}
           isOpen={open}
