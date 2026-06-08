@@ -23,14 +23,15 @@ export default function Lightbox({
   const touchStartRef = useRef(null)
   const prevIndexRef = useRef(index)
   const [isTall, setIsTall] = useState(false)
-  const [slideKey, setSlideKey] = useState(0)
   const [slideDir, setSlideDir] = useState(null)
 
   const showCounter =
     typeof index === 'number' && typeof total === 'number' && total > 1
 
   // Detect index changes (from swipe, arrows, or keyboard) and pick a direction
-  // so the new image animates in from the right side.
+  // so the new image animates in from the correct side.
+  // Toggle null → dir across a frame so the CSS animation re-triggers without
+  // remounting the img element (which would cause a paint gap / "blink").
   useEffect(() => {
     const prev = prevIndexRef.current
     if (
@@ -38,8 +39,11 @@ export default function Lightbox({
       typeof prev === 'number' &&
       index !== prev
     ) {
-      setSlideDir(index > prev ? 'next' : 'prev')
-      setSlideKey((k) => k + 1)
+      const dir = index > prev ? 'next' : 'prev'
+      setSlideDir(null)
+      const rafId = requestAnimationFrame(() => setSlideDir(dir))
+      prevIndexRef.current = index
+      return () => cancelAnimationFrame(rafId)
     }
     prevIndexRef.current = index
   }, [index])
@@ -202,7 +206,6 @@ export default function Lightbox({
             if (html) {
               return (
                 <div
-                  key={slideKey}
                   className={`img-modal-image html-wrap${slideClass}`}
                   role="img"
                   aria-label={alt || label || ''}
@@ -213,7 +216,6 @@ export default function Lightbox({
             if (svg) {
               return (
                 <div
-                  key={slideKey}
                   className={`img-modal-image svg-wrap${slideClass}`}
                   role="img"
                   aria-label={alt || label || ''}
@@ -224,7 +226,6 @@ export default function Lightbox({
             }
             return (
               <img
-                key={slideKey}
                 src={src}
                 alt={alt || label || ''}
                 className={`img-modal-image${slideClass}`}
