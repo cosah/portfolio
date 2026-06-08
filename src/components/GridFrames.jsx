@@ -49,6 +49,8 @@ export default function GridFrames({ items, cols = 4, aspect = '9x16' }) {
           onClose={() => setOpenIdx(-1)}
           onPrev={total > 1 ? () => setOpenIdx((i) => (i - 1 + total) % total) : undefined}
           onNext={total > 1 ? () => setOpenIdx((i) => (i + 1) % total) : undefined}
+          index={openIdx}
+          total={total}
           accent="info"
         />
       )}

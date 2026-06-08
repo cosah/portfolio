@@ -35,6 +35,8 @@ export default function ResearchCarousel({ slides, lightbox = true }) {
           onClose={() => setOpenIndex(-1)}
           onPrev={total > 1 ? () => setOpenIndex((i) => (i - 1 + total) % total) : undefined}
           onNext={total > 1 ? () => setOpenIndex((i) => (i + 1) % total) : undefined}
+          index={openIndex}
+          total={total}
         />
       )}
     </>

@@ -1049,6 +1049,111 @@
 }
 .img-modal-close:hover { opacity: 1; }
 
+/* Slide counter ("2 / 5") — hidden on desktop, shown on mobile carousels */
+.img-modal-counter { display: none; }
+
+/* ============================
+   MOBILE LIGHTBOX
+   Full-bleed image, no card chrome, no caption.
+   Close + arrows + counter float over the image.
+============================ */
+@media (max-width: 720px) {
+  .img-modal-overlay,
+  .img-modal-overlay.has-arrows {
+    padding: 0;
+    gap: 0;
+    background: #000;
+    backdrop-filter: none;
+    --modal-arrow-gutter: 0px;
+  }
+  .img-modal-card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    width: 100%;
+    height: 100%;
+  }
+  .img-modal-stage {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+  }
+  .img-modal-image {
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+  /* Tall-image mode: keep scroll, use full width */
+  .img-modal-stage.is-tall {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+  .img-modal-stage.is-tall .img-modal-image {
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  /* Footer becomes just the floating close button */
+  .img-modal-footer {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    z-index: 11;
+    pointer-events: none; /* let touches pass to swipe, except the close button */
+  }
+  .img-modal-label { display: none; }
+  .img-modal-close {
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    border-radius: 50%;
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Arrows: floating circular buttons on the sides */
+  .img-modal-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.35);
+    opacity: 1;
+    backdrop-filter: blur(4px);
+    z-index: 11;
+  }
+  .img-modal-arrow:hover { opacity: 1; }
+  .img-modal-arrow.prev { left: 8px; }
+  .img-modal-arrow.next { right: 8px; }
+  .img-modal-arrow:disabled { opacity: 0.3; }
+
+  /* Counter: small pill top-center */
+  .img-modal-counter {
+    display: block;
+    position: fixed;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 12px;
+    z-index: 11;
+    backdrop-filter: blur(4px);
+    pointer-events: none;
+  }
+}
+
 /* ============================
    SCROLL FIGURE (one wide image, sliding viewport)
 ============================ */

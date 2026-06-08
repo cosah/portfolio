@@ -96,6 +96,8 @@ export default function ImageSlot({
           onClose={() => setOpenIdx(-1)}
           onPrev={isMulti ? () => setOpenIdx((i) => (i - 1 + total) % total) : undefined}
           onNext={isMulti ? () => setOpenIdx((i) => (i + 1) % total) : undefined}
+          index={isMulti ? openIdx : undefined}
+          total={isMulti ? total : undefined}
           accent="info"
         />
       )}

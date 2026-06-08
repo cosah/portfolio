@@ -65,6 +65,8 @@ export default function PhoneCarousel({ screens }) {
           onClose={() => setOpen(false)}
           onPrev={total > 1 ? prev : undefined}
           onNext={total > 1 ? next : undefined}
+          index={index}
+          total={total}
         />
       )}
     </div>

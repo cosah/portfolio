@@ -14,11 +14,51 @@ export default function Lightbox({
   canPrev = true,
   canNext = true,
   accent,
+  index,
+  total,
 }) {
   const cardRef = useRef(null)
   const previouslyFocusedRef = useRef(null)
   const stageRef = useRef(null)
+  const touchStartRef = useRef(null)
   const [isTall, setIsTall] = useState(false)
+
+  const showCounter =
+    typeof index === 'number' && typeof total === 'number' && total > 1
+
+  const swipedRef = useRef(false)
+
+  const onTouchStart = (e) => {
+    if (e.touches.length !== 1) return
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    }
+    swipedRef.current = false
+  }
+
+  const onTouchEnd = (e) => {
+    const start = touchStartRef.current
+    touchStartRef.current = null
+    if (!start) return
+    const touch = e.changedTouches[0]
+    const dx = touch.clientX - start.x
+    const dy = touch.clientY - start.y
+    // Horizontal swipe must clearly dominate vertical (so scroll still works)
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return
+    if (dx < 0 && onNext && canNext) onNext()
+    else if (dx > 0 && onPrev && canPrev) onPrev()
+    swipedRef.current = true
+  }
+
+  // Guard click handlers so a swipe's synthetic click doesn't also fire onClose / onNext
+  const guard = (fn) => () => {
+    if (swipedRef.current) {
+      swipedRef.current = false
+      return
+    }
+    fn?.()
+  }
 
   // Reset tall detection + scroll position whenever the displayed source changes
   useEffect(() => {
@@ -104,9 +144,16 @@ export default function Lightbox({
   return createPortal(
     <div
       className={`img-modal-overlay${hasArrows ? ' has-arrows' : ''}`}
-      onClick={onClose}
+      onClick={guard(onClose)}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
       style={overlayStyle}
     >
+      {showCounter && (
+        <div className="img-modal-counter" aria-hidden="true">
+          {index + 1} / {total}
+        </div>
+      )}
       {onPrev && (
         <button
           type="button"
@@ -144,7 +191,7 @@ export default function Lightbox({
               className="img-modal-image svg-wrap"
               role="img"
               aria-label={alt || label || ''}
-              onClick={imgClick}
+              onClick={guard(imgClick)}
               dangerouslySetInnerHTML={{ __html: svg }}
             />
           ) : (
@@ -152,7 +199,7 @@ export default function Lightbox({
               src={src}
               alt={alt || label || ''}
               className="img-modal-image"
-              onClick={imgClick}
+              onClick={guard(imgClick)}
               onLoad={onImageLoad}
             />
           )}

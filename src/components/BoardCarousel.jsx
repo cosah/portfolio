@@ -91,6 +91,8 @@ export default function BoardCarousel({
         onNext={goNext}
         canPrev={!atStart}
         canNext={!atEnd}
+        index={index}
+        total={total}
         accent="info"
       />
     </figure>
