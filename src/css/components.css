@@ -1052,12 +1052,37 @@
 /* Slide counter ("2 / 5") — hidden on desktop, shown on mobile carousels */
 .img-modal-counter { display: none; }
 
+/* Slide-in animation when navigating between carousel items */
+@keyframes lightbox-slide-in-right {
+  from { transform: translateX(100vw); opacity: 0.6; }
+  to   { transform: translateX(0);     opacity: 1;   }
+}
+@keyframes lightbox-slide-in-left {
+  from { transform: translateX(-100vw); opacity: 0.6; }
+  to   { transform: translateX(0);      opacity: 1;   }
+}
+.img-modal-image.slide-in-next {
+  animation: lightbox-slide-in-right 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.img-modal-image.slide-in-prev {
+  animation: lightbox-slide-in-left 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .img-modal-image.slide-in-next,
+  .img-modal-image.slide-in-prev {
+    animation: none;
+  }
+}
+
 /* ============================
    MOBILE LIGHTBOX
+   Triggered on portrait phones (max-width 720px)
+   AND on landscape phones (max-height ~540px on touch).
    Full-bleed image, no card chrome, no caption.
    Close + arrows + counter float over the image.
 ============================ */
-@media (max-width: 720px) {
+@media (max-width: 720px),
+       (max-height: 540px) and (orientation: landscape) {
   .img-modal-overlay,
   .img-modal-overlay.has-arrows {
     padding: 0;

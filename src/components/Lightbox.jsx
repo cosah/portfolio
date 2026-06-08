@@ -21,10 +21,28 @@ export default function Lightbox({
   const previouslyFocusedRef = useRef(null)
   const stageRef = useRef(null)
   const touchStartRef = useRef(null)
+  const prevIndexRef = useRef(index)
   const [isTall, setIsTall] = useState(false)
+  const [slideKey, setSlideKey] = useState(0)
+  const [slideDir, setSlideDir] = useState(null)
 
   const showCounter =
     typeof index === 'number' && typeof total === 'number' && total > 1
+
+  // Detect index changes (from swipe, arrows, or keyboard) and pick a direction
+  // so the new image animates in from the right side.
+  useEffect(() => {
+    const prev = prevIndexRef.current
+    if (
+      typeof index === 'number' &&
+      typeof prev === 'number' &&
+      index !== prev
+    ) {
+      setSlideDir(index > prev ? 'next' : 'prev')
+      setSlideKey((k) => k + 1)
+    }
+    prevIndexRef.current = index
+  }, [index])
 
   const swipedRef = useRef(false)
 
@@ -179,30 +197,42 @@ export default function Lightbox({
           ref={stageRef}
           className={`img-modal-stage${isTall ? ' is-tall' : ''}`}
         >
-          {html ? (
-            <div
-              className="img-modal-image html-wrap"
-              role="img"
-              aria-label={alt || label || ''}
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          ) : svg ? (
-            <div
-              className="img-modal-image svg-wrap"
-              role="img"
-              aria-label={alt || label || ''}
-              onClick={guard(imgClick)}
-              dangerouslySetInnerHTML={{ __html: svg }}
-            />
-          ) : (
-            <img
-              src={src}
-              alt={alt || label || ''}
-              className="img-modal-image"
-              onClick={guard(imgClick)}
-              onLoad={onImageLoad}
-            />
-          )}
+          {(() => {
+            const slideClass = slideDir ? ` slide-in-${slideDir}` : ''
+            if (html) {
+              return (
+                <div
+                  key={slideKey}
+                  className={`img-modal-image html-wrap${slideClass}`}
+                  role="img"
+                  aria-label={alt || label || ''}
+                  dangerouslySetInnerHTML={{ __html: html }}
+                />
+              )
+            }
+            if (svg) {
+              return (
+                <div
+                  key={slideKey}
+                  className={`img-modal-image svg-wrap${slideClass}`}
+                  role="img"
+                  aria-label={alt || label || ''}
+                  onClick={guard(imgClick)}
+                  dangerouslySetInnerHTML={{ __html: svg }}
+                />
+              )
+            }
+            return (
+              <img
+                key={slideKey}
+                src={src}
+                alt={alt || label || ''}
+                className={`img-modal-image${slideClass}`}
+                onClick={guard(imgClick)}
+                onLoad={onImageLoad}
+              />
+            )
+          })()}
         </div>
         <div className="img-modal-footer">
           <span className="img-modal-label">{label || alt || ''}</span>
