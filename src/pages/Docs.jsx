@@ -1129,10 +1129,24 @@ return (
         <p>
           <strong>Tall images.</strong> Each slide's aspect ratio is captured on{' '}
           <code>onLoad</code>. When naturalHeight / naturalWidth &gt; 1.6, that slide
-          gets <code>.is-tall-slide</code> — clamped width{' '}
-          (<code>clamp(320px, 30vw, 500px)</code>) and independent vertical scroll. Per-slide,
-          not global, so a portrait slide next to a landscape slide both render correctly.
+          gets <code>.is-tall-slide</code>. The behavior of that class is{' '}
+          <em>viewport-conditional</em>:
         </p>
+        <ul>
+          <li>
+            <strong>Desktop</strong> (above 720px wide, non-landscape-phone): the class
+            has no effect. Images use the default <code>object-fit: contain</code> and
+            fill the lightbox on their longest dimension — landscape fills width,
+            portrait fills height.
+          </li>
+          <li>
+            <strong>Mobile</strong> (under 720px, or landscape phones under 540px tall):
+            the tall slide is set to <code>width: 100vw</code> with{' '}
+            <code>overflow-y: auto</code>, so phone-screenshot-aspect images stay
+            readable and scrollable inside the slide. Per-slide, not global, so a
+            portrait slide next to a landscape slide both render correctly.
+          </li>
+        </ul>
         <p>
           <strong>Touch.</strong> Horizontal swipe (≥50px and dominating vertical movement
           by 1.5×) triggers <code>onPrev</code> / <code>onNext</code> with respect for{' '}
