@@ -132,7 +132,7 @@ function Pager({ path }) {
   if (idx < 0) return null
   const prev = idx > 0 ? DOCS_FLAT[idx - 1] : null
   const next = idx < DOCS_FLAT.length - 1 ? DOCS_FLAT[idx + 1] : null
-  const href = (p) => `#/docs${p ? '/' + p : ''}`
+  const href = (p) => `/docs${p ? '/' + p : ''}`
   return (
     <div className="docs-pager">
       {prev ? (
@@ -182,7 +182,7 @@ function Overview() {
       <p>
         The portfolio is a single-page React app built with Vite. It uses hash-based routing
         (no server-side fallback required) and ships as a static bundle to GitHub Pages.
-        These docs are a sibling route at <code>#/docs</code>; they are intentionally not
+        These docs are a sibling route at <code>/docs</code>; they are intentionally not
         linked from the main site and exist primarily so the GitHub README can point reviewers
         at structured documentation.
       </p>
@@ -279,7 +279,7 @@ npm run dev`}
       <Note kind="good">
         <p>
           You can poke around any route by changing the URL hash, e.g.{' '}
-          <code>#/seed-library</code>, <code>#/audit</code>, <code>#/docs</code>.
+          <code>/seed-library</code>, <code>/audit</code>, <code>/docs</code>.
         </p>
       </Note>
     </PageWrap>
@@ -365,14 +365,21 @@ function Routing() {
     <PageWrap
       eyebrow="ARCHITECTURE"
       title="Routing"
-      lede="Hash-based routing in ~30 lines. No router library."
+      lede="HTML5 history-API routing in ~60 lines. No router library."
       path="routing"
     >
       <h2>How it works</h2>
       <p>
-        Routes are stored in the URL fragment (<code>#/route-id</code>). The fragment never
-        round-trips to the server, which means deep links work on any static host without
-        special redirect rules — including GitHub Pages out of the box.
+        Routes are stored in the URL pathname (<code>/route-id</code>) and managed with{' '}
+        <code>window.history.pushState</code> and the <code>popstate</code> event. No hash
+        fragments, no router library — clean URLs that are good for SEO, sharing, and AI
+        crawlers.
+      </p>
+      <p>
+        Direct hits to a sub-path (e.g. someone pasting{' '}
+        <code>https://anthonyships.com/seed-library</code> into a fresh tab) work because
+        GitHub Pages serves a copy of <code>index.html</code> at <code>404.html</code> —
+        the SPA loads on any path and routes from <code>window.location.pathname</code>.
       </p>
 
       <Code lang="jsx" head="App.jsx (excerpt)">
@@ -385,24 +392,59 @@ function Routing() {
 }
 
 function getRoute() {
-  return window.location.hash.replace(/^#\\/?/, '')
+  return window.location.pathname
+    .replace(/^\\/+/, '')
+    .replace(/\\/+$/, '')
 }
 
 function App() {
   const [route, setRoute] = useState(getRoute)
 
   useEffect(() => {
-    const onHashChange = () => {
+    const onPop = () => {
       setRoute(getRoute())
       window.scrollTo({ top: 0, behavior: 'instant' })
     }
-    window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
   }, [])
 
   const Page = ROUTES[route] ?? ROUTES[route.split('/')[0]] ?? Home
-  return <Page onHome={() => { window.location.hash = '' }} />
+  return <Page />
 }`}
+      </Code>
+
+      <h2>SPA click interception</h2>
+      <p>
+        Plain left-clicks on internal anchors use{' '}
+        <code>history.pushState</code> instead of a full page reload. Middle-click,
+        Cmd/Ctrl-click, Shift-click, right-click, <code>target="_blank"</code>, and{' '}
+        <code>download</code> attributes all bypass the interceptor, so every link still
+        supports "open in new tab" natively.
+      </p>
+
+      <Code lang="jsx" head="App.jsx (excerpt)">
+{`useEffect(() => {
+  const onClick = (e) => {
+    if (e.button !== 0) return
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+    const a = e.target.closest('a')
+    if (!a) return
+    if (a.target && a.target !== '_self') return
+    if (a.hasAttribute('download')) return
+    const href = a.getAttribute('href')
+    if (!href || /^([a-z]+:|\\/\\/|#)/i.test(href)) return
+    if (a.origin !== window.location.origin) return
+
+    e.preventDefault()
+    const target = a.pathname + a.search + a.hash
+    window.history.pushState(null, '', target)
+    setRoute(getRoute())
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }
+  document.addEventListener('click', onClick)
+  return () => document.removeEventListener('click', onClick)
+}, [])`}
       </Code>
 
       <h2>Registering a route</h2>
@@ -418,13 +460,24 @@ function App() {
         Routes can include a slash (e.g. <code>docs/components/lightbox</code>). The lookup
         falls back to the first segment, so <code>docs/anything</code> always lands on the
         Docs component. The component then does its own sub-routing by reading the rest of
-        the hash.
+        the pathname.
+      </p>
+
+      <h2>Legacy hash links</h2>
+      <p>
+        Older bookmarks or shared links may still use the hash form{' '}
+        (<code>/#/seed-library</code>). On initial mount, App.jsx detects any URL whose hash
+        starts with <code>#/</code> and rewrites it to the clean path via{' '}
+        <code>history.replaceState</code>, so old links resolve to the right page without a
+        broken state.
       </p>
 
       <h2>Navigation</h2>
       <p>
-        Anywhere in the app, an anchor with <code>href="#/route-id"</code> just works.
-        Programmatic navigation is <code>window.location.hash = '/route-id'</code>.
+        Anywhere in the app, an anchor with <code>href="/route-id"</code> just works — the
+        global click handler converts it to a pushState. Programmatic navigation is{' '}
+        <code>window.history.pushState(null, '', '/route-id')</code> followed by{' '}
+        <code>setRoute(getRoute())</code>.
       </p>
     </PageWrap>
   )
@@ -459,14 +512,27 @@ function BuildDeploy() {
 
       <h2>Deploy to GitHub Pages</h2>
       <p>
-        The site is deployed via GitHub Actions to the <code>gh-pages</code> branch on
-        every push to <code>main</code>. The workflow file lives at{' '}
-        <code>.github/workflows/deploy.yml</code>.
+        The site is deployed via GitHub Actions on every push to <code>main</code>. The
+        workflow file lives at <code>.github/workflows/deploy.yml</code>.
       </p>
+
+      <h2>SPA fallback for clean URLs</h2>
       <p>
-        Because routing is hash-based, GitHub Pages serves a single <code>index.html</code>{' '}
-        for every URL and the client handles the rest. No 404 shim or rewrite rules
-        required.
+        Routing uses the HTML5 history API, so paths like{' '}
+        <code>/seed-library</code> need to resolve to <code>index.html</code> even on a
+        cold direct hit. GitHub Pages serves <code>404.html</code> for any path it can't
+        find, so the build copies <code>dist/index.html</code> →{' '}
+        <code>dist/404.html</code> as a postbuild step:
+      </p>
+      <Code lang="json" head="package.json">
+{`"scripts": {
+  "build": "vite build && node scripts/spa-fallback.mjs"
+}`}
+      </Code>
+      <p>
+        The fallback script writes <code>dist/404.html</code> with identical content.
+        The HTTP status is technically <code>404</code>, but the rendered content is the
+        SPA, which then routes from <code>window.location.pathname</code>.
       </p>
 
       <h2>Base path</h2>
@@ -738,7 +804,7 @@ function AccessibilityDoc() {
     >
       <h2>Resolved findings</h2>
       <p>
-        See <a href="#/audit">#/audit</a> for the full audit table. Highlights:
+        See <a href="/audit">/audit</a> for the full audit table. Highlights:
       </p>
       <ul>
         <li><strong>Page titles</strong> — every route updates <code>document.title</code> on navigation.</li>
@@ -1398,41 +1464,41 @@ function ComponentsIndex() {
     >
       <h2>Layout & navigation</h2>
       <ul>
-        <li><a href="#/docs/components/navbar">Navbar</a> — top-of-page chrome with breadcrumb, progress bar, dropdown, links.</li>
-        <li><a href="#/docs/components/progress-bar">ProgressBar</a> — internal scroll progress.</li>
-        <li><a href="#/docs/components/table-of-contents">TableOfContents</a> — sticky left rail with scroll-spy.</li>
-        <li><a href="#/docs/components/case-study-hero">CaseStudyHero</a> — top of every case study.</li>
-        <li><a href="#/docs/components/case-study-footer">CaseStudyFooter</a> — bottom of every case study (prev/next).</li>
-        <li><a href="#/docs/components/section-label">SectionLabel</a> — "SEC. 04" eyebrow.</li>
+        <li><a href="/docs/components/navbar">Navbar</a> — top-of-page chrome with breadcrumb, progress bar, dropdown, links.</li>
+        <li><a href="/docs/components/progress-bar">ProgressBar</a> — internal scroll progress.</li>
+        <li><a href="/docs/components/table-of-contents">TableOfContents</a> — sticky left rail with scroll-spy.</li>
+        <li><a href="/docs/components/case-study-hero">CaseStudyHero</a> — top of every case study.</li>
+        <li><a href="/docs/components/case-study-footer">CaseStudyFooter</a> — bottom of every case study (prev/next).</li>
+        <li><a href="/docs/components/section-label">SectionLabel</a> — "SEC. 04" eyebrow.</li>
       </ul>
 
       <h2>Content & media</h2>
       <ul>
-        <li><a href="#/docs/components/image-slot">ImageSlot</a> — captioned figure with click-to-zoom.</li>
-        <li><a href="#/docs/components/image-grid">ImageGrid</a> — N-column grid wrapper.</li>
-        <li><a href="#/docs/components/grid-frames">GridFrames</a> — data-driven labeled grid.</li>
-        <li><a href="#/docs/components/scroll-figure">ScrollFigure</a> — paged scroll of tall images.</li>
-        <li><a href="#/docs/components/video-section">VideoSection</a> — embedded video with crop + responsive sizing.</li>
-        <li><a href="#/docs/components/lightbox">Lightbox</a> — full-screen image modal.</li>
+        <li><a href="/docs/components/image-slot">ImageSlot</a> — captioned figure with click-to-zoom.</li>
+        <li><a href="/docs/components/image-grid">ImageGrid</a> — N-column grid wrapper.</li>
+        <li><a href="/docs/components/grid-frames">GridFrames</a> — data-driven labeled grid.</li>
+        <li><a href="/docs/components/scroll-figure">ScrollFigure</a> — paged scroll of tall images.</li>
+        <li><a href="/docs/components/video-section">VideoSection</a> — embedded video with crop + responsive sizing.</li>
+        <li><a href="/docs/components/lightbox">Lightbox</a> — full-screen image modal.</li>
       </ul>
 
       <h2>Carousels</h2>
       <ul>
-        <li><a href="#/docs/components/board-carousel">BoardCarousel</a> — landscape boards / artifacts.</li>
-        <li><a href="#/docs/components/phone-carousel">PhoneCarousel</a> — phone-shaped frame for mobile screens.</li>
-        <li><a href="#/docs/components/research-carousel">ResearchCarousel</a> — free-form slides.</li>
-        <li><a href="#/docs/components/demo-rail">DemoRail</a> — PhoneCarousel + prose layout.</li>
+        <li><a href="/docs/components/board-carousel">BoardCarousel</a> — landscape boards / artifacts.</li>
+        <li><a href="/docs/components/phone-carousel">PhoneCarousel</a> — phone-shaped frame for mobile screens.</li>
+        <li><a href="/docs/components/research-carousel">ResearchCarousel</a> — free-form slides.</li>
+        <li><a href="/docs/components/demo-rail">DemoRail</a> — PhoneCarousel + prose layout.</li>
       </ul>
 
       <h2>Comparisons & highlights</h2>
       <ul>
-        <li><a href="#/docs/components/before-after-pair">BeforeAfterPair</a> — annotated before/after comparison.</li>
-        <li><a href="#/docs/components/callout">Callout</a> — highlighted finding block.</li>
-        <li><a href="#/docs/components/decision-card">DecisionCard</a> — numbered design decision.</li>
-        <li><a href="#/docs/components/finding-block">FindingBlock</a> — inline observation block.</li>
-        <li><a href="#/docs/components/pull-quote">PullQuote</a> — participant quote with attribution.</li>
-        <li><a href="#/docs/components/stat-row">StatRow</a> — large statistics row.</li>
-        <li><a href="#/docs/components/contrib-grid">ContribGrid</a> — team / contributor grid.</li>
+        <li><a href="/docs/components/before-after-pair">BeforeAfterPair</a> — annotated before/after comparison.</li>
+        <li><a href="/docs/components/callout">Callout</a> — highlighted finding block.</li>
+        <li><a href="/docs/components/decision-card">DecisionCard</a> — numbered design decision.</li>
+        <li><a href="/docs/components/finding-block">FindingBlock</a> — inline observation block.</li>
+        <li><a href="/docs/components/pull-quote">PullQuote</a> — participant quote with attribution.</li>
+        <li><a href="/docs/components/stat-row">StatRow</a> — large statistics row.</li>
+        <li><a href="/docs/components/contrib-grid">ContribGrid</a> — team / contributor grid.</li>
       </ul>
     </PageWrap>
   )
@@ -1444,7 +1510,7 @@ function NotFound({ subPath }) {
       <p className="docs-eyebrow">404</p>
       <h1>Page not found</h1>
       <p className="docs-lede">
-        <code>{subPath ? `#/docs/${subPath}` : '#/docs'}</code> doesn't match any docs
+        <code>{subPath ? `/docs/${subPath}` : '/docs'}</code> doesn't match any docs
         page. Use the sidebar.
       </p>
     </article>
@@ -1489,7 +1555,7 @@ function Sidebar({ subPath }) {
           <h3>{section.section}</h3>
           <ul className="docs-sidebar-list">
             {section.items.map((item) => {
-              const href = `#/docs${item.path ? '/' + item.path : ''}`
+              const href = `/docs${item.path ? '/' + item.path : ''}`
               const isCurrent = item.path === subPath
               return (
                 <li key={item.path}>

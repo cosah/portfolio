@@ -108,7 +108,7 @@ export default function Todo({ onHome }) {
             Open work across content, accessibility, performance, and engineering · {TODOS.length} items
           </p>
           <p className="audit-prev">
-            Sibling page: <a href="#/audit" className="audit-link">Accessibility audit</a> · all 11 findings closed.
+            Sibling page: <a href="/audit" className="audit-link">Accessibility audit</a> · all 11 findings closed.
           </p>
           <ul className="audit-counts">
             <li className="count count--critical">

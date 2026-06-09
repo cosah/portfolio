@@ -41,7 +41,7 @@ export default function Home() {
           <a
             key={id}
             className="case-study-card"
-            href={`#/${id}`}
+            href={`/${id}`}
             aria-label={`View ${title} case study`}
           >
             {heroImage && (

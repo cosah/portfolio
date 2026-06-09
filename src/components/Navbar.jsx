@@ -59,7 +59,7 @@ export default function Navbar({
   return (
     <header className="sys-header" role="banner">
       <div className="sys-header-inner">
-        <a className="name" href="#/" aria-label="Anthony Shephard, home">
+        <a className="name" href="/" aria-label="Anthony Shephard, home">
           anthony.shephard
         </a>
         <span className="crumbs">
@@ -97,7 +97,7 @@ export default function Navbar({
                 {dropdownItems.map((cs) => (
                   <a
                     key={cs.id}
-                    href={`#/${cs.id}`}
+                    href={`/${cs.id}`}
                     className="dropdown-item"
                     role="menuitem"
                     onClick={() => setDropdownOpen(false)}
@@ -113,8 +113,8 @@ export default function Navbar({
           {label ? <span aria-hidden="true">{` / ${label}`}</span> : ''}
         </span>
         <span className="nav-links">
-          {/* <a href="#/about">About</a> -- hidden, page not ready */}
-          <a href="#/resume">Resume</a>
+          {/* <a href="/about">About</a> -- hidden, page not ready */}
+          <a href="/resume">Resume</a>
           <a
             href="https://www.linkedin.com/in/anthony-shephard/"
             target="_blank"

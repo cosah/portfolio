@@ -2,7 +2,7 @@
 
 A personal UX / product portfolio. Five case studies from the University of Michigan, built with React + Vite and deployed to GitHub Pages.
 
-📖 **[Read the full technical docs →](https://cosah.github.io/portfolio/#/docs)**
+📖 **[Read the full technical docs →](https://anthonyships.com/docs)**
 
 The docs cover architecture, routing, the design system, every reusable component, and the patterns (SEO, analytics, accessibility) that hold the site together. They are a sibling route to the portfolio and exist primarily for anyone reviewing this repo.
 
@@ -11,9 +11,9 @@ The docs cover architecture, routing, the design system, every reusable componen
 ## What's inside
 
 - **Five case studies** spanning research-led UX, product strategy, project management, iOS design, and a WCAG audit
-- **Self-audited accessibility** — WCAG 2.1 AA, 11 findings resolved across two passes (see [`/audit`](https://cosah.github.io/portfolio/#/audit))
+- **Self-audited accessibility** — WCAG 2.1 AA, 11 findings resolved across two passes (see [`/audit`](https://anthonyships.com/audit))
 - **Per-route SEO** — `document.title`, `<meta name="description">`, Open Graph, Twitter Cards, and `robots` all update dynamically per route, with static fallbacks in `index.html` for crawlers that don't run JavaScript
-- **Hash routing in ~30 lines** — no router library; deep links work on any static host without redirect rules
+- **HTML5 history-API routing in ~60 lines** — no router library; clean URLs (`/seed-library`, not `/#/seed-library`); a tiny SPA-fallback step at build time makes GitHub Pages serve `index.html` on any path
 - **GA4 analytics** — manual `page_view` events fired per route change, with auto page-view disabled to avoid double-counting
 
 ### Case studies
@@ -52,7 +52,7 @@ Vite serves on `http://localhost:5173` by default. If the port is occupied it au
 
 ### Deploy
 
-Pushes to `main` deploy to GitHub Pages via `.github/workflows/deploy.yml`. Because routing is hash-based, GitHub Pages serves a single `index.html` for every URL and the client handles the rest — no 404 shim or rewrite rules required.
+Pushes to `main` deploy to GitHub Pages via `.github/workflows/deploy.yml`. Because routing uses the HTML5 history API for clean URLs, the build runs a `scripts/spa-fallback.mjs` postbuild step that copies `dist/index.html` → `dist/404.html`. GitHub Pages serves that file on any unknown path, so the SPA loads and routes from `window.location.pathname`.
 
 ---
 
@@ -87,18 +87,18 @@ portfolio/
 
 | Route | Page | Notes |
 |---|---|---|
-| `#/` | Home | Case-study grid |
-| `#/seed-library` | Seed Library | Case study |
-| `#/mintify` | Mintify | Case study |
-| `#/roamio` | Roamio | Case study |
-| `#/the-diag` | The Diag | Case study |
-| `#/courts-audit` | Courts Audit | Case study |
-| `#/about` | About | Hidden from nav until copy is finalized |
-| `#/resume` | Resume | Embedded PDF |
-| `#/docs` | **Docs** | This documentation |
-| `#/audit` | Accessibility Audit | Internal · `noindex` |
-| `#/todo` | Todo | Internal · `noindex` |
-| `#/layout-demo` | Layout Demo | Internal · `noindex` |
+| `/` | Home | Case-study grid |
+| `/seed-library` | Seed Library | Case study |
+| `/mintify` | Mintify | Case study |
+| `/roamio` | Roamio | Case study |
+| `/the-diag` | The Diag | Case study |
+| `/courts-audit` | Courts Audit | Case study |
+| `/about` | About | Hidden from nav until copy is finalized |
+| `/resume` | Resume | Embedded PDF |
+| `/docs` | **Docs** | This documentation |
+| `/audit` | Accessibility Audit | Internal · `noindex` |
+| `/todo` | Todo | Internal · `noindex` |
+| `/layout-demo` | Layout Demo | Internal · `noindex` |
 
 ---
 
@@ -115,24 +115,24 @@ portfolio/
 
 ## Documentation
 
-The full technical documentation lives at [`#/docs`](https://cosah.github.io/portfolio/#/docs). It covers:
+The full technical documentation lives at [`/docs`](https://anthonyships.com/docs). It covers:
 
-- **[Overview](https://cosah.github.io/portfolio/#/docs)** — what's in the docs, tech stack, how to read them
-- **[Getting Started](https://cosah.github.io/portfolio/#/docs/getting-started)** — clone, install, run
+- **[Overview](https://anthonyships.com/docs)** — what's in the docs, tech stack, how to read them
+- **[Getting Started](https://anthonyships.com/docs/getting-started)** — clone, install, run
 - **Architecture**
-  - **[Project Structure](https://cosah.github.io/portfolio/#/docs/project-structure)** — where things live and why
-  - **[Routing](https://cosah.github.io/portfolio/#/docs/routing)** — the hash-routing implementation
-  - **[Build & Deploy](https://cosah.github.io/portfolio/#/docs/build-deploy)** — Vite output and GitHub Pages
+  - **[Project Structure](https://anthonyships.com/docs/project-structure)** — where things live and why
+  - **[Routing](https://anthonyships.com/docs/routing)** — the hash-routing implementation
+  - **[Build & Deploy](https://anthonyships.com/docs/build-deploy)** — Vite output and GitHub Pages
 - **Design System**
-  - **[Color & Tokens](https://cosah.github.io/portfolio/#/docs/design/colors)** — every CSS custom property
-  - **[Typography](https://cosah.github.io/portfolio/#/docs/design/typography)** — three font families
-  - **[Layout & Spacing](https://cosah.github.io/portfolio/#/docs/design/layout)** — the symmetric content column
+  - **[Color & Tokens](https://anthonyships.com/docs/design/colors)** — every CSS custom property
+  - **[Typography](https://anthonyships.com/docs/design/typography)** — three font families
+  - **[Layout & Spacing](https://anthonyships.com/docs/design/layout)** — the symmetric content column
 - **Patterns**
-  - **[SEO & Meta Tags](https://cosah.github.io/portfolio/#/docs/patterns/seo-meta)** — per-route Open Graph, Twitter, robots
-  - **[Analytics](https://cosah.github.io/portfolio/#/docs/patterns/analytics)** — manual `page_view` per route
-  - **[Accessibility](https://cosah.github.io/portfolio/#/docs/patterns/accessibility)** — WCAG patterns from the audit
+  - **[SEO & Meta Tags](https://anthonyships.com/docs/patterns/seo-meta)** — per-route Open Graph, Twitter, robots
+  - **[Analytics](https://anthonyships.com/docs/patterns/analytics)** — manual `page_view` per route
+  - **[Accessibility](https://anthonyships.com/docs/patterns/accessibility)** — WCAG patterns from the audit
 - **Data**
-  - **[`CASE_STUDIES` Schema](https://cosah.github.io/portfolio/#/docs/data/case-studies)** — the canonical content model
+  - **[`CASE_STUDIES` Schema](https://anthonyships.com/docs/data/case-studies)** — the canonical content model
 - **Components** — props, types, and usage for every reusable component:
   - Layout & navigation: Navbar, ProgressBar, TableOfContents, CaseStudyHero, CaseStudyFooter, SectionLabel
   - Content & media: ImageSlot, ImageGrid, GridFrames, ScrollFigure, VideoSection, Lightbox
@@ -145,9 +145,9 @@ The full technical documentation lives at [`#/docs`](https://cosah.github.io/por
 
 Three routes are unlisted in production navigation but accessible if you know the URL:
 
-- **[`/audit`](https://cosah.github.io/portfolio/#/audit)** — WCAG 2.1 AA self-audit. 11 findings, all resolved.
-- **[`/todo`](https://cosah.github.io/portfolio/#/todo)** — Open work across content, accessibility, performance, and engineering.
-- **[`/layout-demo`](https://cosah.github.io/portfolio/#/layout-demo)** — Visualization of the symmetric content-column system.
+- **[`/audit`](https://anthonyships.com/audit)** — WCAG 2.1 AA self-audit. 11 findings, all resolved.
+- **[`/todo`](https://anthonyships.com/todo)** — Open work across content, accessibility, performance, and engineering.
+- **[`/layout-demo`](https://anthonyships.com/layout-demo)** — Visualization of the symmetric content-column system.
 
 All three are marked `noindex, nofollow` for search engines.
 
@@ -155,7 +155,7 @@ All three are marked `noindex, nofollow` for search engines.
 
 ## Contact
 
-- 🌐 [Portfolio](https://cosah.github.io/portfolio/)
+- 🌐 [Portfolio](https://anthonyships.com/)
 - 💼 [LinkedIn](https://www.linkedin.com/in/anthony-shephard/)
 - ✉️ [antshep@umich.edu](mailto:antshep@umich.edu)
 

@@ -1,0 +1,10 @@
+# Allow all well-behaved bots and AI crawlers
+User-agent: *
+Allow: /
+
+# Internal pages are marked noindex via meta robots tags inside the SPA.
+# (Hash fragments can't be Disallow'd here — the listed paths handle it
+# at the meta-tag layer instead. See PAGE_DESCRIPTIONS / INTERNAL_ROUTES
+# in src/App.jsx.)
+
+Sitemap: https://anthonyships.com/sitemap.xml

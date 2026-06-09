@@ -40,7 +40,21 @@ const ROUTES = {
 }
 
 function getRoute() {
-  return window.location.hash.replace(/^#\/?/, '')
+  return window.location.pathname.replace(/^\/+/, '').replace(/\/+$/, '')
+}
+
+// One-time migration: anyone arriving with an old #/ hash link gets redirected
+// to the clean path so bookmarks / shared links from the old hash era keep working.
+function migrateLegacyHash() {
+  if (typeof window === 'undefined') return null
+  const h = window.location.hash
+  if (h.startsWith('#/')) {
+    const path = h.replace(/^#\/?/, '')
+    const target = '/' + path + window.location.search
+    window.history.replaceState(null, '', target)
+    return path
+  }
+  return null
 }
 
 const SITE_NAME = "Anthony Shephard's Portfolio"
@@ -117,15 +131,47 @@ function absoluteUrl(path) {
 }
 
 export default function App() {
-  const [route, setRoute] = useState(getRoute)
+  const [route, setRoute] = useState(() => {
+    const migrated = migrateLegacyHash()
+    return migrated !== null ? migrated : getRoute()
+  })
 
+  // Browser back/forward
   useEffect(() => {
-    const onHashChange = () => {
+    const onPop = () => {
       setRoute(getRoute())
       window.scrollTo({ top: 0, behavior: 'instant' })
     }
-    window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+
+  // SPA click interception — left clicks on internal links pushState instead of full reload.
+  // Middle-click, Cmd/Ctrl-click, Shift-click, right-click, target="_blank", download all bypass.
+  useEffect(() => {
+    const onClick = (e) => {
+      if (e.button !== 0) return
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+      if (e.defaultPrevented) return
+      const a = e.target.closest('a')
+      if (!a) return
+      if (a.target && a.target !== '' && a.target !== '_self') return
+      if (a.hasAttribute('download')) return
+      const href = a.getAttribute('href')
+      if (!href) return
+      // External, mailto/tel, in-page hash anchor — let the browser handle
+      if (/^([a-z]+:|\/\/|#)/i.test(href)) return
+      if (a.origin !== window.location.origin) return
+
+      e.preventDefault()
+      const target = a.pathname + a.search + a.hash
+      if (target === window.location.pathname + window.location.search + window.location.hash) return
+      window.history.pushState(null, '', target)
+      setRoute(getRoute())
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    }
+    document.addEventListener('click', onClick)
+    return () => document.removeEventListener('click', onClick)
   }, [])
 
   useEffect(() => {
@@ -154,7 +200,10 @@ export default function App() {
   }, [route])
 
   function goHome() {
-    window.location.hash = ''
+    if (window.location.pathname === '/') return
+    window.history.pushState(null, '', '/')
+    setRoute('')
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
   const Page = ROUTES[route] ?? ROUTES[route.split('/')[0]] ?? Home
