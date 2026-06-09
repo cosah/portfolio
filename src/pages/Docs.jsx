@@ -549,23 +549,19 @@ function BuildDeploy() {
    Design system
    ============================================================ */
 
+function Swatch({ name, val, desc }) {
+  return (
+    <div className="docs-swatch" key={name}>
+      <span className="docs-swatch-chip" style={{ background: `var(${name})` }} />
+      <span className="docs-swatch-meta">
+        <span className="docs-swatch-name">{name}</span>
+        <span className="docs-swatch-val">{val} — {desc}</span>
+      </span>
+    </div>
+  )
+}
+
 function ColorsDoc() {
-  const tokens = [
-    { name: '--bg', val: '#0E0F11', desc: 'Base background — almost-black.' },
-    { name: '--surface', val: '#16181B', desc: 'Card / panel background.' },
-    { name: '--surface-2', val: '#1D1F23', desc: 'Hover / striped row.' },
-    { name: '--surface-3', val: '#25282D', desc: 'Pressed / active.' },
-    { name: '--rule', val: '#2A2D32', desc: 'Default border / divider.' },
-    { name: '--rule-strong', val: '#3B3F46', desc: 'Emphasized border.' },
-    { name: '--ink', val: '#F2EFE8', desc: 'Primary text (≥7:1 against bg).' },
-    { name: '--ink-mid', val: '#A4A29A', desc: 'Secondary text (4.5:1).' },
-    { name: '--ink-soft', val: '#8A8A87', desc: 'Tertiary / metadata (5.8:1).' },
-    { name: '--good', val: '#E8C547', desc: 'Positive / award accent (yellow).' },
-    { name: '--good-dim', val: '#9B8224', desc: 'Muted yellow.' },
-    { name: '--warn', val: '#FF7C3A', desc: 'Warning / critical accent (orange).' },
-    { name: '--warn-dim', val: '#8F4A22', desc: 'Muted orange.' },
-    { name: '--info', val: '#6BB3FF', desc: 'Info / link accent (blue).' },
-  ]
   return (
     <PageWrap
       eyebrow="DESIGN SYSTEM"
@@ -574,35 +570,130 @@ function ColorsDoc() {
       path="design/colors"
     >
       <p>
-        All colors are declared in{' '}
-        <code>src/css/variables.css</code> under <code>:root</code>. Components reference
-        them as <code>var(--token)</code> — no hex codes scattered through component
-        styles.
+        All colors are declared in <code>src/css/variables.css</code> under{' '}
+        <code>:root</code>. Components reference them as <code>var(--token)</code> — no
+        hex codes scattered through component styles. Each swatch below is rendered from
+        the live token, so what you see is what's deployed.
       </p>
 
-      <h2>Tokens</h2>
+      <h2>Surfaces</h2>
+      <p>
+        Four background tones for vertical depth. The lighter the surface, the
+        further "forward" it sits in the visual hierarchy.
+      </p>
       <div className="docs-swatches">
-        {tokens.map((t) => (
-          <div className="docs-swatch" key={t.name}>
-            <span className="docs-swatch-chip" style={{ background: t.val }} />
-            <span className="docs-swatch-meta">
-              <span className="docs-swatch-name">{t.name}</span>
-              <span className="docs-swatch-val">{t.val} — {t.desc}</span>
-            </span>
+        <Swatch name="--bg"        val="#0E0F11" desc="Base background — almost-black. The body / page color." />
+        <Swatch name="--surface"   val="#16181B" desc="Card / panel background. One step up from --bg." />
+        <Swatch name="--surface-2" val="#1D1F23" desc="Hover state, striped row." />
+        <Swatch name="--surface-3" val="#25282D" desc="Pressed / active state." />
+      </div>
+      <p className="docs-section-label">In context</p>
+      <div className="docs-surface-stack" aria-hidden="true">
+        <div className="docs-stack-row docs-stack-row--bg">
+          <span>--bg</span>
+          <div className="docs-stack-card docs-stack-card--surface">
+            <span>--surface</span>
+            <div className="docs-stack-card docs-stack-card--surface-2">
+              <span>--surface-2</span>
+              <div className="docs-stack-card docs-stack-card--surface-3">
+                <span>--surface-3</span>
+              </div>
+            </div>
           </div>
-        ))}
+        </div>
       </div>
 
-      <h2>Contrast</h2>
-      <ul>
-        <li><code>--ink</code> on <code>--bg</code> → ~13.2:1 (AAA).</li>
-        <li><code>--ink-mid</code> on <code>--bg</code> → ~7.4:1 (AAA).</li>
-        <li><code>--ink-soft</code> on <code>--bg</code> → ~5.8:1 (AA).</li>
-      </ul>
+      <h2>Rules (borders)</h2>
+      <p>Two border weights — the second is for emphasis.</p>
+      <div className="docs-swatches">
+        <Swatch name="--rule"        val="#2A2D32" desc="Default border / divider." />
+        <Swatch name="--rule-strong" val="#3B3F46" desc="Emphasized border (focus rings, active states)." />
+      </div>
+      <p className="docs-section-label">In context</p>
+      <div className="docs-rule-demo">
+        <div className="docs-rule-sample" style={{ borderColor: 'var(--rule)' }}>
+          --rule
+        </div>
+        <div className="docs-rule-sample" style={{ borderColor: 'var(--rule-strong)' }}>
+          --rule-strong
+        </div>
+      </div>
+
+      <h2>Ink (text)</h2>
+      <p>
+        Three text shades on the warm-grey ramp. All three meet WCAG AA against{' '}
+        <code>--bg</code>; the top two clear AAA.
+      </p>
+      <div className="docs-swatches">
+        <Swatch name="--ink"      val="#F2EFE8" desc="Primary text. Contrast ≥ 13:1 (AAA)." />
+        <Swatch name="--ink-mid"  val="#A4A29A" desc="Secondary text. Contrast ~7.4:1 (AAA)." />
+        <Swatch name="--ink-soft" val="#8A8A87" desc="Tertiary / metadata. Contrast ~5.8:1 (AA)." />
+      </div>
+      <p className="docs-section-label">In context</p>
+      <div className="docs-ink-demo">
+        <p style={{ color: 'var(--ink)', fontSize: 18, marginBottom: 8 }}>
+          Primary text — used for headings and main body copy.
+        </p>
+        <p style={{ color: 'var(--ink-mid)', fontSize: 14, marginBottom: 8 }}>
+          Secondary text — supporting prose, descriptions, table cells.
+        </p>
+        <p style={{ color: 'var(--ink-soft)', fontSize: 12, fontFamily: 'var(--mono)', letterSpacing: '0.04em', margin: 0 }}>
+          TERTIARY · METADATA · ROUTE LABELS · DATES
+        </p>
+      </div>
       <p>
         <code>--ink-dim</code> was retired during the accessibility audit; all consumers
         moved to <code>--ink-soft</code>.
       </p>
+
+      <h2>Accents</h2>
+      <p>
+        Three semantic accents with paired dim variants for muted use (e.g. backgrounds
+        of badges where the bright color is the foreground).
+      </p>
+      <div className="docs-swatches">
+        <Swatch name="--good"     val="#E8C547" desc="Positive / award / link-current. Yellow." />
+        <Swatch name="--good-dim" val="#9B8224" desc="Muted yellow — backgrounds, hover tints." />
+        <Swatch name="--warn"     val="#FF7C3A" desc="Warning / critical / before-state. Orange." />
+        <Swatch name="--warn-dim" val="#8F4A22" desc="Muted orange." />
+        <Swatch name="--info"     val="#6BB3FF" desc="Info / link / after-state. Blue." />
+      </div>
+      <p className="docs-section-label">In context</p>
+      <div className="docs-accent-demo">
+        <span className="docs-accent-chip" style={{ background: 'rgba(232, 197, 71, 0.12)', color: 'var(--good)', borderColor: 'rgba(232, 197, 71, 0.4)' }}>good</span>
+        <span className="docs-accent-chip" style={{ background: 'rgba(255, 124, 58, 0.12)', color: 'var(--warn)', borderColor: 'rgba(255, 124, 58, 0.4)' }}>warn</span>
+        <span className="docs-accent-chip" style={{ background: 'rgba(107, 179, 255, 0.14)', color: 'var(--info)', borderColor: 'rgba(107, 179, 255, 0.4)' }}>info</span>
+        <span className="docs-accent-num" style={{ color: 'var(--good)' }}>42</span>
+        <span className="docs-accent-num" style={{ color: 'var(--warn)' }}>4.3%</span>
+        <span className="docs-accent-num" style={{ color: 'var(--info)' }}>355</span>
+      </div>
+
+      <h2>Contrast cheatsheet</h2>
+      <PropsTable rows={[
+        { name: '--ink',      type: 'on --bg', default: '~13.2:1', desc: 'AAA — body, headings.' },
+        { name: '--ink-mid',  type: 'on --bg', default: '~7.4:1',  desc: 'AAA — secondary text.' },
+        { name: '--ink-soft', type: 'on --bg', default: '~5.8:1',  desc: 'AA — metadata, tertiary.' },
+        { name: '--good',     type: 'on --bg', default: '~8.9:1',  desc: 'AAA — accent text.' },
+        { name: '--warn',     type: 'on --bg', default: '~5.5:1',  desc: 'AA — accent text.' },
+        { name: '--info',     type: 'on --bg', default: '~9.4:1',  desc: 'AAA — accent text / links.' },
+      ]} />
+
+      <h2>Usage</h2>
+      <Code lang="css" head="Always reference by token name">
+{`/* Good */
+.thing {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+}
+
+/* Bad — never hardcode the hex */
+.thing {
+  background: #16181B;
+  color: #F2EFE8;
+  border: 1px solid #2A2D32;
+}`}
+      </Code>
     </PageWrap>
   )
 }
@@ -612,28 +703,147 @@ function TypographyDoc() {
     <PageWrap
       eyebrow="DESIGN SYSTEM"
       title="Typography"
-      lede="Three families. Each with one job."
+      lede="Three families. Each with one job. Loaded from Google Fonts, declared once in variables.css, referenced everywhere as var(--serif) / var(--sans) / var(--mono)."
       path="design/typography"
     >
+      <h2>Tokens</h2>
       <PropsTable rows={[
-        { name: '--serif', type: 'Fraunces', default: 'headings', desc: 'Editorial / case-study titles. Optical-size variable font.' },
-        { name: '--sans', type: 'Inter', default: 'body', desc: 'Body copy, UI labels, controls.' },
-        { name: '--mono', type: 'JetBrains Mono', default: 'metadata', desc: 'Eyebrows, captions, code, tags, technical detail.' },
+        { name: '--serif', type: 'Fraunces', default: 'headings', desc: 'Editorial / case-study titles. Optical-size variable font (variable ital, opsz, wght).' },
+        { name: '--sans',  type: 'Inter',          default: 'body',     desc: 'Body copy, UI labels, controls.' },
+        { name: '--mono',  type: 'JetBrains Mono', default: 'metadata', desc: 'Eyebrows, captions, code, tags, technical detail.' },
       ]} />
 
-      <h2>Where each is used</h2>
-      <ul>
-        <li><strong>Fraunces</strong> — H1 / H2 / H3 inside case studies, big numbers in <code>StatRow</code>, <code>Callout</code> titles.</li>
-        <li><strong>Inter</strong> — paragraph body, navbar, buttons, page descriptions.</li>
-        <li><strong>JetBrains Mono</strong> — section labels ("SEC. 04"), tags ("Mixed-Methods Research"), captions, audit tables, dates.</li>
-      </ul>
+      <h2>Families</h2>
+
+      <div className="docs-font-card" style={{ fontFamily: 'var(--serif)' }}>
+        <div className="docs-font-head">
+          <span className="docs-font-name">Fraunces</span>
+          <span className="docs-font-token">var(--serif)</span>
+        </div>
+        <p className="docs-font-aabb">Aa Bb Cc 12 34</p>
+        <p className="docs-font-pangram">The quick brown fox jumps over the lazy dog.</p>
+        <p className="docs-font-meta">
+          Optical-size variable font. Italic supported. Weights 400 / 500. Used for case-study
+          titles, section headings, and big numbers in <code>Callout</code> / <code>StatRow</code>.
+        </p>
+      </div>
+
+      <div className="docs-font-card" style={{ fontFamily: 'var(--sans)' }}>
+        <div className="docs-font-head">
+          <span className="docs-font-name">Inter</span>
+          <span className="docs-font-token">var(--sans)</span>
+        </div>
+        <p className="docs-font-aabb">Aa Bb Cc 12 34</p>
+        <p className="docs-font-pangram">The quick brown fox jumps over the lazy dog.</p>
+        <p className="docs-font-meta">
+          Weights 300 / 400 / 500 / 600 / 700. Used for body copy, navbar, buttons, page
+          descriptions, and most UI controls.
+        </p>
+      </div>
+
+      <div className="docs-font-card" style={{ fontFamily: 'var(--mono)' }}>
+        <div className="docs-font-head">
+          <span className="docs-font-name">JetBrains Mono</span>
+          <span className="docs-font-token">var(--mono)</span>
+        </div>
+        <p className="docs-font-aabb">Aa Bb Cc 12 34</p>
+        <p className="docs-font-pangram">The quick brown fox jumps over the lazy dog.</p>
+        <p className="docs-font-meta">
+          Weights 400 / 500 / 600. Used for section labels ("SEC. 04"), tags, captions,
+          audit tables, dates, code snippets.
+        </p>
+      </div>
+
+      <h2>Hierarchy in context</h2>
+      <p>
+        Real samples rendered with the same CSS the rest of the site uses, so this scales
+        when you bump a token.
+      </p>
+      <div className="docs-type-scale">
+        <div className="docs-type-row">
+          <span className="docs-type-label">PAGE H1 · serif 400 · clamp(32–48px)</span>
+          <h1 className="docs-type-h1">University of Michigan Seed Library</h1>
+        </div>
+        <div className="docs-type-row">
+          <span className="docs-type-label">SECTION H2 · serif 400 · 28px</span>
+          <h2 className="docs-type-h2">A connected system across physical and digital touchpoints.</h2>
+        </div>
+        <div className="docs-type-row">
+          <span className="docs-type-label">SUB H3 · sans 600 · 18px</span>
+          <h3 className="docs-type-h3">Round 1: paper prototype, n=6</h3>
+        </div>
+        <div className="docs-type-row">
+          <span className="docs-type-label">EYEBROW · mono 600 · 11px · 0.06em</span>
+          <p className="docs-type-eyebrow">SEC. 04 · PERSONAS</p>
+        </div>
+        <div className="docs-type-row">
+          <span className="docs-type-label">BODY · sans 400 · 16px</span>
+          <p className="docs-type-body">
+            Every participant succeeded at obtaining a capsule and failed at the next
+            step: knowing what was inside. Without identification, every downstream
+            interaction was effectively unreachable.
+          </p>
+        </div>
+        <div className="docs-type-row">
+          <span className="docs-type-label">CAPTION · mono 400 · 12px</span>
+          <p className="docs-type-caption">FIG. 4.1 · Affinity boards (15 themes, 47 codes)</p>
+        </div>
+        <div className="docs-type-row">
+          <span className="docs-type-label">CODE · mono 400 · 13px</span>
+          <p>
+            <code>var(--serif)</code>, <code>var(--sans)</code>, <code>var(--mono)</code>
+          </p>
+        </div>
+        <div className="docs-type-row">
+          <span className="docs-type-label">STAT · serif 500 · 28–48px</span>
+          <p className="docs-type-stat">4.3%</p>
+        </div>
+      </div>
 
       <h2>Sizes</h2>
       <p>
-        Sizes are usually declared with <code>clamp(min, vw, max)</code> for fluid
-        responsive scaling. There is no global type scale; each context tunes its own.
+        There is no global type scale. Sizes are declared per context, usually with{' '}
+        <code>clamp(min, vw, max)</code> so headings scale fluidly with viewport width.
+        Common patterns:
       </p>
+      <Code lang="css" head="Common size patterns">
+{`/* Case-study title — fluid */
+.case-title {
+  font-size: clamp(32px, 4vw, 48px);
+}
+
+/* Body */
+.body-text { font-size: 16px; line-height: 1.65; }
+
+/* Eyebrow / mono caption */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}`}
+      </Code>
+
+      <h2>Loading</h2>
+      <p>
+        All three families are imported once at the top of{' '}
+        <code>src/css/global.css</code> via Google Fonts CSS2 with{' '}
+        <code>display=swap</code>. The site doesn't ship self-hosted fonts.
+      </p>
+      <Code lang="css" head="src/css/global.css">
+{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap');`}
+      </Code>
     </PageWrap>
+  )
+}
+
+function SpacingRow({ px, note }) {
+  return (
+    <div className="docs-spacing-row">
+      <span className="docs-spacing-label">{px}px</span>
+      <span className="docs-spacing-bar" style={{ width: px }} aria-hidden="true" />
+      <span className="docs-spacing-note">{note}</span>
+    </div>
   )
 }
 
@@ -642,23 +852,60 @@ function LayoutDoc() {
     <PageWrap
       eyebrow="DESIGN SYSTEM"
       title="Layout & Spacing"
-      lede="Symmetric content column. Sticky left rail. Editorial reading width."
+      lede="Symmetric content column. Sticky left rail. Editorial reading width. Spacing by feel, not by strict 4/8 grid."
       path="design/layout"
     >
-      <h2>Tokens</h2>
+      <h2>Layout tokens</h2>
       <PropsTable rows={[
-        { name: '--max-width', type: 'px', default: '1464px', desc: 'Outermost page max-width.' },
-        { name: '--content-w', type: 'px', default: '840px', desc: 'Reading column for case-study prose.' },
-        { name: '--rail-w', type: 'px', default: '240px', desc: 'Left rail (TOC) width.' },
-        { name: '--rail-gap', type: 'px', default: '40px', desc: 'Gap between rail and content.' },
+        { name: '--max-width', type: 'px', default: '1464px', desc: 'Outermost page max-width. Wingspan + page padding.' },
+        { name: '--content-w', type: 'px', default: '840px',  desc: 'Reading column for case-study prose.' },
+        { name: '--rail-w',    type: 'px', default: '240px',  desc: 'Left rail (TOC) width. Mirrored on the right for symmetry.' },
+        { name: '--rail-gap',  type: 'px', default: '40px',   desc: 'Gap between rail and content column.' },
       ]} />
 
-      <h2>The case-study layout</h2>
+      <h2>The symmetric content column</h2>
       <p>
         Every case study uses a 3-column grid: TOC rail on the left, prose in the middle,
         breathing room on the right. The right column intentionally mirrors the left's
-        width so the prose stays optically centered.
+        width so the prose stays optically centered, even though only the left has
+        visible content.
       </p>
+
+      <div className="docs-layout-diagram" aria-hidden="true">
+        <div className="docs-layout-ruler">
+          <span>0</span>
+          <span>—</span>
+          <span>1464px ←  --max-width  →</span>
+          <span>—</span>
+          <span>end</span>
+        </div>
+        <div className="docs-layout-row">
+          <div className="docs-layout-cell docs-layout-cell--rail">
+            <span className="docs-layout-token">--rail-w</span>
+            <span className="docs-layout-px">240px</span>
+            <span className="docs-layout-role">TOC rail</span>
+          </div>
+          <div className="docs-layout-cell docs-layout-cell--gap">
+            <span className="docs-layout-token">--rail-gap</span>
+            <span className="docs-layout-px">40</span>
+          </div>
+          <div className="docs-layout-cell docs-layout-cell--content">
+            <span className="docs-layout-token">--content-w</span>
+            <span className="docs-layout-px">840px</span>
+            <span className="docs-layout-role">prose</span>
+          </div>
+          <div className="docs-layout-cell docs-layout-cell--gap">
+            <span className="docs-layout-token">--rail-gap</span>
+            <span className="docs-layout-px">40</span>
+          </div>
+          <div className="docs-layout-cell docs-layout-cell--rail">
+            <span className="docs-layout-token">--rail-w</span>
+            <span className="docs-layout-px">240px</span>
+            <span className="docs-layout-role">(empty — for symmetry)</span>
+          </div>
+        </div>
+      </div>
+
       <Code lang="css" head="Approximate layout (simplified)">
 {`.case-study-layout {
   display: grid;
@@ -670,14 +917,53 @@ function LayoutDoc() {
     var(--rail-w);
   max-width: var(--max-width);
   margin: 0 auto;
+  padding: 0 32px;
 }`}
       </Code>
 
-      <h2>Vertical rhythm</h2>
+      <h2>Open Layout Demo →</h2>
       <p>
-        Spacing is by feel, not on a strict 4/8px grid. Common values: 8 / 12 / 16 / 20 /
-        24 / 32 / 48 / 64. Sections are separated by 48px+ to give each finding room to
-        breathe.
+        The internal <code>/layout-demo</code> route renders the full grid with
+        measurement overlays — every rail, gap, and column width drawn to scale. Useful
+        for sanity-checking when tuning any of the tokens above.
+      </p>
+      <p>
+        <a className="docs-cta" href="/layout-demo">
+          Open <code>/layout-demo</code> →
+        </a>
+      </p>
+
+      <h2>Spacing scale</h2>
+      <p>
+        There is no enforced 4/8px grid. The site uses a small set of common values for
+        margins, gaps, and padding. Bars below are drawn at actual pixel width.
+      </p>
+      <div className="docs-spacing-scale">
+        <SpacingRow px={4}  note="Tight — chip gaps, icon padding." />
+        <SpacingRow px={8}  note="Tight — inline gaps, small button padding." />
+        <SpacingRow px={12} note="Compact — meta rows, dense table cells." />
+        <SpacingRow px={16} note="Default — most paragraph margins, card padding." />
+        <SpacingRow px={20} note="Comfortable — slightly looser body rhythm." />
+        <SpacingRow px={24} note="Card padding, between-figure spacing." />
+        <SpacingRow px={32} note="Page-level padding, hero spacing." />
+        <SpacingRow px={48} note="Between case-study sections." />
+        <SpacingRow px={64} note="Major separators (e.g. above CaseStudyFooter)." />
+      </div>
+
+      <h2>Responsive behavior</h2>
+      <p>
+        The case-study layout collapses below the wingspan width. The TOC rail goes
+        sticky on desktop and disappears on narrow viewports; the right "ghost" rail
+        collapses first so prose can expand. Specific breakpoints are tuned per
+        component — the docs site for example switches its sidebar at 880px, the audit
+        table at 1100px.
+      </p>
+
+      <h2>Page padding</h2>
+      <p>
+        Page-level horizontal padding is <code>32px</code> on desktop, scaling down to{' '}
+        <code>16–24px</code> on mobile via the existing breakpoint blocks in{' '}
+        <code>src/css/layout.css</code>.
       </p>
     </PageWrap>
   )
