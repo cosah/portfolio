@@ -214,7 +214,7 @@ export default function App() {
       {Page === Home ? (
         <Home />
       ) : (
-        <Page onHome={goHome} />
+        <Page onHome={goHome} route={route} />
       )}
       <div
         aria-hidden="true"

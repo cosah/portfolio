@@ -1576,21 +1576,14 @@ function Sidebar({ subPath }) {
    Main Docs component
    ============================================================ */
 
-function getDocsSubPath() {
-  const hash = window.location.hash.replace(/^#\/?/, '')
-  if (hash === 'docs') return ''
-  if (hash.startsWith('docs/')) return hash.slice('docs/'.length)
+function deriveSubPath(route) {
+  if (!route || route === 'docs') return ''
+  if (route.startsWith('docs/')) return route.slice('docs/'.length)
   return ''
 }
 
-export default function Docs({ onHome }) {
-  const [subPath, setSubPath] = useState(getDocsSubPath)
-
-  useEffect(() => {
-    const onHash = () => setSubPath(getDocsSubPath())
-    window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
-  }, [])
+export default function Docs({ onHome, route }) {
+  const subPath = deriveSubPath(route)
 
   // Scroll to top of content on sub-route change
   useEffect(() => {
