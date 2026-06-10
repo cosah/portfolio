@@ -25,3 +25,6 @@ dist-ssr
 
 # Claude Code
 .claude/
+
+# Personal writing samples used to calibrate Claude's voice. Never shared.
+writing-samples/

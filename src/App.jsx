@@ -73,7 +73,7 @@ const STATIC_TITLES = {
 const PAGE_DESCRIPTIONS = {
   '': DEFAULT_DESCRIPTION,
   resume: "Anthony Shephard's resume. Bachelor of Science in Information (User Experience Design) at the University of Michigan. PM, UX, research, and design.",
-  about: "About Anthony Shephard. Off-the-clock dossier and what I'm into right now.",
+  about: "Anthony Shephard off the clock. Origins, current obsessions, a few opinions worth defending, and the tools I work with daily.",
   audit: "Internal accessibility audit of this portfolio site. WCAG 2.1 AA, self-review.",
   todo: "Internal open todos: content, accessibility, performance, engineering.",
   'layout-demo': "Internal layout demo for the symmetric content-column system.",

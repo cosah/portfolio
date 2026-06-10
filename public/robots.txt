@@ -2,9 +2,11 @@
 User-agent: *
 Allow: /
 
-# Internal pages are marked noindex via meta robots tags inside the SPA.
-# (Hash fragments can't be Disallow'd here — the listed paths handle it
-# at the meta-tag layer instead. See PAGE_DESCRIPTIONS / INTERNAL_ROUTES
-# in src/App.jsx.)
+# Internal pages — also marked noindex via per-route meta tags in src/App.jsx
+# (INTERNAL_ROUTES). Listing them here adds a second layer for crawlers
+# that respect robots.txt but ignore noindex.
+Disallow: /audit
+Disallow: /todo
+Disallow: /layout-demo
 
 Sitemap: https://anthonyships.com/sitemap.xml

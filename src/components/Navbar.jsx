@@ -113,7 +113,7 @@ export default function Navbar({
           {label ? <span aria-hidden="true">{` / ${label}`}</span> : ''}
         </span>
         <span className="nav-links">
-          {/* <a href="/about">About</a> -- hidden, page not ready */}
+          <a href="/about">About</a>
           <a href="/resume">Resume</a>
           <a
             href="https://www.linkedin.com/in/anthony-shephard/"
