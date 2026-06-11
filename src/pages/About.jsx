@@ -1,3 +1,8 @@
+// About is the personal page: hero + specs panel, then sections for
+// Currently / Origins / Hot Takes / Field Notes / Loadout, ending with
+// a small outro. Most of the file is the data arrays that drive each
+// section. The component itself is a thin renderer over them.
+
 import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import nowBook from '../assets/about/now-book.jpg'
@@ -14,6 +19,8 @@ import fieldGrad from '../assets/about/field-notes/grad.jpg'
 import fieldTigers from '../assets/about/field-notes/tigers.jpg'
 import fieldCarbonara from '../assets/about/field-notes/carbonara.jpg'
 
+// Hero-specs panel data. k is the row label, v is the value displayed
+// in bold. Keep both short; the layout is a tight two-column rhythm.
 const SPECS = [
   { k: 'Location', v: 'Ann Arbor, MI' },
   { k: 'Time zone', v: 'EST · UTC−5' },
@@ -23,6 +30,10 @@ const SPECS = [
   { k: 'Coffee', v: 'Americano, black' },
 ]
 
+// NOW drives the "Currently" section: four cards for what's being read,
+// watched, listened to, and built right now. Each card has an optional
+// href that makes the title clickable (used for the WCBN station link).
+// Update by editing this array; the cards re-render automatically.
 const NOW = [
   {
     tag: 'BOOK',
@@ -58,6 +69,10 @@ const NOW = [
   },
 ]
 
+// HOT_TAKES drive the click-to-expand accordions in section 03. heat is
+// 1 to 5 and renders as filled pips next to the title (visual spice meter).
+// Spread the heat across slots for visual variety: see Docs for the
+// 3 / 4 / 5 / 2 pattern reasoning.
 const HOT_TAKES = [
   {
     num: '01',
@@ -85,6 +100,10 @@ const HOT_TAKES = [
   },
 ]
 
+// FIELD is the photo collage. Each photo gets a different CSS aspect
+// ratio cycled through (4/5, 4/3, 1/1, 3/4, 16/9, 4/5) for a magazine-
+// like spread. The order in this array maps directly to those slot
+// aspects, so swap a photo only if its native aspect matches.
 const FIELD = [
   {
     src: fieldHockey,
@@ -118,6 +137,9 @@ const FIELD = [
   },
 ]
 
+// LOADOUT lists daily-driver tools. Each row has a slot label and one
+// or more items. Each item has a name and optional href that turns it
+// into a clickable manufacturer link with the small arrow affordance.
 const LOADOUT = [
   { slot: 'Laptop', items: [{ name: 'MacBook Air M1', href: 'https://support.apple.com/en-us/111883' }] },
   { slot: 'Phone', items: [{ name: 'iPhone 16 Pro Max', href: 'https://www.apple.com/iphone-16-pro/' }] },
@@ -147,6 +169,9 @@ const LOADOUT = [
   { slot: 'Backpack', items: [{ name: 'Osprey Quasar 28L', href: 'https://www.rei.com/product/143022/osprey-quasar-pack?redirect-pup=false' }] },
 ]
 
+// ORIGINS feeds the 3-card photo stack in section 02. The stack starts
+// with the first array entry in front and cycles on click via stackOrder
+// state (see the component below). Order here = initial front-to-back.
 const ORIGINS = [
   {
     ix: 'A',
@@ -166,9 +191,16 @@ const ORIGINS = [
 ]
 
 export default function About({ onHome }) {
+  // Which hot take card is currently expanded. -1 means none.
+  // Only one expands at a time, so a single piece of state is enough.
   const [openTake, setOpenTake] = useState(-1)
+  // Stack order for the Origins collage. The array tracks which
+  // ORIGINS index sits at each position [front, middle-back, other-back].
+  // cycleStack rotates the array so the next image moves to front.
   const [stackOrder, setStackOrder] = useState([0, 1, 2])
 
+  // Cycle: [A, B, C] becomes [B, C, A]. Functional setState so we always
+  // operate on the latest prev, not a stale closed-over value.
   const cycleStack = () => {
     setStackOrder((prev) => [prev[1], prev[2], prev[0]])
   }

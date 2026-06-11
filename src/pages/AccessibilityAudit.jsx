@@ -1,5 +1,13 @@
+// AccessibilityAudit is an internal page (noindex) that documents the
+// WCAG 2.1 AA self-review performed on this site. Each row in the table
+// is a finding that's been resolved, with severity, WCAG criterion, a
+// short description of the fix, and the file(s) affected.
+
 import Navbar from '../components/Navbar'
 
+// RESOLVED is the audit data. Each entry has an id (C1, S2, M3...) where
+// the letter is severity (Critical / Serious / Moderate) and the number is
+// just sequential. sev maps to a colored severity chip in the UI.
 const RESOLVED = [
   {
     id: 'C1',
@@ -80,6 +88,13 @@ const RESOLVED = [
   },
 ]
 
+// CodeMark renders a text string where backtick-wrapped substrings become
+// inline <code> elements, like markdown. Lets us write summary strings with
+// inline code spans without needing JSX in the data file.
+//
+// The regex /(`[^`]+`)/g uses a capturing group inside split(), which
+// preserves the matched delimiters in the result array. So "foo `bar` baz"
+// becomes ["foo ", "`bar`", " baz"]. The map then decides which is which.
 function CodeMark({ text }) {
   const parts = text.split(/(`[^`]+`)/g)
   return (
@@ -126,6 +141,10 @@ export default function AccessibilityAudit({ onHome }) {
           </ul>
         </header>
 
+        {/* role="table" + role="row" + role="cell" gives the styled div
+            grid the semantics of a real HTML table for screen readers.
+            We use divs here instead of <table> because CSS Grid is easier
+            to work with than table layout for responsive collapse. */}
         <div
           id="audit-table"
           className="audit-table"

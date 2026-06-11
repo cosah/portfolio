@@ -1,14 +1,28 @@
+// LayoutDemo is an internal tool that renders a measurement overlay and a
+// wireframe of the symmetric content column the case studies use. It's
+// here to make changes to the layout tokens visible at a glance: edit a
+// number below and reload to see the wireframe shift to match.
+
 import Navbar from '../components/Navbar'
 
+// Layout constants. These mirror the values in src/css/variables.css and
+// are duplicated here so the wireframe is a static reference, not a moving
+// target. If you change the CSS tokens, update these too.
 const CONTENT_W = 840
 const RAIL_W = 220
 const SPECS_W = 240
-const SIDE_W = Math.max(RAIL_W, SPECS_W) // 240 — symmetric
+// Both side rails use the same width so the content column sits visually
+// centered between them. Math.max picks the larger of TOC and Specs.
+const SIDE_W = Math.max(RAIL_W, SPECS_W) // 240 (symmetric)
 const GAP = 40
 const WINGSPAN = SIDE_W + GAP + CONTENT_W + GAP + SIDE_W // 1400
 const PAGE_PAD = 32 // matches case-study-layout padding
 const OUTER_MAX = WINGSPAN + PAGE_PAD * 2 // 1464
 
+// Box is a small wireframe primitive used to draw labelled rectangles
+// inside the schematic. All styling is inline (not via CSS classes)
+// because this is a development-only schematic that benefits from being
+// self-contained: read the file, see exactly what each box does.
 function Box({ w, h, dashed, color = '#3B3F46', bg = 'transparent', label, align = 'flex-start' }) {
   return (
     <div
@@ -33,8 +47,13 @@ function Box({ w, h, dashed, color = '#3B3F46', bg = 'transparent', label, align
   )
 }
 
+// MeasurementOverlay draws fixed-position percentage rulers across the
+// viewport, similar to design-tool overlays. Useful when comparing the
+// wireframe widths to actual viewport percentages on resize.
 function MeasurementOverlay() {
-  // 18 lines at 5%, 10%, ..., 90% of the viewport width
+  // 18 lines at 5%, 10%, ..., 90% of the viewport width.
+  // Array.from({length: N}, (_, i) => ...) is the array-literal-style
+  // way to generate a numeric range without a manual loop.
   const lines = Array.from({ length: 18 }, (_, i) => (i + 1) * 5)
   return (
     <div

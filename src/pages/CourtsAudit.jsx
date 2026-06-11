@@ -1,3 +1,8 @@
+// CourtsAudit is the accessibility case study: a WCAG 2.1 AA audit of seven
+// Michigan Courts pages, delivered to a real government client. Carries more
+// FindingBlock components than the other case studies because the artifact
+// is fundamentally a list of issues, severities, and recommendations.
+
 import Navbar from '../components/Navbar'
 import CaseStudyHero from '../components/CaseStudyHero'
 import SectionLabel from '../components/SectionLabel'

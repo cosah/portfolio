@@ -1,5 +1,12 @@
+// Todo is the sister internal page to AccessibilityAudit. Same table UX,
+// but lists open work items grouped by priority (P0 = blocker, P1 = next
+// round, P2 = polish, P3 = back-burner) and category (A11y, Perf, Eng, etc).
+
 import Navbar from '../components/Navbar'
 
+// Each entry has an id (T2, T3, ...), priority, category, the task title,
+// and optional longer notes. The id letter T just disambiguates from
+// audit's C/S/M letters. status (rarely set) is for in-progress items.
 const TODOS = [
   // ---------- P1 (should land before next round of sharing) ----------
   {
@@ -65,6 +72,8 @@ const CATEGORIES = {
   Eng: 'eng',
 }
 
+// Pre-compute counts per priority so the header pills render quickly.
+// Done at module load (not in the component) since the data is static.
 const COUNTS = {
   p0: TODOS.filter((t) => t.pri === 'p0').length,
   p1: TODOS.filter((t) => t.pri === 'p1').length,
@@ -72,6 +81,9 @@ const COUNTS = {
   p3: TODOS.filter((t) => t.pri === 'p3').length,
 }
 
+// Same backtick-to-inline-code helper as AccessibilityAudit.jsx. Kept
+// per-page (rather than shared) so each internal page stays self-contained
+// and the import graph for the public pages doesn't drag it in.
 function CodeMark({ text }) {
   const parts = text.split(/(`[^`]+`)/g)
   return (

@@ -1,7 +1,30 @@
+// Docs is the in-app documentation site, served at /docs. It owns its own
+// sub-router: any URL like /docs/components/lightbox resolves to this same
+// component (see App.jsx's two-step route lookup), and then this file's
+// internal logic picks the right page content. The file is organized as:
+//
+//   1. Helper components (Code, PropsTable, Note, Pager, PageWrap, CopyButton)
+//   2. Page components, one per docs subpath
+//   3. COMPONENT_DOCS data and a generator for the component pages
+//   4. A PAGES map that ties subpath strings to page components
+//   5. The Sidebar component
+//   6. The main Docs component (sub-router + layout)
+//
+// To add a new docs page: create a page component, add it to PAGES with
+// its subpath as the key, and add an entry to data/docsNav.js so it shows
+// up in the sidebar.
+
 import { useEffect, useRef, useState } from 'react'
 import Navbar from '../components/Navbar'
 import { DOCS_NAV, DOCS_FLAT, findDocsPage } from '../data/docsNav'
 
+// Recursively walks a React node tree and returns its text content.
+// Used by Code below to expose the example as plain text to the copy
+// button, even when the JSX has nested children. The recursion handles:
+//   strings and numbers => coerced to string
+//   arrays              => map and concatenate
+//   React elements      => recurse into .props.children
+//   null / boolean      => empty string
 function extractText(node) {
   if (node == null || typeof node === 'boolean') return ''
   if (typeof node === 'string' || typeof node === 'number') return String(node)
@@ -12,19 +35,34 @@ function extractText(node) {
   return ''
 }
 
+// CopyButton sits in the corner of every code block. Click to copy the
+// example to the clipboard; the button briefly shows "Copied" feedback.
+// Demonstrates two browser APIs: the modern clipboard API and a fallback
+// for older browsers using an off-screen textarea.
 function CopyButton({ text }) {
   const [copied, setCopied] = useState(false)
+  // Ref holds the setTimeout id so we can cancel it on unmount or when
+  // a new copy fires before the previous one has reset.
   const timerRef = useRef(null)
 
+  // Cleanup-only effect: the outer arrow returns the cleanup function,
+  // which runs on unmount and clears any pending reset timer. Stops the
+  // timer from firing setCopied on a dead component.
   useEffect(() => () => {
     if (timerRef.current) clearTimeout(timerRef.current)
   }, [])
 
   const copy = async () => {
     try {
+      // Modern clipboard API. The optional chaining ?.writeText safely
+      // returns undefined on browsers that don't expose it (some old
+      // mobile browsers, non-HTTPS contexts), letting us fall through.
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(text)
       } else {
+        // Fallback for older browsers: create an off-screen textarea,
+        // select it, and execCommand('copy'). position:fixed + opacity:0
+        // hides it visually but keeps it selectable.
         const ta = document.createElement('textarea')
         ta.value = text
         ta.style.position = 'fixed'
@@ -35,10 +73,13 @@ function CopyButton({ text }) {
         ta.remove()
       }
       setCopied(true)
+      // Clear any pending reset before scheduling a new one so rapid
+      // re-clicks don't get cut short by the previous timer firing.
       if (timerRef.current) clearTimeout(timerRef.current)
       timerRef.current = setTimeout(() => setCopied(false), 1800)
     } catch {
-      /* swallow */
+      // Clipboard write can throw in sandboxed contexts (iframe without
+      // permission). Swallow silently; user notices "Copied" never appears.
     }
   }
 
@@ -127,9 +168,15 @@ function Note({ kind = 'info', children }) {
   )
 }
 
+// Pager renders the "← Previous / Next →" links at the bottom of every
+// docs page. DOCS_FLAT is a pre-flattened ordered list of every docs page
+// (see data/docsNav.js), so prev/next are just neighbors in that array.
 function Pager({ path }) {
   const idx = DOCS_FLAT.findIndex((p) => p.path === path)
   if (idx < 0) return null
+  // Boundary checks: no "previous" link before the first page, no "next"
+  // after the last. The render below uses an empty <span /> as a layout
+  // placeholder so the grid keeps the remaining link aligned to its side.
   const prev = idx > 0 ? DOCS_FLAT[idx - 1] : null
   const next = idx < DOCS_FLAT.length - 1 ? DOCS_FLAT[idx + 1] : null
   const href = (p) => `/docs${p ? '/' + p : ''}`
@@ -1807,6 +1854,10 @@ function NotFound({ subPath }) {
    Pages map
    ============================================================ */
 
+// PAGES is the sub-router table for /docs. Keys are subpaths after /docs/,
+// values are page components. Empty string '' maps to the docs index.
+// This file owns its own routing because Docs is mounted from App.jsx by
+// matching the FIRST segment ('docs'), then this map handles the rest.
 const PAGES = {
   '': Overview,
   'getting-started': GettingStarted,
@@ -1823,7 +1874,11 @@ const PAGES = {
   'components': ComponentsIndex,
 }
 
-// Register all component docs under components/<key>
+// Register all component docs under components/<key>. We do this in a
+// loop instead of writing 23 PAGES entries by hand because every component
+// doc renders the same ComponentDoc component, just with different data.
+// The arrow function captures data and path so each lookup gets its
+// own pre-bound page component.
 Object.entries(COMPONENT_DOCS).forEach(([key, data]) => {
   const path = `components/${key}`
   PAGES[path] = () => <ComponentDoc data={data} path={path} />
@@ -1833,6 +1888,10 @@ Object.entries(COMPONENT_DOCS).forEach(([key, data]) => {
    Sidebar
    ============================================================ */
 
+// Sidebar renders the docs nav on the left. DOCS_NAV groups items by
+// section (Overview, Architecture, Design system, Patterns, Data,
+// Components). The current page gets aria-current="page" so screen
+// readers announce it and CSS can style it as the active link.
 function Sidebar({ subPath }) {
   return (
     <aside className="docs-sidebar" aria-label="Documentation navigation">
@@ -1841,6 +1900,8 @@ function Sidebar({ subPath }) {
           <h3>{section.section}</h3>
           <ul className="docs-sidebar-list">
             {section.items.map((item) => {
+              // Empty path is the docs index, served at /docs (no slash).
+              // Everything else gets a slash + sub-path.
               const href = `/docs${item.path ? '/' + item.path : ''}`
               const isCurrent = item.path === subPath
               return (
@@ -1862,21 +1923,32 @@ function Sidebar({ subPath }) {
    Main Docs component
    ============================================================ */
 
+// Extracts the docs sub-path from the full route string. /docs becomes
+// '' (index), /docs/components/lightbox becomes 'components/lightbox'.
 function deriveSubPath(route) {
   if (!route || route === 'docs') return ''
   if (route.startsWith('docs/')) return route.slice('docs/'.length)
   return ''
 }
 
+// Docs is the sub-router. It receives `route` from App.jsx (the full path
+// after the leading slash), derives the docs-specific sub-path, looks up
+// the matching page in PAGES, and renders it inside the docs layout
+// (sidebar + content area).
 export default function Docs({ onHome, route }) {
   const subPath = deriveSubPath(route)
 
-  // Scroll to top of content on sub-route change
+  // Scroll to top on sub-route change. Without this, navigating from a
+  // long docs page to a new one would leave the new page scrolled to
+  // wherever the previous one was. The [subPath] dep means this fires
+  // on every sub-page navigation but not on other re-renders.
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }, [subPath])
 
   const Page = PAGES[subPath]
+  // Look up the matching nav entry to populate the navbar's "current page"
+  // label. The index page has an empty title that we skip explicitly.
   const page = findDocsPage(subPath)
   const subLabel = page && page.path !== '' ? page.title : undefined
 
@@ -1893,6 +1965,9 @@ export default function Docs({ onHome, route }) {
       <div className="docs-layout">
         <Sidebar subPath={subPath} />
         <main id="docs-main" className="docs-content">
+          {/* If the subpath isn't in PAGES, render the NotFound page. This
+              is reached if someone types a bad URL by hand or follows a
+              stale link to a page that was removed. */}
           {Page ? <Page /> : <NotFound subPath={subPath} />}
         </main>
       </div>

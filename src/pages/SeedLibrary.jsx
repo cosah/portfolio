@@ -1,3 +1,9 @@
+// SeedLibrary is the largest case study. It walks through a two-semester
+// mixed-methods research project at the University of Michigan Seed Library:
+// the problem, the methods, the synthesis, the design, the testing, the
+// results. Every reusable component on this site shows up here at least
+// once, so this file doubles as the most thorough usage example.
+
 import Navbar from '../components/Navbar'
 import CaseStudyHero from '../components/CaseStudyHero'
 import SectionLabel from '../components/SectionLabel'
@@ -25,16 +31,26 @@ import imgUserFlow from '../assets/seed-user-flow.png'
 import imgPhysicalV1 from '../assets/seed-physical-v1.png'
 import imgPhysicalV2 from '../assets/seed-physical-v2.png'
 import imgPhysicalV2Instructions from '../assets/seed-physical-v2-instructions.png'
+// ?raw is a Vite query that imports a file as a string instead of a URL.
+// Used here so the SVG markup can be passed directly to dangerouslySetInnerHTML.
 import methodMatrixSvg from '../assets/seed-method-matrix.svg?raw'
 
+// import.meta.glob is Vite's way to bulk-import every file matching a
+// glob pattern. eager: true means resolve them all at build time (vs
+// dynamically). The result is an object: { '../path1.png': module1, ... }.
+// We sort by path so the boards appear in deterministic alphabetical order.
 const affinityModules = import.meta.glob('../assets/seed-affinity/*.png', { eager: true })
 const AFFINITY_BOARDS = Object.entries(affinityModules)
   .sort(([a], [b]) => a.localeCompare(b))
   .map(([path, mod], i) => ({
+    // The default export of each image module is the URL string Vite
+    // generates (post-build it has a content hash for cache-busting).
     src: mod.default,
     label: `Board ${i + 1}`,
   }))
 
+// Same pattern for the evaluation boards. Glob + sort + map is the
+// standard Vite recipe for any "all files in this folder" need.
 const evaluationModules = import.meta.glob('../assets/seed-evaluation/*.png', { eager: true })
 const EVALUATION_BOARDS = Object.entries(evaluationModules)
   .sort(([a], [b]) => a.localeCompare(b))
@@ -73,6 +89,9 @@ const PERSONAS = [
   { ix: 'P2', name: 'Casey', src: imgPersona2, alt: 'Casey, curious beginner looking for a low-effort hobby', desc: 'Curious beginner looking for a low-effort hobby.', contain: true },
 ]
 
+// SECTIONS is the table-of-contents source. Each entry's id must match an
+// id="sec-N" on a real <div> in the JSX below; the TOC component uses
+// document.getElementById to spy on scroll position.
 const SECTIONS = [
   { num: 1, label: 'The problem', id: 'sec-1' },
   { num: 2, label: 'Methods', id: 'sec-2' },
@@ -101,6 +120,11 @@ const CONTRIBUTIONS = [
 ]
 
 export default function SeedLibrary({ onHome }) {
+  // The page is structured as one big render rather than broken into
+  // sub-components. Each numbered section is a <div className="section">
+  // with an id="sec-N" that matches the SECTIONS data above. The TOC
+  // component on the left rail observes those ids to highlight the
+  // currently-visible section.
   return (
     <div className="case-study-page">
       <a href="#main-content" className="skip-link">Skip to content</a>

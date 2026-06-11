@@ -1,3 +1,9 @@
+// Mintify is the project-management case study: leading a 10-person student
+// consulting team that redesigned Michigan debt court forms for a real
+// government client. Structurally similar to the other case studies, but
+// emphasizes process leadership (pods, decisions, cross-functional handoffs)
+// over individual craft.
+
 import Navbar from '../components/Navbar'
 import CaseStudyHero from '../components/CaseStudyHero'
 import SectionLabel from '../components/SectionLabel'

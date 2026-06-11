@@ -1,3 +1,9 @@
+// Roamio is the product-strategy case study: zero-to-one travel marketplace,
+// owned customer discovery from scratch. The structure shows the discovery
+// to design arc: research artifacts (lean canvas, value prop canvas, journey
+// map) then the actual product screens. PullQuote and BeforeAfterPair
+// components carry most of the synthesis weight here.
+
 import Navbar from '../components/Navbar'
 import CaseStudyHero from '../components/CaseStudyHero'
 import SectionLabel from '../components/SectionLabel'

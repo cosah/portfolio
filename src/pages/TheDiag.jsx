@@ -1,3 +1,9 @@
+// TheDiag is an advanced UX case study for a Michigan event-discovery iOS
+// app. The structure follows the same template as SeedLibrary: imports,
+// data arrays at the top, then a single component that renders the
+// numbered sections. The Create Event section uses a VideoSection for
+// the demo walkthrough and a paired natural-language flow demo.
+
 import Navbar from '../components/Navbar'
 import CaseStudyHero from '../components/CaseStudyHero'
 import SectionLabel from '../components/SectionLabel'

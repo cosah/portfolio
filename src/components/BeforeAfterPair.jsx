@@ -1,7 +1,17 @@
+// BeforeAfterPair shows two panels side by side: a "before" state on the
+// left and an "after" state on the right. Each panel can have one or more
+// images, an optional tag (like "4.32% completion"), and a list of
+// lettered annotations. Opening any image puts the user in a unified
+// lightbox carousel that walks across both panels, with the lightbox's
+// accent color tinted to indicate which side they're currently viewing.
+
 import { useState } from 'react'
 import Lightbox from './Lightbox'
 
+// Internal Panel component, used twice from the main BeforeAfterPair below.
+// kind is either 'before' or 'after' and drives styling (color tints).
 function Panel({ kind, label, tag, src, srcs, alt, placeholder, annotations, aspect, onZoom }) {
+  // Same single-vs-multi normalization pattern used in ImageSlot.
   const images = srcs && srcs.length > 0
     ? srcs.map((img) => ({ src: img.src, alt: img.alt || label }))
     : (src ? [{ src, alt: alt || label }] : [])
@@ -34,6 +44,9 @@ function Panel({ kind, label, tag, src, srcs, alt, placeholder, annotations, asp
         <div className="annotations">
           {annotations.map((text, i) => (
             <div key={i} className="ann">
+              {/* String.fromCharCode(97 + i) generates lowercase letters:
+                  97 is 'a', so the first annotation is 'a', the second
+                  is 'b', and so on. Used for the "a / b / c" bullets. */}
               <span className="ann-num">{String.fromCharCode(97 + i)}</span>
               <span>{text}</span>
             </div>
@@ -44,6 +57,9 @@ function Panel({ kind, label, tag, src, srcs, alt, placeholder, annotations, asp
   )
 }
 
+// Turns one panel's data (which may have a src or srcs) into a uniform
+// list of image objects tagged with kind. The combined output of both
+// panels is what feeds the lightbox carousel.
 function flattenPanel(panel, kind) {
   if (panel.srcs && panel.srcs.length > 0) {
     return panel.srcs.map((img) => ({
@@ -62,6 +78,11 @@ function flattenPanel(panel, kind) {
 export default function BeforeAfterPair({ before, after, aspect = '9x16' }) {
   const [openIdx, setOpenIdx] = useState(-1)
 
+  // Combine both panels into a single flat list for the lightbox. The
+  // afterOffset lets the "after" panel's click handlers translate their
+  // local index into the global combined index. Example: before has 2
+  // images, after has 3. Clicking the second "after" image is local
+  // index 1, global index 2 + 1 = 3.
   const beforeImages = flattenPanel(before, 'before')
   const afterImages = flattenPanel(after, 'after')
   const allImages = [...beforeImages, ...afterImages]
@@ -78,16 +99,21 @@ export default function BeforeAfterPair({ before, after, aspect = '9x16' }) {
           kind="before"
           aspect={aspect}
           {...before}
+          // Local index for the "before" panel maps directly to global index.
           onZoom={(localIdx = 0) => setOpenIdx(localIdx)}
         />
         <Panel
           kind="after"
           aspect={aspect}
           {...after}
+          // Local index for the "after" panel gets shifted by afterOffset.
           onZoom={(localIdx = 0) => setOpenIdx(afterOffset + localIdx)}
         />
       </div>
 
+      {/* The lightbox accent color reflects which kind the user is on:
+          'warn' (orange) for before, 'good' (yellow) for after. As they
+          navigate across the carousel, the accent changes. */}
       {current?.src && (
         <Lightbox
           items={hasNav ? allImages.map((it) => ({ src: it.src, alt: it.alt || it.label || '' })) : undefined}
