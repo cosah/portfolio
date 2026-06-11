@@ -93,7 +93,7 @@ portfolio/
 | `/roamio` | Roamio | Case study |
 | `/the-diag` | The Diag | Case study |
 | `/courts-audit` | Courts Audit | Case study |
-| `/about` | About | Hidden from nav until copy is finalized |
+| `/about` | About | Off-the-clock dossier: origins, hot takes, photos, loadout |
 | `/resume` | Resume | Embedded PDF |
 | `/docs` | **Docs** | This documentation |
 | `/audit` | Accessibility Audit | Internal · `noindex` |

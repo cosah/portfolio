@@ -16,13 +16,6 @@ const TODOS = [
     task: 'Run axe DevTools or WAVE against the production build.',
     notes: 'Code review can miss things only a runtime checker catches (computed contrast on overlaid gradients, dynamic ARIA state, image decode errors). Reconcile any new findings.',
   },
-  {
-    id: 'T4',
-    pri: 'p1',
-    cat: 'Content',
-    task: 'About page production.',
-    notes: 'Page is hidden behind a commented-out nav link. Replace every `[bracket]` placeholder with real bio copy. Drop actual photos into the Currently cards and the Origins collage. Re-enable the About nav link in `Navbar.jsx` line 124 and `Home.jsx` line 17.',
-  },
   // ---------- P2 (nice-to-have, ship-quality polish) ----------
   {
     id: 'T7',
