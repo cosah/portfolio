@@ -32,6 +32,11 @@
 
       gtag('config', 'G-8P2KSMW863', { send_page_view: false });
     </script>
+
+    <!-- RSS auto-discovery. Feed readers (NetNewsWire, Feedly, etc) pick
+         this up when the user pastes the site URL. Feed is generated at
+         build time by scripts/blog-rss.mjs. -->
+    <link rel="alternate" type="application/rss+xml" title="Anthony Shephard's Blog" href="/blog/feed.xml" />
   </head>
   <body>
     <div id="root"></div>

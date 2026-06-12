@@ -8,5 +8,6 @@ Allow: /
 Disallow: /audit
 Disallow: /todo
 Disallow: /layout-demo
+Disallow: /blog-editor
 
 Sitemap: https://anthonyships.com/sitemap.xml

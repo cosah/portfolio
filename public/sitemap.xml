@@ -285,4 +285,25 @@
     <priority>0.5</priority>
   </url>
 
+  <!-- ============ BLOG ============ -->
+
+  <url>
+    <loc>https://anthonyships.com/blog</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://anthonyships.com/blog/welcome</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://anthonyships.com/blog/feed.xml</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
 </urlset>

@@ -94,11 +94,14 @@ portfolio/
 | `/the-diag` | The Diag | Case study |
 | `/courts-audit` | Courts Audit | Case study |
 | `/about` | About | Off-the-clock dossier: origins, hot takes, photos, loadout |
+| `/blog` | Blog | Index of posts, filterable by tag |
+| `/blog/<slug>` | Blog post | Individual post rendered from `src/content/blog/<slug>.md` |
 | `/resume` | Resume | Embedded PDF |
 | `/docs` | **Docs** | This documentation |
 | `/audit` | Accessibility Audit | Internal · `noindex` |
 | `/todo` | Todo | Internal · `noindex` |
 | `/layout-demo` | Layout Demo | Internal · `noindex` |
+| `/blog-editor` | Blog editor | Internal · dev-only (production renders a notice; no editor code ships) |
 
 ---
 

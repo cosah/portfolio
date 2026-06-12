@@ -24,6 +24,7 @@ import './css/about.css'
 import './css/resume.css'
 import './css/audit.css'
 import './css/docs.css'
+import './css/blog.css'
 
 import Home from './pages/Home'
 import TheDiag from './pages/TheDiag'
@@ -37,8 +38,11 @@ import Resume from './pages/Resume'
 import AccessibilityAudit from './pages/AccessibilityAudit'
 import Todo from './pages/Todo'
 import Docs from './pages/Docs'
+import Blog from './pages/Blog'
+import BlogEditor from './pages/BlogEditor'
 import { CASE_STUDIES } from './data/caseStudies'
 import { findDocsPage } from './data/docsNav'
+import { findPost } from './data/blog'
 // The Seed Library expo poster doubles as the default Open Graph share image
 // for any route that isn't a case study (the case study hero replaces it).
 import seedHero from './assets/seed-expo-poster.png'
@@ -62,6 +66,8 @@ const ROUTES = {
   'audit': AccessibilityAudit,
   'todo': Todo,
   'docs': Docs,
+  'blog': Blog,
+  'blog-editor': BlogEditor,
 }
 
 // Reads the URL path and normalizes it into a route key. Strips leading and
@@ -104,6 +110,8 @@ const STATIC_TITLES = {
   todo: 'Todo',
   'layout-demo': 'Layout Demo',
   docs: 'Docs',
+  blog: 'Blog',
+  'blog-editor': 'Blog editor',
 }
 
 // Per-route meta descriptions. Used for <meta name="description">,
@@ -117,12 +125,14 @@ const PAGE_DESCRIPTIONS = {
   todo: "Internal open todos: content, accessibility, performance, engineering.",
   'layout-demo': "Internal layout demo for the symmetric content-column system.",
   docs: "Documentation for this portfolio repository. Architecture, design system, patterns, and every reusable component.",
+  blog: "Short notes from Anthony Shephard. Building, reading, cooking, and the occasional opinion.",
+  'blog-editor': "Internal dev-only blog editor.",
 }
 
 // Routes in this set get a noindex/nofollow robots meta tag and are also
 // listed as Disallow entries in public/robots.txt. They're reachable by URL
 // (useful for sharing with reviewers) but excluded from search indexing.
-const INTERNAL_ROUTES = new Set(['audit', 'todo', 'layout-demo'])
+const INTERNAL_ROUTES = new Set(['audit', 'todo', 'layout-demo', 'blog-editor'])
 
 // Builds the browser tab title for a given route. Sub-paths under /docs
 // (e.g. 'docs/components/lightbox') are unpacked here so each sub-page
@@ -133,6 +143,13 @@ function titleForRoute(routeKey) {
     const page = findDocsPage(subPath)
     const docsTitle = page ? `${page.title} · Docs` : 'Docs'
     return `${docsTitle} · ${SITE_NAME}`
+  }
+  // Blog sub-paths: '/blog/welcome' becomes "Welcome to the blog · Blog · ...".
+  if (routeKey.startsWith('blog/')) {
+    const slug = routeKey.slice('blog/'.length)
+    const post = findPost(slug)
+    const blogTitle = post ? `${post.title} · Blog` : 'Blog'
+    return `${blogTitle} · ${SITE_NAME}`
   }
   if (routeKey in STATIC_TITLES) {
     const v = STATIC_TITLES[routeKey]
@@ -151,14 +168,21 @@ function titleForRoute(routeKey) {
 function metaForRoute(routeKey) {
   const cs = CASE_STUDIES.find((c) => c.id === routeKey)
   const routeRoot = routeKey.split('/')[0]
+  // Blog post lookup: when the route is 'blog/<slug>', pull the post and
+  // use its excerpt as the description, its title in the meta tags, and
+  // its hero image as the og:image when one is set.
+  const post = routeKey.startsWith('blog/')
+    ? findPost(routeKey.slice('blog/'.length))
+    : null
   return {
     title: titleForRoute(routeKey),
     description:
+      post?.excerpt ||
       cs?.subtitle ||
       PAGE_DESCRIPTIONS[routeKey] ||
       PAGE_DESCRIPTIONS[routeRoot] ||
       DEFAULT_DESCRIPTION,
-    image: cs?.heroImage || seedHero,
+    image: post?.heroImage || cs?.heroImage || seedHero,
     noindex: INTERNAL_ROUTES.has(routeKey) || INTERNAL_ROUTES.has(routeRoot),
   }
 }
@@ -250,6 +274,13 @@ export default function App() {
       // Clicking the link to the current page is a no-op; don't push a
       // duplicate history entry.
       if (target === window.location.pathname + window.location.search + window.location.hash) return
+      // Give any interested component a chance to veto the navigation.
+      // The blog editor uses this to prompt for confirmation when the
+      // form has unsaved changes. The event is cancelable; calling
+      // preventDefault() on it aborts the navigation entirely.
+      const navEv = new CustomEvent('spa-nav-attempt', { cancelable: true })
+      window.dispatchEvent(navEv)
+      if (navEv.defaultPrevented) return
       window.history.pushState(null, '', target)
       setRoute(getRoute())
       window.scrollTo({ top: 0, behavior: 'instant' })

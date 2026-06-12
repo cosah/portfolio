@@ -52,6 +52,27 @@ const TODOS = [
     task: 'Lighthouse audit against production.',
     notes: 'Once the site is deployed, run Lighthouse for Performance / Accessibility / Best Practices / SEO. Track scores over time as a regression signal.',
   },
+  {
+    id: 'T12',
+    pri: 'p2',
+    cat: 'Blog',
+    task: 'Blog v3.1: magazine-grid card redesign.',
+    notes: 'Replace the flex-row card with a CSS Grid that reflows 3 → 2 → 1 columns. Each card gets a 16:9 top-banner hero, meta line, title, excerpt, tags. Posts without `heroImage` get a styled placeholder. Tags cap at three pills + a "+N more" chip. Full spec in plan section v3.1.',
+  },
+  {
+    id: 'T13',
+    pri: 'p2',
+    cat: 'Blog',
+    task: 'Blog v3.2: toolbar alignment buttons (text + images).',
+    notes: 'Add Left/Center/Right buttons after the list buttons in `BlogEditorToolbar`. Detection: image-only selections modify the image-attrs `.center` shorthand; everything else wraps in `<div class="blog-align-*">`. Toggle off by reapplying the same direction. Full spec in plan section v3.2.',
+  },
+  {
+    id: 'T14',
+    pri: 'p2',
+    cat: 'Blog',
+    task: 'Blog v3.3: redirect to post after Save and Publish.',
+    notes: 'In `BlogEditor.jsx` `doSave`, add `pushState` + dispatched `popstate` to `/blog/<slug>` on success when `draft === false`. Save Draft does not redirect. Full spec in plan section v3.3.',
+  },
 
   // ---------- P3 (back-burner) ----------
   {
@@ -60,6 +81,20 @@ const TODOS = [
     cat: 'Eng',
     task: 'Decide what to do with `/layout-demo` and `/audit` / `/todo` routes pre-ship.',
     notes: 'All three are unlisted but publicly accessible if anyone guesses the URL. Options: leave as-is, password-gate them, or remove from the deploy build via a `NODE_ENV` check.',
+  },
+  {
+    id: 'T15',
+    pri: 'p3',
+    cat: 'Blog',
+    task: 'Blog v3 backlog: tag cloud, search, scheduled posts, backup/export.',
+    notes: 'Tag cloud at the bottom of the index (frequency-sized). Client-side search (Fuse.js or similar over title / body / tags). Scheduled posts: filter out future-dated posts at build time. Backup/export: `npm run blog:backup` script that zips `src/content/blog/` and `public/blog-assets/`.',
+  },
+  {
+    id: 'T16',
+    pri: 'p3',
+    cat: 'Analytics',
+    task: 'Cloudflare Workers proxy in front of Google Analytics.',
+    notes: 'Distant. Move DNS to Cloudflare, write a Worker on `/__analytics/*` that forwards events to GA Measurement Protocol server-side. Client request goes to `anthonyships.com/__analytics/collect` instead of `googletagmanager.com/gtag/js`, dodging adblockers. Restores visibility on the ~30-40% of audience using content blockers. Current `typeof window.gtag === "function"` guard means clean degradation, so not urgent.',
   },
 ]
 

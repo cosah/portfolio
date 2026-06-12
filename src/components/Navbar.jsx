@@ -159,6 +159,7 @@ export default function Navbar({
         </span>
         <span className="nav-links">
           <a href="/about">About</a>
+          <a href="/blog">Blog</a>
           <a href="/resume">Resume</a>
           {/* External links open in a new tab. rel="noopener noreferrer"
               is a security best practice: noopener prevents the new tab

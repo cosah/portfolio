@@ -5,11 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/spa-fallback.mjs",
+    "build": "vite build && node scripts/spa-fallback.mjs && node scripts/blog-rss.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "marked": "^18.0.5",
+    "marked-highlight": "^2.2.4",
+    "prismjs": "^1.30.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },
