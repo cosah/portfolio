@@ -285,9 +285,6 @@ export default function About({ onHome }) {
               <p>
                 I always wanted to build things, Legos, puzzles, and science kits; anything I could take apart and put back together. I also disappeared into video games. Computer science was where the two met. Design came a little later, the same instinct to build and iterate, but at a larger scale, where the system includes the people using it.
               </p>
-              <p>
-                I always wanted to play hockey as a kid. I never did. As an adult, I'm finally learning, and I hope to find a league to join next winter.
-              </p>
             </div>
             <button
               type="button"
