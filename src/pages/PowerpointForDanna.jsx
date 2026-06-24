@@ -335,17 +335,20 @@ function renderSlide(i, h) {
     case 2:
       return (
         <>
-          <p className="dpz-eyebrow">Slide 03 · Qualifications</p>
+          {/* The install-service stamp has two homes: above the title on
+              desktop (--inline), and stamped onto the header rule on mobile
+              (--eyebrow) so the slide isn't as tall. CSS shows one per
+              breakpoint; only one is ever visible. */}
+          <p className="dpz-eyebrow dpz-eyebrow--qual">
+            Slide 03 · Qualifications
+            <span className="dpz-stamp dpz-stamp--eyebrow">✓ Certified install service*</span>
+          </p>
           <div className="dpz-split">
             <div>
-              {/* Stamp sits above the title on desktop; on mobile it tucks to
-                  the right of the title (see .dpz-qual-head) to save a line. */}
-              <div className="dpz-qual-head">
-                <span className="dpz-stamp">✓ Certified install service*</span>
-                <h2 className="dpz-h" style={{ margin: '0 0 0.3em' }}>
-                  I will, in fact, hang your curtains.
-                </h2>
-              </div>
+              <span className="dpz-stamp dpz-stamp--inline">✓ Certified install service*</span>
+              <h2 className="dpz-h" style={{ margin: '0 0 0.3em' }}>
+                I will, in fact, hang your curtains.
+              </h2>
               <p className="dpz-body">
                 You mentioned the curtains. Consider this a formal bid. Shephard Curtain Co. brings the
                 drill, the level, and an unreasonable respect for a straight rod.

@@ -273,17 +273,10 @@
 }
 @media (max-width: 720px) {
   .dpz-split { grid-template-columns: 1fr; }
-  /* Tuck the install-service stamp to the right of the title so it no longer
-     eats its own line — lets the rest of the slide ride up a touch. */
-  .dpz-qual-head {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  .dpz-qual-head .dpz-stamp { margin-bottom: 0; flex: none; }
-  .dpz-qual-head .dpz-h { flex: 1; min-width: 0; }
+  /* Move the install-service stamp up onto the header rule and out of the
+     content, so the slide rides up and isn't as tall. */
+  .dpz-stamp--inline { display: none; }
+  .dpz-stamp--eyebrow { display: inline-flex; }
   /* Stacked full-width photos squash into wide letterboxes that crop the
      windows out. Sit the pair side by side instead, each a tall-ish box so
      the window reads. The single-photo precedent slide stays full width. */
@@ -310,6 +303,20 @@
   padding: 5px 12px;
   margin-bottom: 10px;
   transform: rotate(-2deg);
+}
+
+/* The header-rule variant: rides at the right end of the eyebrow and overlaps
+   the rule so it reads as a stamp pressed onto the line. Hidden on desktop,
+   where the stamp lives above the title instead (revealed in the mobile query).
+   order:1 puts it after the flex:1 ::after rule; the slide-colored background
+   masks the rule passing behind it; the negative margin pulls it onto the line. */
+.dpz-stamp--eyebrow {
+  display: none;
+  order: 1;
+  margin: 0 0 0 -10px;
+  background: var(--dpz-slide);
+  position: relative;
+  z-index: 1;
 }
 
 .dpz-spec {
