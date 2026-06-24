@@ -354,7 +354,7 @@ function renderSlide(i, h) {
                 drill, the level, and an unreasonable respect for a straight rod.
               </p>
               <ul className="dpz-spec">
-                <li><span className="k">Tools</span><span className="v">Cordless drill, laser level, stud finder, anchors rated well past spec</span></li>
+                <li><span className="k">Tools</span><span className="v">Cordless drill, level, <em>stud finder</em>, wall anchors</span></li>
                 <li><span className="k">Lead time</span><span className="v">Same day. Sooner if you bake.</span></li>
                 <li><span className="k">Warranty</span><span className="v">Indefinite. References available (me).</span></li>
               </ul>
@@ -382,7 +382,7 @@ function renderSlide(i, h) {
           <p className="dpz-eyebrow">Slide 04 · Synergy analysis</p>
           <div className="dpz-split">
             <div>
-              <h2 className="dpz-h" style={{ margin: '0 0 0.3em' }}>You bake. I like things <em>hot</em>. I'd call that compatible.</h2>
+              <h2 className="dpz-h" style={{ margin: '0 0 0.3em' }}>You bake. I <em>cook</em>. Sounds like compatability.</h2>
               <p className="dpz-body">
                 You bake, sometimes a little too long. I prefer crispy confections. Where most people would reach for a fire extinguisher, I'd reach for a fork.
               </p>
@@ -421,13 +421,13 @@ function renderSlide(i, h) {
               <h2 className="dpz-h" style={{ margin: '0 0 0.3em' }}>You kayaked Pictured Rocks. <em>So did I.</em></h2>
               <p className="dpz-body">
                 We did it separately, on the same cold and impossibly clear water, under the same cliffs,
-                probably a summer or two apart. A statistician would call that a coincidence.
+                probably a summer or two apart. You could say that is a coincidence.
               </p>
               <p className="dpz-body">
                 I wouldn't. I'd call it a <em>head start</em>. We already know we like the same water, so
-                going back makes sense to me, and I'd rather we went in the same boat this time. Why not?
+                going back makes sense to me. Why not in the same boat this time?
               </p>
-              <p className="dpz-footnote">same lake, same instinct, two different summers</p>
+              <p className="dpz-footnote">same lake, same people, two different summers</p>
             </div>
             <div className="dpz-proof dpz-proof--one">
               <Photo
