@@ -273,10 +273,6 @@
 }
 @media (max-width: 720px) {
   .dpz-split { grid-template-columns: 1fr; }
-  /* Move the install-service stamp up onto the header rule and out of the
-     content, so the slide rides up and isn't as tall. */
-  .dpz-stamp--inline { display: none; }
-  .dpz-stamp--eyebrow { display: inline-flex; }
   /* Stacked full-width photos squash into wide letterboxes that crop the
      windows out. Sit the pair side by side instead, each a tall-ish box so
      the window reads. The single-photo precedent slide stays full width. */
@@ -324,6 +320,14 @@
   margin: 0;
   background: var(--dpz-slide);
   z-index: 2;
+}
+
+/* Mobile: hide the above-title stamp, reveal the corner stamp. This block sits
+   AFTER the base rules above on purpose — equal specificity means source order
+   decides, so placing the reveal last is what lets it win on mobile. */
+@media (max-width: 720px) {
+  .dpz-stamp--inline { display: none; }
+  .dpz-stamp--eyebrow { display: inline-flex; }
 }
 
 .dpz-spec {
