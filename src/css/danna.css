@@ -316,6 +316,10 @@
   position: absolute;
   top: 0;
   right: 0;
+  /* Force the pill to its single-line content width and let it overflow left,
+     rather than being squeezed by the containing block into a 2-line pill. */
+  width: max-content;
+  white-space: nowrap;
   transform: rotate(-2deg);
   margin: 0;
   background: var(--dpz-slide);
