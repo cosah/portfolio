@@ -73,6 +73,25 @@
     0 8px 24px -12px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   display: flex;
+  /* Let the browser own vertical scrolling (dense slides scroll inside the
+     frame) while our JS owns horizontal swipes — no preventDefault needed. */
+  touch-action: pan-y;
+}
+
+/* The drag layer: while a finger is down it tracks horizontally 1:1 (no
+   transition); on release it eases back to 0 or hands off to the next slide.
+   It sits between the static frame and the keyed/animated inner so the
+   finger-follow transform never fights the entrance animation's transform. */
+.dpz-drag {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+  will-change: transform;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.dpz-drag.is-snapping {
+  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 /* On short/narrow screens, drop the rigid 16:9 so content never clips. */
@@ -104,8 +123,8 @@
 
 /* Slide entrance. Re-triggered by keying the slide on the active index. */
 @keyframes dpz-slide-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translate(var(--dpz-enter-x, 0), var(--dpz-enter-y, 10px)); }
+  to   { opacity: 1; transform: translate(0, 0); }
 }
 .dpz-slide-inner {
   animation: dpz-slide-in 380ms cubic-bezier(0.2, 0.7, 0.2, 1) both;

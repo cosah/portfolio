@@ -104,6 +104,12 @@ function Photo({ src, alt, tag }) {
   )
 }
 
+// How far a finger has to travel (px) before a swipe commits to changing
+// slides, and how much the slide rubber-bands when dragged past the first/last
+// slide. Tuned for a phone: a flick of an inch or so turns the page.
+const SWIPE_THRESHOLD = 52
+const SWIPE_EDGE_RESISTANCE = 0.32
+
 export default function PowerpointForDanna() {
   const [i, setI] = useState(0)
   const [accepted, setAccepted] = useState(false)
@@ -113,7 +119,59 @@ export default function PowerpointForDanna() {
   const [noPos, setNoPos] = useState({ x: 0, y: 0 })
   const actionsRef = useRef(null)
 
-  const go = (next) => setI((cur) => Math.max(0, Math.min(LAST, next ?? cur)))
+  // Touch-swipe state. `drag` is the live horizontal offset the slide follows
+  // the finger by; `dragging` removes the snap transition so the follow is 1:1;
+  // `dir` (1 next / -1 prev) drives the directional entrance animation so a
+  // swiped slide slides in from the side the finger pulled it. The ref holds
+  // per-gesture scratch (origin + locked axis) that must not trigger renders.
+  const [drag, setDrag] = useState(0)
+  const [dragging, setDragging] = useState(false)
+  const [dir, setDir] = useState(0)
+  const touch = useRef(null)
+
+  const go = (next) => {
+    const target = Math.max(0, Math.min(LAST, next ?? i))
+    setDir(target > i ? 1 : target < i ? -1 : 0)
+    setI(target)
+  }
+
+  // --- Touch swipe ------------------------------------------------------
+  // We lock to a single axis on first move: a mostly-vertical drag is left to
+  // the browser (dense slides scroll inside the frame), a mostly-horizontal
+  // one becomes a page turn. touch-action: pan-y on the frame means we never
+  // have to preventDefault, so vertical scrolling stays native and smooth.
+  const onTouchStart = (e) => {
+    if (accepted) return
+    const t = e.touches[0]
+    touch.current = { x0: t.clientX, y0: t.clientY, dx: 0, axis: null }
+  }
+  const onTouchMove = (e) => {
+    const s = touch.current
+    if (!s) return
+    const t = e.touches[0]
+    const dx = t.clientX - s.x0
+    const dy = t.clientY - s.y0
+    if (!s.axis) {
+      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return
+      s.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
+      if (s.axis === 'x') setDragging(true)
+    }
+    if (s.axis !== 'x') return
+    // Rubber-band when there's no slide to reveal in that direction.
+    let d = dx
+    if ((i === 0 && d > 0) || (i === LAST && d < 0)) d *= SWIPE_EDGE_RESISTANCE
+    s.dx = d
+    setDrag(d)
+  }
+  const onTouchEnd = () => {
+    const s = touch.current
+    touch.current = null
+    setDragging(false)
+    setDrag(0)
+    if (!s || s.axis !== 'x') return
+    if (s.dx <= -SWIPE_THRESHOLD) go(i + 1)
+    else if (s.dx >= SWIPE_THRESHOLD) go(i - 1)
+  }
 
   // Arrow-key navigation, like a real presentation. Disabled once accepted so
   // the payoff screen owns the view.
@@ -144,10 +202,25 @@ export default function PowerpointForDanna() {
   return (
     <div className="dpz-root">
       <div className="dpz-stage">
-        <div className="dpz-slide">
-          {/* key on i so the entrance animation replays each slide change */}
-          <div className="dpz-slide-inner" key={i}>
-            {renderSlide(i, { go, accept, dodge, noDodging, noPos, actionsRef })}
+        <div
+          className="dpz-slide"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          {/* dpz-drag follows the finger horizontally and snaps back/over on
+              release; the keyed inner replays the entrance on each change. */}
+          <div
+            className={`dpz-drag${dragging ? '' : ' is-snapping'}`}
+            style={{ transform: `translateX(${drag}px)` }}
+          >
+            <div
+              className="dpz-slide-inner"
+              key={i}
+              style={dir ? { '--dpz-enter-x': dir > 0 ? '40px' : '-40px', '--dpz-enter-y': '0px' } : undefined}
+            >
+              {renderSlide(i, { go, accept, dodge, noDodging, noPos, actionsRef })}
+            </div>
           </div>
         </div>
       </div>
