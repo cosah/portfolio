@@ -273,6 +273,16 @@
 }
 @media (max-width: 720px) {
   .dpz-split { grid-template-columns: 1fr; }
+  /* Stacked full-width photos squash into wide letterboxes that crop the
+     windows out. Sit the pair side by side instead, each a tall-ish box so
+     the window reads. The single-photo precedent slide stays full width. */
+  .dpz-proof {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    height: auto;
+  }
+  .dpz-proof--one { grid-template-columns: 1fr; }
+  .dpz-proof .dpz-photo { aspect-ratio: 4 / 5; }
 }
 
 .dpz-stamp {

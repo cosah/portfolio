@@ -19,8 +19,11 @@ import { useEffect, useRef, useState } from 'react'
 import '../css/danna.css'
 // The curtain proof-of-work photos. A genuine before/after: bare window with
 // blinds and a curtain-rod kit on the floor, then the finished hang.
-import curtainsBefore from '../assets/danna/IMG_7693.JPEG'
-import curtainsAfter from '../assets/danna/IMG_7753.JPEG'
+// Reframed crops centered on the window (with margin) so the actual
+// blinds/curtains read at any container aspect — the originals are the
+// untouched IMG_7693/IMG_7753 alongside these.
+import curtainsBefore from '../assets/danna/IMG_7693-crop.JPEG'
+import curtainsAfter from '../assets/danna/IMG_7753-crop.JPEG'
 // Synergy-slide food photos (the cooking and the eating) and the precedent
 // slide's on-the-water photo.
 import pastaPhoto from '../assets/danna/IMG_2632.JPEG'
