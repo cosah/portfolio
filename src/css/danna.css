@@ -305,18 +305,21 @@
   transform: rotate(-2deg);
 }
 
-/* The header-rule variant: rides at the right end of the eyebrow and overlaps
-   the rule so it reads as a stamp pressed onto the line. Hidden on desktop,
-   where the stamp lives above the title instead (revealed in the mobile query).
-   order:1 puts it after the flex:1 ::after rule; the slide-colored background
-   masks the rule passing behind it; the negative margin pulls it onto the line. */
+/* The corner variant: absolutely pinned to the top-right corner of the slide so
+   it can never wrap to a second line — it just overlaps whatever's behind it,
+   masked by the slide-colored background. Hidden on desktop, where the stamp
+   lives above the title instead (revealed in the mobile query). The eyebrow is
+   the first, full-width element, so its top-right corner is the page's. */
+.dpz-eyebrow--qual { position: relative; }
 .dpz-stamp--eyebrow {
   display: none;
-  order: 1;
-  margin: 0 0 0 -10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: rotate(-2deg);
+  margin: 0;
   background: var(--dpz-slide);
-  position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .dpz-spec {
