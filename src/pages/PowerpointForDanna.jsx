@@ -427,13 +427,13 @@ function renderSlide(i, h) {
                 I wouldn't. I'd call it a <em>head start</em>. We already know we like the same water, so
                 going back makes sense to me. Why not in the same boat this time?
               </p>
-              <p className="dpz-footnote">same lake, same people, two different summers</p>
+              <p className="dpz-footnote">find me on the Huron this summer</p>
             </div>
             <div className="dpz-proof dpz-proof--one">
               <Photo
                 src={waterPhoto}
                 alt="Anthony on the water with friends, floating the river on a sunny day"
-                tag="Exhibit E · skippering on different water"
+                tag="Exhibit E · skippering on different waters"
               />
             </div>
           </div>
