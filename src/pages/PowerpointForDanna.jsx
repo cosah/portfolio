@@ -338,10 +338,14 @@ function renderSlide(i, h) {
           <p className="dpz-eyebrow">Slide 03 · Qualifications</p>
           <div className="dpz-split">
             <div>
-              <span className="dpz-stamp">✓ Certified install service*</span>
-              <h2 className="dpz-h" style={{ margin: '0 0 0.3em' }}>
-                I will, in fact, hang your curtains.
-              </h2>
+              {/* Stamp sits above the title on desktop; on mobile it tucks to
+                  the right of the title (see .dpz-qual-head) to save a line. */}
+              <div className="dpz-qual-head">
+                <span className="dpz-stamp">✓ Certified install service*</span>
+                <h2 className="dpz-h" style={{ margin: '0 0 0.3em' }}>
+                  I will, in fact, hang your curtains.
+                </h2>
+              </div>
               <p className="dpz-body">
                 You mentioned the curtains. Consider this a formal bid. Shephard Curtain Co. brings the
                 drill, the level, and an unreasonable respect for a straight rod.

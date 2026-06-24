@@ -273,6 +273,17 @@
 }
 @media (max-width: 720px) {
   .dpz-split { grid-template-columns: 1fr; }
+  /* Tuck the install-service stamp to the right of the title so it no longer
+     eats its own line — lets the rest of the slide ride up a touch. */
+  .dpz-qual-head {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .dpz-qual-head .dpz-stamp { margin-bottom: 0; flex: none; }
+  .dpz-qual-head .dpz-h { flex: 1; min-width: 0; }
   /* Stacked full-width photos squash into wide letterboxes that crop the
      windows out. Sit the pair side by side instead, each a tall-ish box so
      the window reads. The single-photo precedent slide stays full width. */
