@@ -28,3 +28,8 @@ dist-ssr
 
 # Personal writing samples used to calibrate Claude's voice. Never shared.
 writing-samples/
+
+# Private, share-by-link "For Danna" page. Kept locally, never published.
+src/pages/PowerpointForDanna.jsx
+src/css/danna.css
+src/assets/danna/

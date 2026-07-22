@@ -40,10 +40,6 @@ import Todo from './pages/Todo'
 import Docs from './pages/Docs'
 import Blog from './pages/Blog'
 import BlogEditor from './pages/BlogEditor'
-// A private, unlisted page (shared by link only). Registered as a route and
-// marked noindex below, but deliberately kept out of sitemap.xml and
-// robots.txt so the URL isn't advertised.
-import PowerpointForDanna from './pages/PowerpointForDanna'
 import { CASE_STUDIES } from './data/caseStudies'
 import { findDocsPage } from './data/docsNav'
 import { findPost } from './data/blog'
@@ -72,7 +68,6 @@ const ROUTES = {
   'docs': Docs,
   'blog': Blog,
   'blog-editor': BlogEditor,
-  'powerpoint_for_danna': PowerpointForDanna,
 }
 
 // Reads the URL path and normalizes it into a route key. Strips leading and
@@ -117,7 +112,6 @@ const STATIC_TITLES = {
   docs: 'Docs',
   blog: 'Blog',
   'blog-editor': 'Blog editor',
-  powerpoint_for_danna: 'For Danna',
 }
 
 // Per-route meta descriptions. Used for <meta name="description">,
@@ -133,16 +127,12 @@ const PAGE_DESCRIPTIONS = {
   docs: "Documentation for this portfolio repository. Architecture, design system, patterns, and every reusable component.",
   blog: "Short notes from Anthony Shephard. Building, reading, cooking, and the occasional opinion.",
   'blog-editor': "Internal dev-only blog editor.",
-  powerpoint_for_danna: "A short proposal. Six slides. One ask.",
 }
 
-// Routes in this set get a noindex/nofollow robots meta tag. Most are also
+// Routes in this set get a noindex/nofollow robots meta tag and are also
 // listed as Disallow entries in public/robots.txt. They're reachable by URL
 // (useful for sharing with reviewers) but excluded from search indexing.
-// Exception: 'powerpoint_for_danna' is noindex here but intentionally NOT in
-// robots.txt or sitemap.xml — it's a private share-by-link page, and listing
-// the path in robots.txt would only advertise it.
-const INTERNAL_ROUTES = new Set(['audit', 'todo', 'layout-demo', 'blog-editor', 'powerpoint_for_danna'])
+const INTERNAL_ROUTES = new Set(['audit', 'todo', 'layout-demo', 'blog-editor'])
 
 // Builds the browser tab title for a given route. Sub-paths under /docs
 // (e.g. 'docs/components/lightbox') are unpacked here so each sub-page

@@ -14,6 +14,7 @@ The docs cover architecture, routing, the design system, every reusable componen
 - **Self-audited accessibility** — WCAG 2.1 AA, 11 findings resolved across two passes (see [`/audit`](https://anthonyships.com/audit))
 - **Per-route SEO** — `document.title`, `<meta name="description">`, Open Graph, Twitter Cards, and `robots` all update dynamically per route, with static fallbacks in `index.html` for crawlers that don't run JavaScript
 - **HTML5 history-API routing in ~60 lines** — no router library; clean URLs (`/seed-library`, not `/#/seed-library`); a tiny SPA-fallback step at build time makes GitHub Pages serve `index.html` on any path
+- **File-based blog with a dev-only editor** — posts are Markdown; a two-pane live-preview editor at `/blog-editor` writes them to disk through a custom Vite plugin (image upload, drafts, tag autocomplete) and ships **no code to production**
 - **GA4 analytics** — manual `page_view` events fired per route change, with auto page-view disabled to avoid double-counting
 
 ### Case studies
@@ -66,9 +67,11 @@ portfolio/
 │   └── *-demo.mp4           # Video demos
 ├── src/
 │   ├── assets/              # Images / SVGs imported by JS (hashed by Vite)
-│   ├── components/          # Reusable React components (23 of them)
+│   ├── components/          # Reusable React components (26 of them)
 │   ├── pages/               # One file per route
-│   ├── data/                # Static content (caseStudies, docsNav)
+│   ├── content/blog/        # Blog posts as Markdown (one file per slug)
+│   ├── data/                # Static content (caseStudies, docsNav, blog)
+│   ├── hooks/               # Custom React hooks
 │   ├── css/                 # Global CSS modules
 │   ├── App.jsx              # Route registry + meta-tag/analytics wiring
 │   └── main.jsx             # React mount point
@@ -146,13 +149,14 @@ The full technical documentation lives at [`/docs`](https://anthonyships.com/doc
 
 ## Internal pages
 
-Three routes are unlisted in production navigation but accessible if you know the URL:
+Several routes are unlisted in production navigation but accessible if you know the URL:
 
 - **[`/audit`](https://anthonyships.com/audit)** — WCAG 2.1 AA self-audit. 11 findings, all resolved.
 - **[`/todo`](https://anthonyships.com/todo)** — Open work across content, accessibility, performance, and engineering.
 - **[`/layout-demo`](https://anthonyships.com/layout-demo)** — Visualization of the symmetric content-column system.
+- **`/blog-editor`** — Dev-only blog editor. Production renders a notice; no editor code ships in the bundle.
 
-All three are marked `noindex, nofollow` for search engines.
+These are all marked `noindex, nofollow` for search engines and are listed as `Disallow` entries in `robots.txt`.
 
 ---
 

@@ -227,11 +227,11 @@ function Overview() {
       path=""
     >
       <p>
-        The portfolio is a single-page React app built with Vite. It uses hash-based routing
-        (no server-side fallback required) and ships as a static bundle to GitHub Pages.
-        These docs are a sibling route at <code>/docs</code>; they are intentionally not
-        linked from the main site and exist primarily so the GitHub README can point reviewers
-        at structured documentation.
+        The portfolio is a single-page React app built with Vite. It uses HTML5 history-API
+        routing for clean URLs (a build-time SPA fallback lets GitHub Pages serve it on any
+        path) and ships as a static bundle. These docs are a sibling route at <code>/docs</code>;
+        they are intentionally not linked from the main site and exist primarily so the GitHub
+        README can point reviewers at structured documentation.
       </p>
 
       <h2>What's in here</h2>
@@ -245,12 +245,16 @@ function Overview() {
           content-column system.
         </li>
         <li>
-          <strong>Patterns</strong> — hash routing, SEO meta tags, GA analytics wiring, and the
-          accessibility patterns that came out of the WCAG 2.1 AA self-audit.
+          <strong>Patterns</strong> — history-API routing, SEO meta tags, GA analytics wiring,
+          and the accessibility patterns that came out of the WCAG 2.1 AA self-audit.
         </li>
         <li>
           <strong>Data</strong> — the shape of <code>CASE_STUDIES</code>, which drives the home
           page, the navbar dropdown, and per-route SEO.
+        </li>
+        <li>
+          <strong>Blog</strong> — the file-based blog: Markdown posts, the shared frontmatter
+          parser, the Markdown renderer, and the build-time RSS feed.
         </li>
         <li>
           <strong>Components</strong> — every reusable React component in{' '}
@@ -260,9 +264,10 @@ function Overview() {
 
       <h2>Tech stack</h2>
       <ul>
-        <li>React 19 (no router library — hash-based routing in ~30 lines)</li>
-        <li>Vite 5 (dev server, build, asset pipeline)</li>
+        <li>React 19 (no router library — history-API routing in ~60 lines)</li>
+        <li>Vite (dev server, build, asset pipeline)</li>
         <li>Plain CSS with custom properties (no Tailwind, no CSS-in-JS)</li>
+        <li>marked + Prism for the Markdown blog</li>
         <li>Google Analytics 4 via <code>gtag.js</code></li>
         <li>Deployed to GitHub Pages</li>
       </ul>
@@ -311,8 +316,9 @@ npm run dev`}
       <h2>Available scripts</h2>
       <PropsTable rows={[
         { name: 'npm run dev', type: 'dev server', desc: 'Vite hot-reload dev server.' },
-        { name: 'npm run build', type: 'production build', desc: 'Produces optimized static bundle in dist/.' },
+        { name: 'npm run build', type: 'production build', desc: 'Produces optimized static bundle in dist/, then writes the SPA fallback and RSS feed.' },
         { name: 'npm run preview', type: 'preview build', desc: 'Serves the production build locally for smoke-testing.' },
+        { name: 'npm run lint', type: 'lint', desc: 'Runs ESLint over the project.' },
       ]} />
 
       <h2>First places to look</h2>
@@ -352,14 +358,19 @@ function ProjectStructure() {
 │   ├── share-default.png    # Default OG share image
 │   ├── *-demo.mp4           # Video demos
 │   └── ...
+├── public/blog-assets/      # Blog images (uploaded by the dev-only editor)
 ├── src/
 │   ├── assets/              # Images / SVGs imported by JS (hashed by Vite)
 │   ├── components/          # Reusable React components (Navbar, Lightbox, …)
 │   ├── pages/               # One file per route (Home, SeedLibrary, …)
-│   ├── data/                # Static content: caseStudies, docsNav
+│   ├── content/blog/        # Blog posts as Markdown (one file per slug)
+│   ├── data/                # Static content: caseStudies, docsNav, blog
+│   ├── hooks/               # Custom React hooks
 │   ├── css/                 # Global CSS modules (variables, layout, …)
 │   ├── App.jsx              # Route registry, meta-tag + analytics wiring
 │   └── main.jsx             # React mount point
+├── vite-plugins/            # Dev-only blog-writer (editor save/upload)
+├── scripts/                 # Postbuild: spa-fallback + blog-rss
 ├── index.html               # Single HTML entry; static fallback meta tags
 ├── vite.config.js
 └── package.json`}
@@ -400,6 +411,7 @@ function ProjectStructure() {
         { name: 'components.css', type: 'components', desc: 'Styles for everything in src/components/. The biggest file.' },
         { name: 'index.css', type: 'home', desc: 'Home page only.' },
         { name: 'about.css, resume.css', type: 'page-specific', desc: 'About and Resume pages.' },
+        { name: 'blog.css', type: 'blog', desc: 'Blog index, post, and dev-only editor.' },
         { name: 'audit.css', type: 'internal', desc: 'Accessibility Audit + Todo pages (they share table styles).' },
         { name: 'docs.css', type: 'docs', desc: 'This documentation site.' },
       ]} />
@@ -573,13 +585,21 @@ function BuildDeploy() {
       </p>
       <Code lang="json" head="package.json">
 {`"scripts": {
-  "build": "vite build && node scripts/spa-fallback.mjs"
+  "build": "vite build && node scripts/spa-fallback.mjs && node scripts/blog-rss.mjs"
 }`}
       </Code>
       <p>
         The fallback script writes <code>dist/404.html</code> with identical content.
         The HTTP status is technically <code>404</code>, but the rendered content is the
         SPA, which then routes from <code>window.location.pathname</code>.
+      </p>
+
+      <h2>RSS feed</h2>
+      <p>
+        A second postbuild step, <code>scripts/blog-rss.mjs</code>, reads the Markdown
+        posts through the same shared frontmatter parser the app uses and writes{' '}
+        <code>dist/blog/feed.xml</code> (drafts excluded). See{' '}
+        <a href="/docs/blog">Blog System</a> for the full pipeline.
       </p>
 
       <h2>Base path</h2>
@@ -1214,6 +1234,239 @@ export const CASE_STUDIES = [
   },
 ]`}
       </Code>
+    </PageWrap>
+  )
+}
+
+/* ============================================================
+   Blog
+   ============================================================ */
+
+function BlogSystem() {
+  return (
+    <PageWrap
+      eyebrow="BLOG"
+      title="Blog System"
+      lede="A file-based blog. Posts are Markdown files; everything else — routing, SEO, the RSS feed — is derived from them at build time."
+      path="blog"
+    >
+      <p>
+        The blog has no CMS and no database. Each post is a Markdown file in{' '}
+        <code>src/content/blog/</code>. Vite loads them all at build time, a shared
+        parser turns the frontmatter into post objects, and the rest of the app
+        (the index, individual posts, per-route SEO, the RSS feed) reads from that
+        one derived list.
+      </p>
+
+      <h2>Authoring a post</h2>
+      <p>
+        Drop a <code>.md</code> file in <code>src/content/blog/</code>. The filename
+        becomes the slug unless the frontmatter overrides it. Frontmatter is a{' '}
+        <code>---</code>-fenced block at the top of the file:
+      </p>
+      <Code lang="markdown" head="src/content/blog/welcome.md">
+{`---
+title: Welcome to the blog
+slug: welcome
+date: 2026-06-12
+excerpt: A short note on what this blog is, what it isn't, and what to expect.
+tags: [meta]
+draft: false
+---
+
+Body copy in **Markdown**. Fenced code blocks are syntax-highlighted.`}
+      </Code>
+
+      <PropsTable rows={[
+        { name: 'title', type: 'string', desc: 'Post title. Defaults to "Untitled" if omitted.' },
+        { name: 'slug', type: 'string?', desc: 'URL slug. Falls back to the filename (minus .md).' },
+        { name: 'date', type: 'string', desc: 'ISO date (YYYY-MM-DD). Drives the newest-first sort.' },
+        { name: 'excerpt', type: 'string', desc: 'One-line summary. Used on the index and as the per-post meta description / og:description.' },
+        { name: 'tags', type: 'string[]', desc: 'Flow (tags: [a, b]) or block list. Powers the index filter strip and ALL_TAGS.' },
+        { name: 'draft', type: 'boolean', desc: 'Drafts render in dev but are stripped from production builds and the RSS feed.' },
+        { name: 'heroImage', type: 'string?', desc: 'Optional URL path (e.g. /blog-assets/<slug>/cover.jpg). Becomes the post’s og:image.' },
+        { name: 'heroImageAlt', type: 'string?', desc: 'Alt text for the hero image.' },
+      ]} />
+
+      <h2>Data layer</h2>
+      <p>
+        <code>src/data/blog.js</code> is the client-side layer. It uses Vite’s{' '}
+        <code>import.meta.glob</code> to pull every Markdown file in as a raw string,
+        runs each through the shared parser, sorts newest-first, and drops drafts in
+        production. It exports three things the rest of the app consumes:
+      </p>
+      <PropsTable rows={[
+        { name: 'POSTS', type: 'Post[]', desc: 'All visible posts, newest first. Drafts included in dev, excluded in prod.' },
+        { name: 'ALL_TAGS', type: 'string[]', desc: 'First-seen-ordered union of every tag across visible posts.' },
+        { name: 'findPost(slug)', type: '(string) => Post?', desc: 'Lookup by slug, mirroring findDocsPage / CASE_STUDIES.find. Returns undefined when absent.' },
+      ]} />
+
+      <h2>Shared frontmatter parser</h2>
+      <p>
+        <code>src/data/parseFrontmatter.js</code> is pure JS with no Vite imports, so
+        it runs in both the browser (via <code>blog.js</code>) and Node (via the RSS
+        script) — both consumers stay in lockstep on format. Beyond parsing the
+        frontmatter it derives the fields Markdown can’t express: it computes a word
+        count (stripping code, images, and Markdown punctuation first) and a read-time
+        estimate at <code>{`225`}</code> words per minute.
+      </p>
+      <Note>
+        <p>
+          The parser accepts both YAML list styles (<code>tags: [a, b]</code> and the
+          indented <code>- a</code> block form) plus quoted scalars and booleans, so
+          hand-written posts and editor-written posts parse identically.
+        </p>
+      </Note>
+
+      <h2>Rendering</h2>
+      <p>
+        <code>src/data/marked.js</code> is a single shared <code>marked</code> instance
+        used by both <code>BlogPost.jsx</code> (the rendered post) and the editor’s
+        live preview, so the two render paths never drift. Fenced code blocks run
+        through <code>marked-highlight</code> + Prism, with a small set of languages
+        bundled eagerly — no runtime CDN fetches, which keeps the deploy self-contained
+        and CSP-clean.
+      </p>
+
+      <h2>Routing &amp; SEO</h2>
+      <PropsTable rows={[
+        { name: '/blog', type: 'index', desc: 'Post list with a tag filter strip. Rendered by pages/Blog.jsx.' },
+        { name: '/blog/<slug>', type: 'post', desc: 'Individual post. pages/BlogPost.jsx renders the body via the shared marked instance.' },
+      ]} />
+      <p>
+        <code>App.jsx</code> resolves any <code>blog/&lt;slug&gt;</code> path through{' '}
+        <code>findPost</code> and wires per-post SEO from the post itself: the excerpt
+        becomes the meta description, the title flows into <code>og:title</code>, and{' '}
+        <code>heroImage</code> (when set) becomes the <code>og:image</code>. See{' '}
+        <a href="/docs/patterns/seo-meta">SEO &amp; Meta Tags</a> for the shared machinery.
+      </p>
+
+      <h2>RSS feed</h2>
+      <p>
+        <code>npm run build</code> runs <code>scripts/blog-rss.mjs</code> as a postbuild
+        step (alongside the SPA fallback). It reads the same Markdown files through the
+        same shared parser and writes <code>dist/blog/feed.xml</code> — drafts excluded.
+      </p>
+      <Code lang="json" head="package.json">
+{`"scripts": {
+  "build": "vite build && node scripts/spa-fallback.mjs && node scripts/blog-rss.mjs"
+}`}
+      </Code>
+
+      <h2>The editor</h2>
+      <p>
+        <code>/blog-editor</code> is a dev-only authoring UI that writes these Markdown
+        files for you — a two-pane form with a live preview, image upload, and
+        draft/publish, backed by a custom Vite plugin. It ships no code to production.
+        It has its own page: <a href="/docs/blog/editor">Blog Editor</a>.
+      </p>
+
+      <h2>Related components</h2>
+      <PropsTable rows={[
+        { name: 'RecentPostsSidebar', type: 'component', desc: 'Sidebar list of recent posts, shown alongside a post.' },
+        { name: 'TagPill', type: 'component', desc: 'The tag chip used on the index filter strip and post meta.' },
+        { name: 'BlogEditorToolbar', type: 'component', desc: 'Formatting toolbar for the dev-only editor.' },
+      ]} />
+    </PageWrap>
+  )
+}
+
+function BlogEditorDoc() {
+  return (
+    <PageWrap
+      eyebrow="BLOG"
+      title="Blog Editor"
+      lede="A dev-only authoring UI at /blog-editor. Two-pane live-preview editor on the front, a custom Vite plugin writing Markdown to disk on the back — and nothing at all in production."
+      path="blog/editor"
+    >
+      <p>
+        Posts are just Markdown files (see <a href="/docs/blog">Blog System</a>), so they
+        can always be edited by hand in an IDE. The editor is the nicer path: a form with
+        a live preview that serializes to exactly the same on-disk format the loader reads
+        back, so hand-edits and editor-edits round-trip cleanly.
+      </p>
+
+      <h2>Dev-only by construction</h2>
+      <p>
+        The whole feature is gated on <code>import.meta.env.DEV</code>. In a production
+        build the component renders a short "editor is dev-only" notice and Vite's dead-code
+        elimination tree-shakes the rest of the form out of the bundle. The write path lives
+        in a Vite plugin (<code>vite-plugins/blog-writer.js</code>) that registers its
+        endpoints through <code>configureServer</code> — a hook only <code>vite dev</code>
+        ever calls. That is the entire security model: on the deployed site there is no
+        endpoint to talk to.
+      </p>
+      <Note kind="good">
+        <p>
+          Nothing to lock down in production because nothing is exposed there. The editor UI
+          and its server both simply cease to exist outside <code>vite dev</code>.
+        </p>
+      </Note>
+
+      <h2>Architecture</h2>
+      <p>
+        <code>pages/BlogEditor.jsx</code> (the React UI) talks to the plugin over three
+        dev-server endpoints. Payloads are small JSON bodies; responses are JSON with a
+        readable <code>error</code> on failure so the UI can surface it inline.
+      </p>
+      <PropsTable rows={[
+        { name: 'POST /__write-post', type: 'endpoint', desc: 'Serialize the form to frontmatter + body and write src/content/blog/<slug>.md.' },
+        { name: 'DELETE /__delete-post/<slug>', type: 'endpoint', desc: 'Remove a post file from disk.' },
+        { name: 'POST /__upload-image', type: 'endpoint', desc: 'Decode a base64 image and write it under public/blog-assets/<slug>/.' },
+      ]} />
+      <p>
+        After every write or delete the plugin invalidates the <code>src/data/blog.js</code>
+        module in Vite's graph and pushes an HMR update, so the new/edited/removed post
+        shows up across the index, post pages, and docs sidebar without a manual refresh
+        (Vite's watcher catches adds and edits on its own; the poke is mainly there so
+        <em> deletes</em> propagate too).
+      </p>
+
+      <h2>Serialization</h2>
+      <p>
+        The frontmatter serializer is hand-rolled to match the reader in{' '}
+        <code>parseFrontmatter.js</code> exactly, rather than reaching for a YAML library
+        whose output (block-style arrays, 80-column wrapping, its own quote escapes) the
+        lightweight parser wouldn't read back the same way. Dates are always single-quoted
+        so YAML never coerces them to a <code>Date</code>; other scalars are quoted only
+        when they'd otherwise be misread; tags are written flow-style; hero fields are
+        emitted only when set, for cleaner diffs on re-save.
+      </p>
+
+      <h2>What the UI does</h2>
+      <PropsTable rows={[
+        { name: 'Live preview', type: 'editing', desc: 'Right pane renders the body through the same shared marked instance the live site uses (memoized per body change).' },
+        { name: 'Load / New', type: 'editing', desc: 'Dropdown loads any existing post into the form; New clears it. /blog-editor?slug=welcome deep-links straight into a post.' },
+        { name: 'Auto-slug', type: 'editing', desc: 'Slug derives from the title (kebab-case) until you edit the slug field, then it stops tracking.' },
+        { name: 'Tags', type: 'editing', desc: 'Chip input with autocomplete over ALL_TAGS. Enter/comma commits, Backspace on empty removes the last chip.' },
+        { name: 'Toolbar + shortcuts', type: 'editing', desc: 'Bold/italic/etc. act on the textarea selection; Cmd/Ctrl+B and Cmd/Ctrl+I are wired directly.' },
+        { name: 'Draft vs Publish', type: 'saving', desc: 'Two save buttons differ only in the draft flag. Drafts render in dev, are stripped from prod and the RSS feed.' },
+      ]} />
+
+      <h2>Images</h2>
+      <p>
+        Images upload by drag-and-drop onto the body, via the toolbar, or through the hero
+        field. The file is read to base64, POSTed to <code>/__upload-image</code>, and
+        written to <code>public/blog-assets/&lt;slug&gt;/</code> (bucketed by slug, or{' '}
+        <code>drafts/</code> when the post has no slug yet). The plugin enforces a MIME
+        allowlist (png, jpeg, gif, webp, avif, svg), a 5&nbsp;MB cap, a filename-collision
+        counter, and — via a strict kebab-case slug regex — no path traversal. On success
+        the editor drops standard image Markdown at the cursor.
+      </p>
+      <p>
+        Clicking an image in the preview opens a resize modal: pick width or height in{' '}
+        <code>px</code> or <code>%</code> and the change is find-and-replaced into the body
+        Markdown live (as a <code>{`{width=…}`}</code> sizing hint), with Cancel restoring
+        the pre-edit snapshot.
+      </p>
+
+      <h2>Guardrails</h2>
+      <PropsTable rows={[
+        { name: 'Dirty tracking', type: 'safety', desc: 'The form is diffed against a snapshot frozen on load and on save, so "unsaved changes" is precise.' },
+        { name: 'Navigation guard', type: 'safety', desc: 'While dirty, it vetoes SPA navigation via the cancelable spa-nav-attempt event (see Routing) and arms beforeunload for tab-close / reload.' },
+        { name: 'Delete confirm', type: 'safety', desc: 'Deleting opens a focus-trapped modal (Cancel is the default focus) rather than a click-twice arm, so a stray double-click can never delete.' },
+        { name: 'Slug-change panel', type: 'safety', desc: 'Editing a loaded post’s slug forces a choice — save as a new post, or move (delete the original after writing) — before saving re-enables.' },
+      ]} />
     </PageWrap>
   )
 }
@@ -1871,6 +2124,8 @@ const PAGES = {
   'patterns/analytics': AnalyticsDoc,
   'patterns/accessibility': AccessibilityDoc,
   'data/case-studies': CaseStudiesSchema,
+  'blog': BlogSystem,
+  'blog/editor': BlogEditorDoc,
   'components': ComponentsIndex,
 }
 

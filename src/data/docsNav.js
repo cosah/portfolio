@@ -37,6 +37,13 @@ export const DOCS_NAV = [
     ],
   },
   {
+    section: 'Blog',
+    items: [
+      { path: 'blog', title: 'Blog System' },
+      { path: 'blog/editor', title: 'Blog Editor' },
+    ],
+  },
+  {
     section: 'Components',
     items: [
       { path: 'components', title: 'Overview' },
