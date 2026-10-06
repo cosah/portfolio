@@ -206,7 +206,7 @@ export default function LayoutDemo({ onHome }) {
         </div>
         <h1
           style={{
-            fontFamily: 'Fraunces, serif',
+            fontFamily: 'var(--serif)',
             fontSize: 28,
             fontWeight: 400,
             letterSpacing: '-0.02em',
@@ -217,7 +217,7 @@ export default function LayoutDemo({ onHome }) {
         </h1>
         <p
           style={{
-            fontFamily: 'Inter, system-ui, sans-serif',
+            fontFamily: 'var(--sans)',
             color: '#A4A29A',
             fontSize: 14,
             lineHeight: 1.6,

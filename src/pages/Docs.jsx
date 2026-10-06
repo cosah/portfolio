@@ -750,12 +750,12 @@ function TypographyDoc() {
     <PageWrap
       eyebrow="DESIGN SYSTEM"
       title="Typography"
-      lede="Three families. Each with one job. Loaded from Google Fonts, declared once in variables.css, referenced everywhere as var(--serif) / var(--sans) / var(--mono)."
+      lede="Three families. Each with one job. Declared once in variables.css, referenced everywhere as var(--serif) / var(--sans) / var(--mono)."
       path="design/typography"
     >
       <h2>Tokens</h2>
       <PropsTable rows={[
-        { name: '--serif', type: 'Fraunces', default: 'headings', desc: 'Editorial / case-study titles. Optical-size variable font (variable ital, opsz, wght).' },
+        { name: '--serif', type: 'Libron',         default: 'headings', desc: 'Editorial / case-study titles and big numbers.' },
         { name: '--sans',  type: 'Inter',          default: 'body',     desc: 'Body copy, UI labels, controls.' },
         { name: '--mono',  type: 'JetBrains Mono', default: 'metadata', desc: 'Eyebrows, captions, code, tags, technical detail.' },
       ]} />
@@ -764,13 +764,14 @@ function TypographyDoc() {
 
       <div className="docs-font-card" style={{ fontFamily: 'var(--serif)' }}>
         <div className="docs-font-head">
-          <span className="docs-font-name">Fraunces</span>
+          <span className="docs-font-name">Libron</span>
           <span className="docs-font-token">var(--serif)</span>
         </div>
         <p className="docs-font-aabb">Aa Bb Cc 12 34</p>
         <p className="docs-font-pangram">The quick brown fox jumps over the lazy dog.</p>
         <p className="docs-font-meta">
-          Optical-size variable font. Italic supported. Weights 400 / 500. Used for case-study
+          Reading serif with reduced serifs, by Nico Verbruggen (OFL). Static weights 400 / 700,
+          each with an italic; other requested weights snap to the nearest. Used for case-study
           titles, section headings, and big numbers in <code>Callout</code> / <code>StatRow</code>.
         </p>
       </div>
@@ -873,12 +874,22 @@ function TypographyDoc() {
 
       <h2>Loading</h2>
       <p>
-        All three families are imported once at the top of{' '}
-        <code>src/css/global.css</code> via Google Fonts CSS2 with{' '}
-        <code>display=swap</code>. The site doesn't ship self-hosted fonts.
+        Libron is self-hosted: four WOFF2 files live in{' '}
+        <code>src/assets/fonts/libron/</code> (with its OFL license) and are declared with{' '}
+        <code>@font-face</code> at the top of <code>src/css/global.css</code>. Inter and
+        JetBrains Mono are imported from Google Fonts CSS2. Everything uses <code>display=swap</code>.
       </p>
       <Code lang="css" head="src/css/global.css">
-{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap');`}
+{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@font-face {
+  font-family: 'Libron';
+  src: url('../assets/fonts/libron/Libron-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* + Italic (400 italic), Bold (700), BoldItalic (700 italic) */`}
       </Code>
     </PageWrap>
   )

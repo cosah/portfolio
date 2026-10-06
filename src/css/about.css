@@ -40,7 +40,7 @@
   margin-bottom: 24px;
 }
 .about-title em {
-  font-style: italic;
+  font-style: normal;
   color: var(--good);
   font-weight: 400;
 }

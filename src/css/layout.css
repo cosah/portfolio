@@ -251,7 +251,7 @@
   margin-bottom: 24px;
 }
 .hero-meta h1 em {
-  font-style: italic;
+  font-style: normal;
   color: var(--good);
   font-weight: 400;
 }
@@ -434,11 +434,11 @@
   margin-bottom: 24px;
 }
 .section h2 em {
-  font-style: italic;
+  font-style: normal;
   color: var(--good);
 }
 .section h2 .warn {
-  font-style: italic;
+  font-style: normal;
   color: var(--warn);
 }
 .section h3 {
