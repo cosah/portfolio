@@ -8,5 +8,14 @@ export default defineConfig({
   // runs in `vite dev` only. It contributes nothing to `vite build` or
   // `vite preview`, so leaving it always-on here is safe.
   plugins: [react(), blogWriter()],
-  base: '/'
+  base: '/',
+  server: {
+    // Image uploads land in public/blog-assets/. Without this, each
+    // upload adds a file Vite can't scope to an HMR boundary, so it
+    // falls back to a full page reload that wipes the editor's unsaved
+    // form state. sirv still serves these files on demand regardless.
+    watch: {
+      ignored: ['**/public/blog-assets/**'],
+    },
+  },
 })
