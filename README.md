@@ -113,7 +113,7 @@ portfolio/
 - **[React](https://react.dev/) 19** — no router library
 - **[Vite](https://vitejs.dev/) 5** — dev server, build, asset pipeline
 - **Plain CSS** — custom properties (no Tailwind, no CSS-in-JS)
-- **[Fraunces](https://fonts.google.com/specimen/Fraunces)** (serif), **[Inter](https://rsms.me/inter/)** (sans), **[JetBrains Mono](https://www.jetbrains.com/lp/mono/)** (mono)
+- **[Libron](https://github.com/nicoverbruggen/libron)** (serif, self-hosted, OFL), **[Inter](https://rsms.me/inter/)** (sans), **[JetBrains Mono](https://www.jetbrains.com/lp/mono/)** (mono)
 - **Google Analytics 4** via `gtag.js`
 - **GitHub Pages** for hosting
 
