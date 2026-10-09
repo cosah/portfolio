@@ -28,6 +28,7 @@ import imgPersona2 from '../assets/seed-persona-1.png'
 import imgExpoPoster from '../assets/seed-expo-poster.png'
 import imgFieldStudy from '../assets/seed-field-study.png'
 import imgUserFlow from '../assets/seed-user-flow.png'
+import imgBuiltSite from '../assets/seed-built-homepage.jpg'
 import imgPhysicalV1 from '../assets/seed-physical-v1.png'
 import imgPhysicalV2 from '../assets/seed-physical-v2.png'
 import imgPhysicalV2Instructions from '../assets/seed-physical-v2-instructions.png'
@@ -62,8 +63,8 @@ const EVALUATION_BOARDS = Object.entries(evaluationModules)
 const META = [
   { label: 'Project', value: 'University of Michigan Seed Library' },
   { label: 'Course', value: 'SI 487 Capstone' },
-  { label: 'Role', value: 'Researcher, Liaison' },
-  { label: 'Owned', value: 'Research Report' },
+  { label: 'Role', value: 'Researcher, Liaison, Developer' },
+  { label: 'Owned', value: 'Research Report, Site build' },
   { label: 'Team', value: '4 members' },
   { label: 'Duration', value: '2 semesters' },
   { label: 'Year', value: '2025–2026' },
@@ -104,8 +105,9 @@ const SECTIONS = [
   { num: 9, label: 'Testing', id: 'sec-9' },
   { num: 10, label: 'Try it', id: 'sec-10' },
   { num: 11, label: 'Results', id: 'sec-11' },
-  { num: 12, label: 'Contributions', id: 'sec-12' },
-  { num: 13, label: 'Reflection', id: 'sec-13' },
+  { num: 12, label: 'Building the site', id: 'sec-12' },
+  { num: 13, label: 'Contributions', id: 'sec-13' },
+  { num: 14, label: 'Reflection', id: 'sec-14' },
 ]
 
 const CONTRIBUTIONS = [
@@ -117,6 +119,7 @@ const CONTRIBUTIONS = [
   { phase: 'Requirements', work: 'Authored the UX Research and Design Requirements Report: the foundational document that defined the problem space and established the testable requirements every design decision was evaluated against.' },
   { phase: 'Design', work: 'Co-designed across physical and digital touchpoints: ideation, Crazy 8\'s sketching, design system, and lo-fi through hi-fi screens.' },
   { phase: 'Evaluation', work: 'Contributed to the three-phase usability evaluation (14 participants total across paper prototype and full-system rounds), comparing pre- and post-design metrics.' },
+  { phase: 'Build', work: 'After the capstone, built the tested design as a working site on my own, with a Next.js front end, a Directus CMS with an editor role for library staff, a Docker deployment, and a WCAG 2.1 AA audit.' },
 ]
 
 export default function SeedLibrary({ onHome }) {
@@ -134,7 +137,7 @@ export default function SeedLibrary({ onHome }) {
         kicker="Case Study · UX Research & Design · UMSI Expo 26 BSI UX Pathway Award"
         title="An underutilized resource,"
         titleEmphasis="redesigned to fit its community."
-        subtitle="Redesigning the physical and digital experience of a campus seed distribution system, from a gumball machine with a 4% completion rate to a connected ecosystem tested with 355 participants. Winner of the UMSI Expo 26 BSI UX Pathway Award."
+        subtitle="Redesigning the physical and digital experience of a campus seed distribution system, from a gumball machine with a 4% completion rate to a connected ecosystem tested with 355 participants. After the capstone, I built the site as a working Next.js app. Winner of the UMSI Expo 26 BSI UX Pathway Award."
         meta={META}
         corners={{ tl: '+ 00.00', tr: 'EXPO POSTER', bl: 'UNIVERSITY OF MICHIGAN SEED LIBRARY', br: '2025–2026 · SI 487' }}
         heroImage={imgExpoPoster}
@@ -377,9 +380,10 @@ export default function SeedLibrary({ onHome }) {
 
         <div className="section" id="sec-10">
           <SectionLabel num={10}>Try it</SectionLabel>
-          <h2>Interactive prototype.</h2>
+          <h2>The live site, and the prototype it came from.</h2>
           <div className="body-text" style={{ marginBottom: '24px' }}>
-            <p>Click through the final desktop prototype below. Start on the Plant Listing page (the QR entry point) and explore the full site.</p>
+            <p>The design is now a working website. <a href="https://seed-library-eight.vercel.app/" target="_blank" rel="noopener noreferrer">Open the live site<span className="sr-only"> (opens in a new tab)</span></a> to browse plants, events, and pickup locations, or read how I built it in <a href="#sec-12">section 12</a>.</p>
+            <p>The final Figma prototype is below. Start on the Plant Listing page (the QR entry point) and explore the full site.</p>
           </div>
           <div className="prototype-embed-wrapper">
             <iframe
@@ -425,13 +429,34 @@ export default function SeedLibrary({ onHome }) {
         </div>
 
         <div className="section" id="sec-12">
-          <SectionLabel num={12}>My contributions</SectionLabel>
+          <SectionLabel num={12}>Building the site</SectionLabel>
+          <h2>From Figma prototype to a working website.</h2>
+          <div className="body-text">
+            <p>After the capstone ended, I built the design our team tested as a real site. The Next.js front end is built on design tokens pulled from the team's Figma file, and it covers the homepage, the plant listing with its capsule-color filter, plant detail pages, and a filterable events calendar.</p>
+            <p>The site is meant to be run by librarians, not developers. Plants, events, pickup locations, books, and testimonials all live in a Directus CMS, which I set up with an editor role for library staff, a branded admin, and field help text written for librarians. The front end refreshes from the CMS every five minutes, so a change goes live without a deploy.</p>
+            <p>I audited the build against WCAG 2.1 AA across 50 success criteria, then fixed every serious and moderate issue it found, including a missing skip link, focus outlines that fell below contrast minimums, and filters that never announced their results to screen readers.</p>
+          </div>
+          <ImageSlot
+            id="12.1"
+            src={imgBuiltSite}
+            alt="The built Seed Library homepage: a white anemone hero with a Grow your plant button, above photos of the three campus pickup libraries"
+            caption="The built homepage, with content served from the CMS."
+            aspect="16x9"
+          />
+          <h3>Where it lives now</h3>
+          <div className="body-text">
+            <p>I deployed the site to the University's container platform, but the library ultimately decided it did not have the IT capacity to maintain a custom site. The build lives on as a <a href="https://seed-library-eight.vercel.app/" target="_blank" rel="noopener noreferrer">public demo on Vercel<span className="sr-only"> (opens in a new tab)</span></a>. In hindsight, it confirmed the constraint the client named at the start of the project. For a small team, the right site is the one it can keep running.</p>
+          </div>
+        </div>
+
+        <div className="section" id="sec-13">
+          <SectionLabel num={13}>My contributions</SectionLabel>
           <h2>What I owned across each phase.</h2>
           <ContribGrid items={CONTRIBUTIONS} />
         </div>
 
-        <div className="section" id="sec-13">
-          <SectionLabel num={13}>Reflection</SectionLabel>
+        <div className="section" id="sec-14">
+          <SectionLabel num={14}>Reflection</SectionLabel>
           <h2>What I'd do differently as the PM.</h2>
           <div className="body-text">
             <p>The redesign solved the problems it set out to solve. Seed identification went from impossible to universal. Task completion improved across every metric. Community features moved from invisible to discoverable. But the project surfaced a deeper tension that the team navigated differently than I would have.</p>
@@ -448,7 +473,7 @@ export default function SeedLibrary({ onHome }) {
           </div>
           <h3>If the project continued</h3>
           <div className="body-text">
-            <p>Real-world deployment testing in actual library environments with no facilitator present, tracking completion, return behavior, and event participation over time. Beyond that, the digital experience should be validated in Google Sites before assuming the Figma prototype translates cleanly. The Figma file includes dev specs and annotations to support a direct development handoff if the client eventually moves to a custom site.</p>
+            <p>Real-world deployment testing in actual library environments with no facilitator present, tracking completion, return behavior, and event participation over time. The digital side has already moved past the prototype stage. I built it as a working site after the capstone, covered in section 12.</p>
           </div>
         </div>
 

@@ -5,26 +5,27 @@
 
 import { useState } from 'react'
 import Navbar from '../components/Navbar'
-import nowBook from '../assets/about/now-book.jpg'
-import nowScreen from '../assets/about/now-screen.jpg'
+import nowBook from '../assets/about/now-book-contact.jpg'
+import nowScreen from '../assets/about/now-screen-lasso.png'
 import nowAudio from '../assets/about/now-audio.png'
-import nowShip from '../assets/about/now-ship.png'
+import nowShip from '../assets/about/now-ship-mindsemerge.png'
 import originCat from '../assets/about/origin/cat-crop.jpg'
 import originGarden from '../assets/about/origin/garden-crop.jpg'
 import originTeach from '../assets/about/origin/teach-crop.jpg'
 import fieldHockey from '../assets/about/field-notes/hockey.jpg'
-import fieldSalmon from '../assets/about/field-notes/salmon.jpg'
-import fieldRigatoni from '../assets/about/field-notes/rigatoni.jpg'
+import fieldBirria from '../assets/about/field-notes/birria.jpg'
+import fieldOrzo from '../assets/about/field-notes/orzo.jpg'
 import fieldGrad from '../assets/about/field-notes/grad.jpg'
 import fieldTigers from '../assets/about/field-notes/tigers.jpg'
-import fieldCarbonara from '../assets/about/field-notes/carbonara.jpg'
+import fieldCutlet from '../assets/about/field-notes/cutlet.jpg'
 
 // Hero-specs panel data. k is the row label, v is the value displayed
 // in bold. Keep both short; the layout is a tight two-column rhythm.
 const SPECS = [
   { k: 'Location', v: 'Ann Arbor, MI' },
   { k: 'Time zone', v: 'EST · UTC−5' },
-  { k: 'Status', v: 'Grad Apr 2026, Pursuing full time work' },
+  { k: 'Status', v: 'UMSI MSI student · grad May 2027' },
+  { k: 'Interning', v: 'MindsEmerge · Product Design & Development' },
   { k: 'Looking for', v: 'PM / UX roles · willing to relocate or remote' },
   { k: 'Right now', v: 'Claude' },
   { k: 'Coffee', v: 'Americano, black' },
@@ -38,17 +39,18 @@ const NOW = [
   {
     tag: 'BOOK',
     label: 'Reading',
-    title: 'Business School and the Noble Purpose of the Market',
-    byline: 'Andrew Hoffman',
+    title: 'Contact',
+    byline: 'Carl Sagan',
     img: nowBook,
-    note: "A case for fixing the misalignment between shareholder capitalism and the biosphere.",
+    note: "It's Sagan's only novel, about a radio astronomer who picks up a signal from Vega and a world that has to decide what to do with it.",
   },
   {
     tag: 'SCREEN',
-    label: 'Watching',
-    title: 'House of the Dragon',
+    label: 'Just finished',
+    title: 'Ted Lasso',
+    byline: 'the newest season',
     img: nowScreen,
-    note: 'A smorgasbord of CG dragons and political infighting.',
+    note: "I just finished the newest season, and Ted is my Halloween costume this year.",
   },
   {
     tag: 'AUDIO',
@@ -62,10 +64,11 @@ const NOW = [
   {
     tag: 'SHIP',
     label: 'Building',
-    title: 'UMICH Seed Library',
-    byline: 'for real',
+    title: 'MindsEmerge',
+    byline: 'product design & development intern',
+    href: 'https://www.mindsemerge.com/',
     img: nowShip,
-    note: "Turning the capstone into the actual website. React, a lightweight CMS, and auth, so the librarians can edit it themselves.",
+    note: "I'm interning on product design and development at an Ann Arbor startup that puts AI inside a maple-wood alphabet set, so young kids learn to read through screen-free play.",
   },
 ]
 
@@ -110,15 +113,19 @@ const FIELD = [
     alt: 'Anthony cheering with arms raised at a Michigan hockey game, wearing a yellow Michigan-print jacket',
     caption: 'M hockey at Yost',
   },
+  // The three food photos are the first image of the latest three posts on
+  // instagram.com/not_anthonybourdain (as of Oct 2026), placed by shape:
+  // the wide plate in the 4:3 slot, the near-square one in 1:1, the tall
+  // one in 4:5.
   {
-    src: fieldSalmon,
-    alt: 'A plate of papardelle with cream sauce and lemon slices on a salmon filet',
-    caption: 'Salmon and lemon papardelle',
+    src: fieldBirria,
+    alt: 'A plate of birria tacos with lime wedges and a cup of consommé for dipping',
+    caption: 'Birria tacos and horchata',
   },
   {
-    src: fieldRigatoni,
-    alt: 'A pan of rigatoni in a creamy bacon sauce',
-    caption: 'Rigatoni, the slow sauce',
+    src: fieldOrzo,
+    alt: 'A crispy-skinned chicken thigh on shiitake Parmesan orzo, topped with torn basil',
+    caption: 'Chicken thighs, shiitake orzo',
   },
   {
     src: fieldGrad,
@@ -131,9 +138,9 @@ const FIELD = [
     caption: 'Tigers at Comerica',
   },
   {
-    src: fieldCarbonara,
-    alt: 'A plate of spaghetti carbonara with bacon',
-    caption: 'Carbonara, no cream',
+    src: fieldCutlet,
+    alt: 'Spaghetti in a creamy tomato sauce with a sliced breaded cutlet and shaved Parmesan on top',
+    caption: 'Tomato cream pasta, breaded cutlet',
   },
 ]
 
@@ -240,7 +247,7 @@ export default function About({ onHome }) {
           <header className="about-section-head">
             <span className="about-section-num">01</span>
             <h2>Currently</h2>
-            <span className="about-section-meta">updated Jun 2026</span>
+            <span className="about-section-meta">updated Oct 2026</span>
           </header>
           <div className="now-grid">
             {NOW.map(({ tag, label, title, byline, href, img, note }) => (
@@ -371,6 +378,18 @@ export default function About({ onHome }) {
               </figure>
             ))}
           </div>
+          {/* The food photos are a sample. The full cooking log lives on
+              Instagram, linked here rather than embedded so the page
+              doesn't load Instagram's scripts and trackers. */}
+          <a
+            className="field-more"
+            href="https://www.instagram.com/not_anthonybourdain/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            More cooking on Instagram, @not_anthonybourdain <span aria-hidden="true">↗</span>
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
         </section>
 
         {/* LOADOUT */}

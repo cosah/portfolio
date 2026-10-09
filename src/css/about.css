@@ -353,7 +353,9 @@
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 22px;
-  row-gap: 8px;
+  /* No row-gap: the collapsed body row would still reserve it and push
+     the title off center. The open body gets its spacing from margin. */
+  row-gap: 0;
   align-items: start;
   cursor: pointer;
   color: inherit;
@@ -428,7 +430,7 @@
 .take.is-open .take-body {
   max-height: 200px;
   opacity: 1;
-  margin-top: 4px;
+  margin-top: 12px;
 }
 
 /* ----- 04 · Field notes ----- */
@@ -436,6 +438,25 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+}
+/* Link out to the full cooking log on Instagram, under the photo grid. */
+.field-more {
+  /* Grid item of .about-section: start-align so the underline only
+     spans the text instead of stretching across the column. */
+  justify-self: start;
+  margin-top: 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--ink-mid);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 2px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.field-more:hover {
+  color: var(--good);
+  border-color: var(--good);
 }
 .field-card {
   display: flex;

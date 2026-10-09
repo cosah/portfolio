@@ -97,7 +97,7 @@ function migrateLegacyHash() {
 }
 
 const SITE_NAME = "Anthony Shephard's Portfolio"
-const DEFAULT_DESCRIPTION = "Five case studies in product design, project management, and UX research and design by Anthony Shephard. Real clients, tests, insights, and the rebuilds that followed."
+const DEFAULT_DESCRIPTION = "Case studies and live builds in product design, project management, and UX research by Anthony Shephard. Real clients, real usability tests, and working apps you can open."
 
 // Static page titles. Case studies aren't listed here, they get their
 // titles from CASE_STUDIES.title inside titleForRoute. Sub-paths under docs
@@ -119,7 +119,7 @@ const STATIC_TITLES = {
 // CASE_STUDIES.subtitle so we don't duplicate copy.
 const PAGE_DESCRIPTIONS = {
   '': DEFAULT_DESCRIPTION,
-  resume: "Anthony Shephard's resume. Bachelor of Science in Information (User Experience Design) at the University of Michigan. PM, UX, research, and design.",
+  resume: "Anthony Shephard's resume. Master of Science in Information student (User Centered Agile Development) at the University of Michigan, graduating May 2027, after a Bachelor of Science in Information. PM, UX, research, and design.",
   about: "Anthony Shephard off the clock. Origins, current obsessions, a few opinions worth defending, and the tools I work with daily.",
   audit: "Internal accessibility audit of this portfolio site. WCAG 2.1 AA, self-review.",
   todo: "Internal open todos: content, accessibility, performance, engineering.",

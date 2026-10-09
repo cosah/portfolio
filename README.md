@@ -1,6 +1,6 @@
 # Anthony Shephard — Portfolio
 
-A personal UX / product portfolio. Five case studies from the University of Michigan, built with React + Vite and deployed to GitHub Pages.
+A personal UX / product portfolio. Five University of Michigan case studies and three personal builds, built with React + Vite and deployed to GitHub Pages.
 
 📖 **[Read the full technical docs →](https://anthonyships.com/docs)**
 
@@ -11,6 +11,7 @@ The docs cover architecture, routing, the design system, every reusable componen
 ## What's inside
 
 - **Five case studies** spanning research-led UX, product strategy, project management, iOS design, and a WCAG audit
+- **Personal builds** (NoteTube, Pathways, an e-ink wall calendar) listed alongside them on the home page, newest first
 - **Self-audited accessibility** — WCAG 2.1 AA, 11 findings resolved across two passes (see [`/audit`](https://anthonyships.com/audit))
 - **Per-route SEO** — `document.title`, `<meta name="description">`, Open Graph, Twitter Cards, and `robots` all update dynamically per route, with static fallbacks in `index.html` for crawlers that don't run JavaScript
 - **HTML5 history-API routing in ~60 lines** — no router library; clean URLs (`/seed-library`, not `/#/seed-library`); a tiny SPA-fallback step at build time makes GitHub Pages serve `index.html` on any path

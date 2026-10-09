@@ -1204,9 +1204,11 @@ function CaseStudiesSchema() {
     >
       <p>
         Defined in <code>src/data/caseStudies.js</code>. Exported as <code>CASE_STUDIES</code>.
-        Each entry is consumed in three places: the Home grid (image + tags + subtitle),
-        the Navbar case-study dropdown, and the per-route meta-tag updates (subtitle →
-        description, heroImage → og:image).
+        Each entry is consumed in three places: the Home work grid (thumbnail, tags,
+        subtitle, buttons), the Navbar case-study dropdown, and the per-route meta-tag
+        updates (subtitle → description, heroImage → og:image). Home merges these with
+        the non-case-study builds in <code>src/data/projects.js</code>, which use the same
+        card fields, and sorts the combined list by <code>sortDate</code>, newest first.
       </p>
 
       <h2>Entry shape</h2>
@@ -1215,11 +1217,16 @@ function CaseStudiesSchema() {
         { name: 'title', type: 'string', required: true, desc: 'Full case-study title.' },
         { name: 'eyebrow', type: 'string', required: true, desc: 'Short uppercase context (course, role).' },
         { name: 'subtitle', type: 'string', required: true, desc: 'One-paragraph summary. Reused as the meta description.' },
-        { name: 'tags', type: 'string[]', required: true, desc: 'Small chips on the Home card (methodology, tools, semester).' },
-        { name: 'award', type: 'string', default: '—', desc: 'Optional award badge displayed on the Home card.' },
-        { name: 'heroImage', type: 'imported image', required: true, desc: 'Image module (import from ../assets). Used as the og:image and the Home card visual.' },
-        { name: 'heroImageSize', type: 'string', default: '—', desc: 'Optional background-size override for the Home card.' },
-        { name: 'heroImagePosition', type: 'string', default: '—', desc: 'Optional background-position override.' },
+        { name: 'term', type: 'string', required: true, desc: 'When the work happened, shown after the eyebrow on the Home card ("Fall 2025").' },
+        { name: 'sortDate', type: "'YYYY-MM'", required: true, desc: 'Month the work ended. Home sorts newest first. Ties keep array order, with projects ahead of case studies.' },
+        { name: 'tags', type: 'string[]', required: true, desc: 'Small chips on the Home card (methods, tools).' },
+        { name: 'award', type: 'string', default: '—', desc: 'Optional award chip displayed on the Home card.' },
+        { name: 'links', type: 'Array<{ label, href }>', required: true, desc: 'Card buttons, left to right. The first is the filled primary button and the thumbnail target. External hrefs open in a new tab.' },
+        { name: 'heroImage', type: 'imported image', default: '—', desc: 'Image module (import from ../assets). Used as the og:image, the hero preload, and the default Home thumbnail.' },
+        { name: 'cardImage', type: 'imported image', default: 'heroImage', desc: 'Optional Home thumbnail override.' },
+        { name: 'cardImagePosition', type: 'string', default: "'top center'", desc: 'Optional object-position for the thumbnail.' },
+        { name: 'cardImageFit', type: 'string', default: "'cover'", desc: 'Optional object-fit for the thumbnail.' },
+        { name: 'cardText', type: '{ big, small }', default: '—', desc: 'Type-only thumbnail for a case study without a usable image.' },
       ]} />
 
       <h2>Adding a case study</h2>
@@ -1239,9 +1246,12 @@ export const CASE_STUDIES = [
     id: 'my-case',
     title: 'My Case Study',
     eyebrow: 'Course · Role',
+    term: 'Fall 2026',
+    sortDate: '2026-12',
     subtitle: 'One paragraph summary.',
     tags: ['Tag A', 'Tag B'],
     heroImage: myHero,
+    links: [{ label: 'Read the case study', href: '/my-case' }],
   },
 ]`}
       </Code>
