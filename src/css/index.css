@@ -9,11 +9,15 @@
      background but below every piece of content. */
   isolation: isolate;
 }
+/* Small canvas that follows the cursor (size set inline by CursorGrid,
+   position set per frame via transform). Starts off-screen until the first
+   mouse move. */
 .cursor-grid {
   position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  left: 0;
+  transform: translate3d(-9999px, -9999px, 0);
+  will-change: transform;
   z-index: -1;
   pointer-events: none;
 }
@@ -112,7 +116,10 @@
   list-style: none;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  /* Generous gutters so the large cards read as separate pieces rather
+     than one dense wall. Rows get more air than columns. */
+  column-gap: 48px;
+  row-gap: 64px;
 }
 
 .work-card {
@@ -325,7 +332,7 @@
   }
   .home-header .home-meta { border-left: none; padding-left: 0; }
   .work-section { padding: 48px 16px 24px; }
-  .work-grid { grid-template-columns: 1fr; }
+  .work-grid { grid-template-columns: 1fr; row-gap: 40px; }
   .home-footer { padding: 24px; flex-direction: column; gap: 12px; }
   .home-corner-links { top: 16px; right: 20px; }
 }

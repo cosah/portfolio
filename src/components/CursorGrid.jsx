@@ -1,9 +1,14 @@
 // CursorGrid reveals a gridline like the case-study hero's (at half its
 // 80px cell size) in a small radius around the mouse on the home page,
 // drawn in a cool silver with a gold glint (the site's --good accent) that
-// sweeps across the lines as the cursor moves. It's a fixed, full-viewport canvas layered at z-index -1
-// inside .home-page (which isolates a stacking context), so it paints over
-// the page background but under every piece of content, and
+// sweeps across the lines as the cursor moves.
+//
+// The canvas is only as big as the reveal circle and follows the cursor
+// with a CSS transform. A full-viewport canvas would mean repainting
+// millions of pixels per frame, which Firefox (often a CPU canvas) can't
+// keep up with, so the grid trailed the cursor there. It's layered at
+// z-index -1 inside .home-page (which isolates a stacking context), so it
+// paints over the page background but under every piece of content, and
 // pointer-events: none keeps clicks and text selection intact.
 //
 // Behavior:
@@ -28,6 +33,7 @@ import { useEffect, useRef } from 'react'
 
 const CELL = 40            // half of .hero-frame::before's 80px grid
 const RADIUS = 112         // reveal radius in CSS px
+const SIZE = RADIUS * 2 + 8 // canvas edge in CSS px: the circle plus a little room for the glow
 const PEAK_ALPHA = 0.7     // overall opacity at the cursor
 const SILVER = 'rgba(200, 204, 212, 0.38)'
 const SILVER_BRIGHT = 'rgba(232, 234, 238, 0.7)'
@@ -56,16 +62,10 @@ export default function CursorGrid({ getRegion }) {
     const ctx = canvas.getContext('2d')
 
     let dpr = 1
-    let width = 0
-    let height = 0
     const resize = () => {
       dpr = window.devicePixelRatio || 1
-      // The canvas box, not innerWidth: innerWidth includes the scrollbar,
-      // which would stretch the drawing and drift it off the cursor.
-      width = canvas.clientWidth
-      height = canvas.clientHeight
-      canvas.width = Math.round(width * dpr)
-      canvas.height = Math.round(height * dpr)
+      canvas.width = Math.round(SIZE * dpr)
+      canvas.height = Math.round(SIZE * dpr)
     }
     resize()
 
@@ -79,7 +79,8 @@ export default function CursorGrid({ getRegion }) {
     let raf = 0
     let prev = null
 
-    const region = () => regionRef.current?.() || { left: 0, top: 0, right: width, bottom: height }
+    const region = () =>
+      regionRef.current?.() || { left: 0, top: 0, right: document.documentElement.clientWidth, bottom: window.innerHeight }
     // True while any part of the reveal circle overlaps the region, so the
     // grid stays visible (confined and faded) with the cursor just past an
     // edge. Distance from the cursor to the nearest point of the rect.
@@ -93,7 +94,7 @@ export default function CursorGrid({ getRegion }) {
     // 3/4. Sliding it by `phase` (mod one gap) repeats seamlessly, so there
     // is always a glint crossing the reveal area.
     // `glowOnly` returns the same bands with everything but the gold
-    // transparent, for the second, blurred glow pass.
+    // transparent, for the soft glow strokes under the lines.
     const shimmer = (glowOnly = false) => {
       const dir = Math.SQRT1_2 // 45° down-right
       const shift = (phase % BAND_GAP) - BAND_GAP
@@ -116,18 +117,23 @@ export default function CursorGrid({ getRegion }) {
     }
 
     const draw = () => {
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      ctx.clearRect(0, 0, width, height)
+      // Move the small canvas so it's centered on the cursor (whole pixels,
+      // so 1px lines stay crisp), then fold that offset into the context
+      // transform. Everything below draws in viewport coordinates.
+      const ox = Math.round(mx - SIZE / 2)
+      const oy = Math.round(my - SIZE / 2)
+      canvas.style.transform = `translate3d(${ox}px, ${oy}px, 0)`
+      ctx.setTransform(dpr, 0, 0, dpr, -ox * dpr, -oy * dpr)
+      ctx.clearRect(ox, oy, SIZE, SIZE)
       if (visible < 0.01) return
 
       // No clip path here on purpose: compositing masks inside an
       // antialiased clip leaves half-covered edge pixels partly drawn. The
       // edge fades below already zero everything right of and below the
-      // region, and the top is cleared at the end.
+      // region, and the top and left are cleared at the end.
       const r = region()
 
       ctx.globalCompositeOperation = 'source-over'
-      ctx.lineWidth = 1
       ctx.beginPath()
 
       // Grid lines in page coordinates, converted to viewport coordinates
@@ -142,18 +148,21 @@ export default function CursorGrid({ getRegion }) {
         ctx.moveTo(mx - RADIUS, y + 0.5)
         ctx.lineTo(mx + RADIUS, y + 0.5)
       }
-      // Pass 1: the silver lines with their gold glints.
+      // Glow: the same path stroked wide and faint in gold only, so the
+      // glint catches light. Two cheap strokes stand in for shadowBlur,
+      // which is slow on CPU-backed canvases.
+      ctx.strokeStyle = shimmer(true)
+      ctx.lineWidth = 6
+      ctx.globalAlpha = 0.16
+      ctx.stroke()
+      ctx.lineWidth = 3
+      ctx.globalAlpha = 0.32
+      ctx.stroke()
+      ctx.globalAlpha = 1
+      // The silver lines with their gold glints, crisp on top.
+      ctx.lineWidth = 1
       ctx.strokeStyle = shimmer()
       ctx.stroke()
-      // Pass 2: the same path again, gold only and blurred, so the glint
-      // catches light instead of just changing color.
-      ctx.save()
-      ctx.strokeStyle = shimmer(true)
-      ctx.lineWidth = 2
-      ctx.shadowColor = GOLD
-      ctx.shadowBlur = 8
-      ctx.stroke()
-      ctx.restore()
 
       // Soft circular reveal: keep the lines only where the radial mask is
       // opaque, strongest at the cursor and gone at the radius.
@@ -163,7 +172,7 @@ export default function CursorGrid({ getRegion }) {
       mask.addColorStop(1, 'rgba(0,0,0,0)')
       ctx.globalCompositeOperation = 'destination-in'
       ctx.fillStyle = mask
-      ctx.fillRect(0, 0, width, height)
+      ctx.fillRect(ox, oy, SIZE, SIZE)
 
       // Edge fades: two more destination-in passes, one per edge, that
       // multiply with the radial mask above. Each ramps linearly from the
@@ -176,14 +185,14 @@ export default function CursorGrid({ getRegion }) {
         g.addColorStop(atLine, `rgba(0,0,0,${EDGE_MIN})`)
         g.addColorStop(1, 'rgba(0,0,0,0)')
         ctx.fillStyle = g
-        ctx.fillRect(0, 0, width, height)
+        ctx.fillRect(ox, oy, SIZE, SIZE)
       }
       edgeFade(ctx.createLinearGradient(r.right - EDGE_FADE, 0, r.right + 1, 0))
       edgeFade(ctx.createLinearGradient(0, r.bottom - EDGE_FADE, 0, r.bottom + 1))
 
       ctx.globalCompositeOperation = 'source-over'
-      ctx.clearRect(0, 0, width, Math.max(0, Math.floor(r.top)))
-      ctx.clearRect(0, 0, Math.max(0, Math.floor(r.left)), height)
+      ctx.clearRect(ox, oy, SIZE, Math.max(0, Math.floor(r.top) - oy))
+      ctx.clearRect(ox, oy, Math.max(0, Math.floor(r.left) - ox), SIZE)
     }
 
     // The loop only runs to ease the fade in and out. Each move also
@@ -221,6 +230,7 @@ export default function CursorGrid({ getRegion }) {
     const onScroll = () => {
       if (inWindow || visible > 0) wake()
     }
+    // Resize also fires on browser zoom, which changes devicePixelRatio.
     const onResize = () => {
       resize()
       wake()
@@ -239,5 +249,12 @@ export default function CursorGrid({ getRegion }) {
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="cursor-grid" aria-hidden="true" />
+  return (
+    <canvas
+      ref={canvasRef}
+      className="cursor-grid"
+      aria-hidden="true"
+      style={{ width: SIZE, height: SIZE }}
+    />
+  )
 }
