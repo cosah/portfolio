@@ -125,27 +125,50 @@
 .work-card {
   display: flex;
   flex-direction: column;
-  background: var(--surface);
-  border: 1px solid var(--rule);
+  /* At rest the card has no surface of its own: no fill, no outline (the
+     border stays, transparent, so nothing shifts on hover). The surface
+     fades in on hover, or when keyboard focus lands on one of its links. */
+  background-color: transparent;
+  border: 1px solid transparent;
   border-radius: 4px;
   overflow: hidden;
-  transition: border-color 0.2s ease;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
-.work-card:hover {
-  border-color: var(--rule-strong);
+.work-card:hover,
+.work-card:focus-within {
+  background-color: var(--surface);
+  border-color: var(--rule);
 }
 
 /* Thumbnail: fixed 16:10 frame so screenshots of different sizes line up.
    Screenshots fill and crop from the top, where each app's header lives. */
 .work-thumb {
+  position: relative;
   display: block;
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background: var(--surface-2);
   border: 0;
-  border-bottom: 1px solid var(--rule);
   padding: 0;
   cursor: pointer;
+}
+/* Bottom 50px of the thumbnail fades into the page background, so the
+   image melts into the card-less layout. On hover the fade lifts and the
+   full image shows against the card surface. */
+.work-thumb::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.work-card:hover .work-thumb::after,
+.work-card:focus-within .work-thumb::after {
+  opacity: 0;
 }
 .work-thumb img {
   display: block;

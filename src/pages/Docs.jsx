@@ -1043,6 +1043,36 @@ function LayoutDoc() {
         <code>16–24px</code> on mobile via the existing breakpoint blocks in{' '}
         <code>src/css/layout.css</code>.
       </p>
+
+      <h2>Home work grid</h2>
+      <p>
+        The home page lists case studies and projects in a two-column grid that spans the
+        full page width, so its left edge lines up with the hero. It drops to one column
+        at 880px. Styles live in <code>src/css/index.css</code> under <code>.work-*</code>.
+      </p>
+      <PropsTable rows={[
+        { name: 'column-gap', type: 'desktop', default: '48px', desc: 'Space between the two columns.' },
+        { name: 'row-gap', type: 'desktop', default: '64px', desc: 'Space between rows. Larger than the column gap so each card reads as its own piece.' },
+        { name: 'row-gap', type: '≤ 880px', default: '40px', desc: 'Single-column spacing on phones and narrow windows.' },
+        { name: 'thumbnail', type: 'aspect', default: '16 / 10', desc: 'Fixed frame so screenshots of different sizes line up. Cropped from the top, except e-ink panels (shown whole) and type-only tiles.' },
+      ]} />
+      <h3>Card states</h3>
+      <ul>
+        <li>
+          <strong>At rest:</strong> no fill and a transparent 1px border, so the card sits
+          directly on the page. The bottom 50px of the thumbnail fades into{' '}
+          <code>--bg</code> through a <code>::after</code> gradient.
+        </li>
+        <li>
+          <strong>On hover or keyboard focus</strong> (<code>:hover</code>,{' '}
+          <code>:focus-within</code>): the fill fades to <code>--surface</code> and the border
+          to <code>--rule</code>, the thumbnail fade lifts, and the image scales to 1.02.
+        </li>
+        <li>
+          All three transitions run over <code>0.4s ease</code> so they move together. The
+          border is always present (just transparent at rest), so nothing shifts on hover.
+        </li>
+      </ul>
     </PageWrap>
   )
 }
