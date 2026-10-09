@@ -4,7 +4,9 @@
 // results. Every reusable component on this site shows up here at least
 // once, so this file doubles as the most thorough usage example.
 
+import { useState } from 'react'
 import Navbar from '../components/Navbar'
+import Lightbox from '../components/Lightbox'
 import CaseStudyHero from '../components/CaseStudyHero'
 import SectionLabel from '../components/SectionLabel'
 import Callout from '../components/Callout'
@@ -29,6 +31,7 @@ import imgExpoPoster from '../assets/seed-expo-poster.png'
 import imgFieldStudy from '../assets/seed-field-study.png'
 import imgUserFlow from '../assets/seed-user-flow.png'
 import imgBuiltSite from '../assets/seed-built-homepage.jpg'
+import imgSiteHero from '../assets/projects/seed-library-site.jpg'
 import imgPhysicalV1 from '../assets/seed-physical-v1.png'
 import imgPhysicalV2 from '../assets/seed-physical-v2.png'
 import imgPhysicalV2Instructions from '../assets/seed-physical-v2-instructions.png'
@@ -128,6 +131,10 @@ export default function SeedLibrary({ onHome }) {
   // with an id="sec-N" that matches the SECTIONS data above. The TOC
   // component on the left rail observes those ids to highlight the
   // currently-visible section.
+  // The award-winning expo poster isn't the hero anymore (the built site
+  // is), so it opens from a link in the hero summary instead.
+  const [posterOpen, setPosterOpen] = useState(false)
+
   return (
     <div className="case-study-page">
       <a href="#main-content" className="skip-link">Skip to content</a>
@@ -137,11 +144,25 @@ export default function SeedLibrary({ onHome }) {
         kicker="Case Study · UX Research & Design · UMSI Expo 26 BSI UX Pathway Award"
         title="An underutilized resource,"
         titleEmphasis="redesigned to fit its community."
-        subtitle="Redesigning the physical and digital experience of a campus seed distribution system, from a gumball machine with a 4% completion rate to a connected ecosystem tested with 355 participants. After the capstone, I built the site as a working Next.js app. Winner of the UMSI Expo 26 BSI UX Pathway Award."
+        subtitle={
+          <>
+            Redesigning the physical and digital experience of a campus seed distribution system, from a gumball machine with a 4% completion rate to a connected ecosystem tested with 355 participants. After the capstone, I built the site as a working Next.js app. Winner of the UMSI Expo 26 BSI UX Pathway Award.{' '}
+            <button type="button" className="lead-link" onClick={() => setPosterOpen(true)}>
+              View the expo poster <span aria-hidden="true">⤢</span>
+            </button>
+          </>
+        }
         meta={META}
-        corners={{ tl: '+ 00.00', tr: 'EXPO POSTER', bl: 'UNIVERSITY OF MICHIGAN SEED LIBRARY', br: '2025–2026 · SI 487' }}
-        heroImage={imgExpoPoster}
-        heroImageAlt="University of Michigan Seed Library, 2026 UMSI Exposition poster"
+        corners={{ tl: '+ 00.00', tr: 'BUILT SITE', bl: 'UNIVERSITY OF MICHIGAN SEED LIBRARY', br: '2025–2026 · SI 487' }}
+        heroImage={imgSiteHero}
+        heroImageAlt="The built Seed Library homepage: a white anemone hero with a Grow your plant button, above photos of the three campus pickup libraries"
+      />
+      <Lightbox
+        isOpen={posterOpen}
+        onClose={() => setPosterOpen(false)}
+        src={imgExpoPoster}
+        alt="University of Michigan Seed Library, 2026 UMSI Exposition poster"
+        label="UMSI Expo 26 poster · BSI UX Pathway Award winner"
       />
 
       <div className="case-study-layout">

@@ -1,5 +1,4 @@
-import seedHero from '../assets/seed-expo-poster.png'
-import seedSiteThumb from '../assets/projects/seed-library-site.jpg'
+import seedSiteHero from '../assets/projects/seed-library-site.jpg'
 import mintifyHero from '../assets/mintify-hero-poster.png'
 import roamioHero from '../assets/roamio-homepage.png'
 import diagHero from '../assets/diag-hero.png'
@@ -32,8 +31,7 @@ export const CASE_STUDIES = [
       'Redesigning a campus seed distribution system from a 4% completion rate to a connected physical-digital ecosystem, tested with 355 participants across four research methods. After the capstone, I built the site in Next.js with a CMS the library staff can edit.',
     tags: ['Mixed-Methods Research', 'Client Liaison', 'Figma', 'Next.js', 'Directus CMS'],
     award: 'UMSI Expo 26 BSI UX Pathway Award',
-    heroImage: seedHero,
-    cardImage: seedSiteThumb,
+    heroImage: seedSiteHero,
     links: [
       { label: 'Open site', href: 'https://seed-library-eight.vercel.app/' },
       { label: 'Read the case study', href: '/seed-library' },

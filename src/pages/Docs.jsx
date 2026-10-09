@@ -355,7 +355,7 @@ function ProjectStructure() {
 {`portfolio/
 ├── public/                  # Static assets served verbatim from the root
 │   ├── favicon.*            # Favicons
-│   ├── share-default.png    # Default OG share image
+│   ├── share-home.jpg       # Default OG share image (home page screenshot)
 │   ├── *-demo.mp4           # Video demos
 │   └── ...
 ├── public/blog-assets/      # Blog images (uploaded by the dev-only editor)

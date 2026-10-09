@@ -43,9 +43,11 @@ import BlogEditor from './pages/BlogEditor'
 import { CASE_STUDIES } from './data/caseStudies'
 import { findDocsPage } from './data/docsNav'
 import { findPost } from './data/blog'
-// The Seed Library expo poster doubles as the default Open Graph share image
-// for any route that isn't a case study (the case study hero replaces it).
-import seedHero from './assets/seed-expo-poster.png'
+// Default Open Graph share image for any route without its own (case study
+// heroes and blog post heroes replace it). It's a screenshot of the home
+// page, kept in public/ so index.html can reference the same file for
+// crawlers that don't run JavaScript (LinkedIn, iMessage, Slack).
+const DEFAULT_SHARE_IMAGE = '/share-home.jpg'
 
 // The full route table. Keys are URL path segments (no leading slash); values
 // are the page components. Adding a new route is exactly four steps:
@@ -182,7 +184,7 @@ function metaForRoute(routeKey) {
       PAGE_DESCRIPTIONS[routeKey] ||
       PAGE_DESCRIPTIONS[routeRoot] ||
       DEFAULT_DESCRIPTION,
-    image: post?.heroImage || cs?.heroImage || seedHero,
+    image: post?.heroImage || cs?.heroImage || DEFAULT_SHARE_IMAGE,
     noindex: INTERNAL_ROUTES.has(routeKey) || INTERNAL_ROUTES.has(routeRoot),
   }
 }

@@ -260,6 +260,23 @@
   color: var(--ink-mid);
   line-height: 1.6;
 }
+/* Inline text link inside the hero summary that opens a Lightbox (a
+   button, since it doesn't navigate). Reset button chrome so it reads
+   as part of the sentence. */
+.hero-meta .lead-link {
+  font: inherit;
+  color: var(--good);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: zoom-in;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.hero-meta .lead-link:hover {
+  text-decoration-thickness: 2px;
+}
 
 .specs {
   grid-column: 3;

@@ -64,7 +64,7 @@ Pushes to `main` deploy to GitHub Pages via `.github/workflows/deploy.yml`. Beca
 portfolio/
 ├── public/                  # Static assets served verbatim from /
 │   ├── favicon.*
-│   ├── share-default.png    # Default OG share image
+│   ├── share-home.jpg       # Default OG share image (home page screenshot)
 │   └── *-demo.mp4           # Video demos
 ├── src/
 │   ├── assets/              # Images / SVGs imported by JS (hashed by Vite)
