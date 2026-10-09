@@ -5,6 +5,17 @@
   min-height: 100vh;
   background: var(--bg);
   color: var(--ink);
+  /* Own stacking context so .cursor-grid's z-index: -1 lands above this
+     background but below every piece of content. */
+  isolation: isolate;
+}
+.cursor-grid {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .home-corner-links {

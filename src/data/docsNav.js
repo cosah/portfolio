@@ -34,6 +34,7 @@ export const DOCS_NAV = [
     section: 'Data',
     items: [
       { path: 'data/case-studies', title: 'CASE_STUDIES Schema' },
+      { path: 'data/projects', title: 'PROJECTS Schema' },
     ],
   },
   {
@@ -70,6 +71,7 @@ export const DOCS_NAV = [
       { path: 'components/pull-quote', title: 'PullQuote' },
       { path: 'components/stat-row', title: 'StatRow' },
       { path: 'components/contrib-grid', title: 'ContribGrid' },
+      { path: 'components/cursor-grid', title: 'CursorGrid' },
     ],
   },
 ]

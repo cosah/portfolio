@@ -5,11 +5,12 @@
 // is a real anchor (or a button for Lightbox previews) so middle-click and
 // "open in new tab" work natively.
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { CASE_STUDIES } from '../data/caseStudies'
 import { PROJECTS } from '../data/projects'
 import Navbar from '../components/Navbar'
 import Lightbox from '../components/Lightbox'
+import CursorGrid from '../components/CursorGrid'
 
 // Normalize both data sources into one card shape. Projects come first so
 // that, when two items share a sortDate month, the project wins the tie.
@@ -59,8 +60,30 @@ export default function Home() {
   const [previewKey, setPreviewKey] = useState(null)
   const previewItem = WORK.find((w) => w.key === previewKey)
 
+  // The cursor grid is confined to the hero's text area: from the left
+  // edge to the meta panel's divider line, and down to the hero's bottom
+  // rule. When the meta panel stacks under the text (narrow windows), it
+  // stops at the top of the panel instead.
+  const headerRef = useRef(null)
+  const metaRef = useRef(null)
+  const heroGridRegion = () => {
+    const header = headerRef.current
+    if (!header) return null
+    const h = header.getBoundingClientRect()
+    const region = { left: 0, top: h.top, right: document.documentElement.clientWidth, bottom: h.bottom - 1 }
+    const meta = metaRef.current?.getBoundingClientRect()
+    if (meta) {
+      if (meta.left > h.left + h.width / 2) region.right = meta.left
+      else region.bottom = meta.top
+    }
+    return region
+  }
+
   return (
     <div className="home-page">
+      {/* Decorative gridline reveal around the cursor, confined to the
+          hero. Sits behind all content (see .cursor-grid in index.css). */}
+      <CursorGrid getRegion={heroGridRegion} />
       {/* Skip link is the first focusable element. Keyboard users hitting
           Tab once on page load land here, can press Enter, and jump
           straight to the work list. WCAG 2.4.1. */}
@@ -71,7 +94,7 @@ export default function Home() {
           the "work / [slug]" default and replaces it with "Home". */}
       <Navbar crumbOverride="Home" hideProgress />
 
-      <header className="home-header">
+      <header className="home-header" ref={headerRef}>
         <div>
           <p className="home-eyebrow">Portfolio · 2026</p>
           <h1>
@@ -81,7 +104,7 @@ export default function Home() {
           </h1>
           <p>Case studies and builds in product design, project management, and UX research. Most come from real clients and real usability tests, and several are live apps you can open.</p>
         </div>
-        <div className="home-meta">
+        <div className="home-meta" ref={metaRef}>
           {HOME_META.map(({ label, value }) => (
             <div key={label} className="row">
               <span>{label.toLowerCase()}</span>

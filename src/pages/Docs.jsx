@@ -324,7 +324,7 @@ npm run dev`}
       <h2>First places to look</h2>
       <ul>
         <li><code>src/App.jsx</code> — route registry and meta-tag/analytics wiring.</li>
-        <li><code>src/data/caseStudies.js</code> — content metadata for the home grid.</li>
+        <li><code>src/data/caseStudies.js</code> and <code>src/data/projects.js</code> — content for the home work grid.</li>
         <li><code>src/css/variables.css</code> — every color and font token.</li>
         <li><code>src/pages/Home.jsx</code> — the landing page.</li>
       </ul>
@@ -364,7 +364,7 @@ function ProjectStructure() {
 │   ├── components/          # Reusable React components (Navbar, Lightbox, …)
 │   ├── pages/               # One file per route (Home, SeedLibrary, …)
 │   ├── content/blog/        # Blog posts as Markdown (one file per slug)
-│   ├── data/                # Static content: caseStudies, docsNav, blog
+│   ├── data/                # Static content: caseStudies, projects, docsNav, blog
 │   ├── hooks/               # Custom React hooks
 │   ├── css/                 # Global CSS modules (variables, layout, …)
 │   ├── App.jsx              # Route registry, meta-tag + analytics wiring
@@ -1091,6 +1091,17 @@ function SeoMeta() {
         Audit, Todo, Layout Demo) have bespoke descriptions in <code>PAGE_DESCRIPTIONS</code>.
       </p>
 
+      <h2>Default share image</h2>
+      <p>
+        Any route without its own image uses <code>public/share-home.jpg</code>, a 1200 × 628
+        screenshot of the home page (<code>DEFAULT_SHARE_IMAGE</code> in <code>App.jsx</code>).{' '}
+        <code>index.html</code> points at the same file with an absolute URL plus{' '}
+        <code>og:image:width</code>, <code>og:image:height</code>, and <code>og:image:alt</code>,
+        since LinkedIn and most other crawlers only read the static tags. When the home page
+        changes enough to matter, retake the screenshot under a new filename so platforms
+        that cache previews fetch it fresh, then re-scrape with LinkedIn's Post Inspector.
+      </p>
+
       <Note kind="warn">
         <p>
           The dynamic updates help JS-aware crawlers. For social previews, the fallback in{' '}
@@ -1193,6 +1204,67 @@ function AccessibilityDoc() {
 /* ============================================================
    Data
    ============================================================ */
+
+function ProjectsSchema() {
+  return (
+    <PageWrap
+      eyebrow="DATA"
+      title="PROJECTS Schema"
+      lede="Builds that aren't case studies: live apps, side projects, and hardware. Listed on the home page alongside the case studies."
+      path="data/projects"
+    >
+      <p>
+        Defined in <code>src/data/projects.js</code>. Exported as <code>PROJECTS</code>.
+        Home merges these with <code>CASE_STUDIES</code> into one work grid and sorts the
+        combined list by <code>sortDate</code>, newest first. When two items share a month,
+        projects come first, and otherwise ties keep data-file order.
+      </p>
+
+      <h2>Entry shape</h2>
+      <PropsTable rows={[
+        { name: 'id', type: 'string', required: true, desc: 'Unique key for the card.' },
+        { name: 'title', type: 'string', required: true, desc: 'Card title.' },
+        { name: 'eyebrow', type: 'string', required: true, desc: 'Short uppercase context, e.g. "Web app · Personal project".' },
+        { name: 'term', type: 'string', required: true, desc: 'When the work happened, shown after the eyebrow ("Oct 2026").' },
+        { name: 'sortDate', type: "'YYYY-MM'", required: true, desc: 'Month the work ended. Drives home page order.' },
+        { name: 'description', type: 'string', required: true, desc: 'Two to three sentence summary on the card.' },
+        { name: 'tags', type: 'string[]', required: true, desc: 'Tool and skill chips.' },
+        { name: 'thumb', type: 'imported image', required: true, desc: 'Card thumbnail. Shown in a 16:10 frame, cropped from the top.' },
+        { name: 'thumbAlt', type: 'string', default: '—', desc: 'Alt text, used when the thumbnail opens in the Lightbox.' },
+        { name: 'panel', type: 'boolean', default: 'false', desc: 'Thumbnail is a render of a physical screen. Shown whole on black instead of cropped.' },
+        { name: 'preview', type: '{ label }', default: '—', desc: 'Lightbox caption for a project with no public URL. Pair it with a { preview: true } link.' },
+        { name: 'links', type: 'Array<{ label, href } | { label, preview: true }>', required: true, desc: 'Card buttons, left to right. The first is the filled primary button and the thumbnail target. External hrefs open in a new tab.' },
+      ]} />
+
+      <Note kind="warn">
+        <p>
+          The e-ink calendar's live deployment serves a real calendar, so its card only links
+          to the code and opens a render made from the sample fixture data. Never point it at
+          the deployment or use a render made from live data.
+        </p>
+      </Note>
+
+      <Code lang="js" head="projects.js">
+{`import myThumb from '../assets/projects/my-app.jpg'
+
+export const PROJECTS = [
+  // …existing entries
+  {
+    id: 'my-app',
+    title: 'My App',
+    eyebrow: 'Web app · Personal project',
+    term: 'Nov 2026',
+    sortDate: '2026-11',
+    description: 'What it does, who it is for, and one detail worth knowing.',
+    tags: ['React', 'TypeScript'],
+    thumb: myThumb,
+    links: [{ label: 'Open app', href: 'https://my-app.vercel.app/' }],
+  },
+]`}
+      </Code>
+    </PageWrap>
+  )
+}
 
 function CaseStudiesSchema() {
   return (
@@ -2030,6 +2102,66 @@ return (
   // …
 ]} />`,
   },
+  'cursor-grid': {
+    title: 'CursorGrid',
+    file: 'src/components/CursorGrid.jsx',
+    blurb:
+      'Decorative gridline reveal on the home page. A fixed, full-viewport canvas draws a 40px silver grid in a small circle around the mouse, with a gold glint that sweeps across the lines as the cursor travels. It sits behind every piece of content and never takes pointer events, so clicking and text selection work normally.',
+    props: [
+      { name: 'getRegion', type: '() => { left, top, right, bottom } | null', desc: 'Optional. Returns the viewport rect the effect is confined to. Called every frame, so it can measure live DOM and stays correct through scroll and resize. Without it, the whole viewport is the region.' },
+    ],
+    usage: `const headerRef = useRef(null)
+const metaRef = useRef(null)
+
+// Confine the grid to the hero's text area: left edge to the meta
+// panel's divider, down to the hero's bottom rule.
+const heroGridRegion = () => {
+  const h = headerRef.current?.getBoundingClientRect()
+  if (!h) return null
+  const m = metaRef.current?.getBoundingClientRect()
+  return { left: 0, top: h.top, right: m ? m.left : h.right, bottom: h.bottom - 1 }
+}
+
+return (
+  <div className="home-page">
+    <CursorGrid getRegion={heroGridRegion} />
+    <header className="home-header" ref={headerRef}>
+      …
+      <div className="home-meta" ref={metaRef}>…</div>
+    </header>
+  </div>
+)`,
+    notes: (
+      <>
+        <h3>Layering</h3>
+        <p>
+          The canvas is <code>position: fixed</code> with <code>z-index: -1</code>, and{' '}
+          <code>.home-page</code> sets <code>isolation: isolate</code>. That makes the page its
+          own stacking context, so the canvas paints above the page background but below every
+          piece of content. Opaque surfaces like the work cards cover it completely.
+        </p>
+        <h3>Behavior</h3>
+        <ul>
+          <li>Fades in while any part of the reveal circle overlaps the region, and fades out once it doesn't or the mouse leaves the window.</li>
+          <li>The right and bottom edges of the region get a linear fade over <code>EDGE_FADE</code> px, down to <code>EDGE_MIN</code> (1%) at the line and zero past it.</li>
+          <li>The glint advances with cursor travel, not time. When the fade settles, the animation loop stops and the last frame stays painted, so an idle page costs nothing.</li>
+          <li>The grid is anchored to page coordinates, so it scrolls with the content.</li>
+          <li>Touch-only devices (no hover, coarse pointer) never render it. With <code>prefers-reduced-motion</code>, the grid follows the cursor but the glint stays still.</li>
+        </ul>
+        <h3>Tuning</h3>
+        <PropsTable rows={[
+          { name: 'CELL', type: 'number', default: '40', desc: 'Grid spacing in px (half the 80px case-study hero grid).' },
+          { name: 'RADIUS', type: 'number', default: '112', desc: 'Reveal radius in px.' },
+          { name: 'PEAK_ALPHA', type: 'number', default: '0.7', desc: 'Overall opacity at the cursor.' },
+          { name: 'SILVER / SILVER_BRIGHT / GOLD', type: 'rgba string', desc: 'Line color, glint shoulder, and glint peak (GOLD matches --good).' },
+          { name: 'BAND_GAP', type: 'number', default: '176', desc: 'Distance between glints along the diagonal, in px.' },
+          { name: 'TRAVEL', type: 'number', default: '0.9', desc: 'Glint travel per px of cursor movement.' },
+          { name: 'EDGE_FADE', type: 'number', default: '100', desc: 'Length of the fade inside the right and bottom edges, in px.' },
+          { name: 'EDGE_MIN', type: 'number', default: '0.01', desc: 'Opacity multiplier left at the edge line itself.' },
+        ]} />
+      </>
+    ),
+  },
 }
 
 function ComponentDoc({ data, path }) {
@@ -2107,6 +2239,11 @@ function ComponentsIndex() {
         <li><a href="/docs/components/stat-row">StatRow</a> — large statistics row.</li>
         <li><a href="/docs/components/contrib-grid">ContribGrid</a> — team / contributor grid.</li>
       </ul>
+
+      <h2>Decoration</h2>
+      <ul>
+        <li><a href="/docs/components/cursor-grid">CursorGrid</a> — shimmering gridline reveal around the cursor on the home page hero.</li>
+      </ul>
     </PageWrap>
   )
 }
@@ -2145,6 +2282,7 @@ const PAGES = {
   'patterns/analytics': AnalyticsDoc,
   'patterns/accessibility': AccessibilityDoc,
   'data/case-studies': CaseStudiesSchema,
+  'data/projects': ProjectsSchema,
   'blog': BlogSystem,
   'blog/editor': BlogEditorDoc,
   'components': ComponentsIndex,

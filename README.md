@@ -12,6 +12,7 @@ The docs cover architecture, routing, the design system, every reusable componen
 
 - **Five case studies** spanning research-led UX, product strategy, project management, iOS design, and a WCAG audit
 - **Personal builds** (NoteTube, Pathways, an e-ink wall calendar) listed alongside them on the home page, newest first
+- **Cursor grid on the home hero**: a canvas reveals a silver grid with a gold glint around the cursor, confined to the hero text area and layered behind all content
 - **Self-audited accessibility** — WCAG 2.1 AA, 11 findings resolved across two passes (see [`/audit`](https://anthonyships.com/audit))
 - **Per-route SEO** — `document.title`, `<meta name="description">`, Open Graph, Twitter Cards, and `robots` all update dynamically per route, with static fallbacks in `index.html` for crawlers that don't run JavaScript
 - **HTML5 history-API routing in ~60 lines** — no router library; clean URLs (`/seed-library`, not `/#/seed-library`); a tiny SPA-fallback step at build time makes GitHub Pages serve `index.html` on any path
@@ -68,10 +69,10 @@ portfolio/
 │   └── *-demo.mp4           # Video demos
 ├── src/
 │   ├── assets/              # Images / SVGs imported by JS (hashed by Vite)
-│   ├── components/          # Reusable React components (26 of them)
+│   ├── components/          # Reusable React components (27 of them)
 │   ├── pages/               # One file per route
 │   ├── content/blog/        # Blog posts as Markdown (one file per slug)
-│   ├── data/                # Static content (caseStudies, docsNav, blog)
+│   ├── data/                # Static content (caseStudies, projects, docsNav, blog)
 │   ├── hooks/               # Custom React hooks
 │   ├── css/                 # Global CSS modules
 │   ├── App.jsx              # Route registry + meta-tag/analytics wiring
@@ -140,11 +141,13 @@ The full technical documentation lives at [`/docs`](https://anthonyships.com/doc
   - **[Accessibility](https://anthonyships.com/docs/patterns/accessibility)** — WCAG patterns from the audit
 - **Data**
   - **[`CASE_STUDIES` Schema](https://anthonyships.com/docs/data/case-studies)** — the canonical content model
+  - **[`PROJECTS` Schema](https://anthonyships.com/docs/data/projects)** — personal builds shown in the home work grid
 - **Components** — props, types, and usage for every reusable component:
   - Layout & navigation: Navbar, ProgressBar, TableOfContents, CaseStudyHero, CaseStudyFooter, SectionLabel
   - Content & media: ImageSlot, ImageGrid, GridFrames, ScrollFigure, VideoSection, Lightbox
   - Carousels: BoardCarousel, PhoneCarousel, ResearchCarousel, DemoRail
   - Comparisons & highlights: BeforeAfterPair, Callout, DecisionCard, FindingBlock, PullQuote, StatRow, ContribGrid
+  - Decoration: CursorGrid
 
 ---
 

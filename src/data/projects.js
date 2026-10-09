@@ -56,7 +56,9 @@ export const PROJECTS = [
     thumb: einkThumb,
     thumbAlt: 'Sample three-day calendar in a Mondrian layout, with red, blue, yellow, and white event blocks on black',
     panel: true,
-    preview: { label: 'Sample render · Mondrian layout · 800 × 480, six inks' },
+    // 2x full-color render of the sample fixtures, before the six-ink
+    // conversion the panel gets, so it stays crisp on the page.
+    preview: { label: 'Sample render · Mondrian layout · full color, before six-ink conversion' },
     links: [
       { label: 'View sample render', preview: true },
       { label: 'Code', href: 'https://github.com/cosah/eink-calendar' },
