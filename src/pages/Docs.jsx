@@ -2106,7 +2106,7 @@ return (
     title: 'CursorGrid',
     file: 'src/components/CursorGrid.jsx',
     blurb:
-      'Decorative gridline reveal on the home page. A fixed, full-viewport canvas draws a 40px silver grid in a small circle around the mouse, with a gold glint that sweeps across the lines as the cursor travels. It sits behind every piece of content and never takes pointer events, so clicking and text selection work normally.',
+      'Decorative gridline reveal on the home page. A small canvas, just big enough for the reveal circle, follows the mouse and draws a 40px silver grid around it, with a gold glint that sweeps across the lines as the cursor travels. It sits behind every piece of content and never takes pointer events, so clicking and text selection work normally.',
     props: [
       { name: 'getRegion', type: '() => { left, top, right, bottom } | null', desc: 'Optional. Returns the viewport rect the effect is confined to. Called every frame, so it can measure live DOM and stays correct through scroll and resize. Without it, the whole viewport is the region.' },
     ],
@@ -2140,6 +2140,16 @@ return (
           own stacking context, so the canvas paints above the page background but below every
           piece of content. Opaque surfaces like the work cards cover it completely.
         </p>
+        <h3>Performance</h3>
+        <p>
+          The canvas is only <code>SIZE</code> px square (the circle plus a little room for the
+          glow) and moves with a CSS <code>transform</code> each frame. Its context transform
+          absorbs that offset, so drawing code still works in viewport coordinates. A
+          full-viewport canvas meant repainting millions of pixels per frame, which Firefox
+          (often a CPU-backed canvas) couldn't keep up with: about 30ms per frame, so the grid
+          trailed the cursor. The small canvas takes about 1.5ms. The glow is two wide, faint
+          strokes rather than <code>shadowBlur</code>, which is slow on CPU canvases.
+        </p>
         <h3>Behavior</h3>
         <ul>
           <li>Fades in while any part of the reveal circle overlaps the region, and fades out once it doesn't or the mouse leaves the window.</li>
@@ -2152,6 +2162,7 @@ return (
         <PropsTable rows={[
           { name: 'CELL', type: 'number', default: '40', desc: 'Grid spacing in px (half the 80px case-study hero grid).' },
           { name: 'RADIUS', type: 'number', default: '112', desc: 'Reveal radius in px.' },
+          { name: 'SIZE', type: 'number', default: 'RADIUS × 2 + 8', desc: 'Canvas edge length in px. Derived from RADIUS.' },
           { name: 'PEAK_ALPHA', type: 'number', default: '0.7', desc: 'Overall opacity at the cursor.' },
           { name: 'SILVER / SILVER_BRIGHT / GOLD', type: 'rgba string', desc: 'Line color, glint shoulder, and glint peak (GOLD matches --good).' },
           { name: 'BAND_GAP', type: 'number', default: '176', desc: 'Distance between glints along the diagonal, in px.' },
