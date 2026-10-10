@@ -11,9 +11,10 @@ import diagHero from '../assets/diag-hero.png'
 //   - term: shown after the eyebrow ("Fall 2025").
 //   - sortDate: 'YYYY-MM' the work ended. Home sorts newest first. Ties
 //     keep array order.
-//   - links: card buttons, left to right. The first is the primary
-//     (filled) button. The case study always goes first, then any live
-//     site or prototype.
+//   - links: card buttons, left to right. Any live site or prototype goes
+//     first and is the primary (filled) button. The case study link goes
+//     last and is always styled as a secondary (outline) button, even
+//     when it's the only one, so gold fill always means "open the thing".
 //   - cardImage: optional thumbnail override. Defaults to heroImage, which
 //     stays the og:image and preload target.
 //   - cardImagePosition / cardImageFit: optional object-position /
@@ -33,8 +34,8 @@ export const CASE_STUDIES = [
     award: 'UMSI Expo 26 BSI UX Pathway Award',
     heroImage: seedSiteHero,
     links: [
-      { label: 'Read the case study', href: '/seed-library' },
       { label: 'Open site', href: 'https://seed-library-eight.vercel.app/' },
+      { label: 'Read the case study', href: '/seed-library' },
     ],
   },
   {
@@ -62,8 +63,8 @@ export const CASE_STUDIES = [
     tags: ['Hypothesis Testing', 'Two-Sided Marketplace', 'Figma Make'],
     heroImage: roamioHero,
     links: [
-      { label: 'Read the case study', href: '/roamio' },
       { label: 'Open prototype', href: 'https://www.figma.com/make/8aDzPLod12FLVoPWeNwNGD/Travel-Package-Service-Prototype?fullscreen=1' },
+      { label: 'Read the case study', href: '/roamio' },
     ],
   },
   {
@@ -77,8 +78,8 @@ export const CASE_STUDIES = [
     tags: ['Product Strategy', 'Hi-Fi Prototyping', 'Usability Testing'],
     heroImage: diagHero,
     links: [
-      { label: 'Read the case study', href: '/the-diag' },
       { label: 'Open prototype', href: 'https://www.figma.com/proto/GPrbf3nseOkGdO0t5HjXn4/SI-407-Group-Project?node-id=419-11643&starting-point-node-id=419-11643&scaling=scale-down&page-id=377-4356' },
+      { label: 'Read the case study', href: '/the-diag' },
     ],
   },
   {

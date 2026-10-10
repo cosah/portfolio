@@ -161,7 +161,11 @@ export default function Home() {
                   </ul>
                   <div className="work-links">
                     {item.links.map((link, i) => {
-                      const cls = `work-link${i === 0 ? ' is-primary' : ''}`
+                      // The first link is primary (filled) unless it's an
+                      // internal case-study link. Those are always outline,
+                      // so gold fill consistently means "open the thing".
+                      const primary = i === 0 && (link.preview || isExternal(link.href))
+                      const cls = `work-link${primary ? ' is-primary' : ''}`
                       if (link.preview) {
                         return (
                           <button key={link.label} type="button" className={cls} onClick={openPreview}>

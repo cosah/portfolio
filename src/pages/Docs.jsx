@@ -1071,7 +1071,7 @@ function LayoutDoc() {
         <li>
           <strong>Thumbnails aren't links.</strong> Cards point to different kinds of places
           (a case study, a live app, a preview), so every action is a labeled button and the
-          image is decorative. The primary button is filled gold, the rest are outlines.
+          image is decorative. The first "open" action (live app, site, prototype, or preview) is the filled gold primary button. Everything else, including "Read the case study", is an outline.
         </li>
         <li>
           All three transitions run over <code>0.4s ease</code> so they move together. The
@@ -1328,7 +1328,7 @@ function CaseStudiesSchema() {
         { name: 'sortDate', type: "'YYYY-MM'", required: true, desc: 'Month the work ended. Home sorts newest first. Ties keep array order, with projects ahead of case studies.' },
         { name: 'tags', type: 'string[]', required: true, desc: 'Small chips on the Home card (methods, tools).' },
         { name: 'award', type: 'string', default: '—', desc: 'Optional award chip displayed on the Home card.' },
-        { name: 'links', type: 'Array<{ label, href }>', required: true, desc: 'Card buttons, left to right. The first is the filled primary button, so the case study goes first, then any live site or prototype. External hrefs open in a new tab.' },
+        { name: 'links', type: 'Array<{ label, href }>', required: true, desc: 'Card buttons, left to right. Any live site or prototype goes first as the filled primary button. The case study link goes last and is always an outline (secondary) button, even when it is the only one. External hrefs open in a new tab.' },
         { name: 'heroImage', type: 'imported image', default: '—', desc: 'Image module (import from ../assets). Used as the og:image, the hero preload, and the default Home thumbnail.' },
         { name: 'cardImage', type: 'imported image', default: 'heroImage', desc: 'Optional Home thumbnail override.' },
         { name: 'cardImagePosition', type: 'string', default: "'top center'", desc: 'Optional object-position for the thumbnail.' },
