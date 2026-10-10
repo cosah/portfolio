@@ -1069,6 +1069,11 @@ function LayoutDoc() {
           to <code>--rule</code>, the thumbnail fade lifts, and the image scales to 1.02.
         </li>
         <li>
+          <strong>Thumbnails aren't links.</strong> Cards point to different kinds of places
+          (a case study, a live app, a preview), so every action is a labeled button and the
+          image is decorative. The primary button is filled gold, the rest are outlines.
+        </li>
+        <li>
           All three transitions run over <code>0.4s ease</code> so they move together. The
           border is always present (just transparent at rest), so nothing shifts on hover.
         </li>
@@ -1263,7 +1268,7 @@ function ProjectsSchema() {
         { name: 'thumbAlt', type: 'string', default: '—', desc: 'Alt text, used when the thumbnail opens in the Lightbox.' },
         { name: 'panel', type: 'boolean', default: 'false', desc: 'Thumbnail is a render of a physical screen. Shown whole on black instead of cropped.' },
         { name: 'preview', type: '{ label }', default: '—', desc: 'Lightbox caption for a project with no public URL. Pair it with a { preview: true } link.' },
-        { name: 'links', type: 'Array<{ label, href } | { label, preview: true }>', required: true, desc: 'Card buttons, left to right. The first is the filled primary button and the thumbnail target. External hrefs open in a new tab.' },
+        { name: 'links', type: 'Array<{ label, href } | { label, preview: true }>', required: true, desc: 'Card buttons, left to right. The first is the filled primary button. External hrefs open in a new tab.' },
       ]} />
 
       <Note kind="warn">
@@ -1323,7 +1328,7 @@ function CaseStudiesSchema() {
         { name: 'sortDate', type: "'YYYY-MM'", required: true, desc: 'Month the work ended. Home sorts newest first. Ties keep array order, with projects ahead of case studies.' },
         { name: 'tags', type: 'string[]', required: true, desc: 'Small chips on the Home card (methods, tools).' },
         { name: 'award', type: 'string', default: '—', desc: 'Optional award chip displayed on the Home card.' },
-        { name: 'links', type: 'Array<{ label, href }>', required: true, desc: 'Card buttons, left to right. The first is the filled primary button and the thumbnail target. External hrefs open in a new tab.' },
+        { name: 'links', type: 'Array<{ label, href }>', required: true, desc: 'Card buttons, left to right. The first is the filled primary button, so the case study goes first, then any live site or prototype. External hrefs open in a new tab.' },
         { name: 'heroImage', type: 'imported image', default: '—', desc: 'Image module (import from ../assets). Used as the og:image, the hero preload, and the default Home thumbnail.' },
         { name: 'cardImage', type: 'imported image', default: 'heroImage', desc: 'Optional Home thumbnail override.' },
         { name: 'cardImagePosition', type: 'string', default: "'top center'", desc: 'Optional object-position for the thumbnail.' },

@@ -2,9 +2,11 @@
 // CASE_STUDIES and sorts everything by `sortDate`, newest first. Fields
 // match the case study card fields documented in caseStudies.js.
 //
-//   - links: `href` starting with "/" is an internal route (SPA navigation
-//     via App.jsx's click interceptor), anything else opens in a new tab.
-//     `preview: true` opens the thumbnail in the Lightbox instead.
+//   - links: card buttons, left to right. The first is the primary
+//     (filled) button. `href` starting with "/" is an
+//     internal route (SPA navigation via App.jsx's click interceptor),
+//     anything else opens in a new tab. `preview: true` opens the thumbnail
+//     image in the Lightbox instead.
 //   - panel: the thumbnail is a render of a physical screen, so it's shown
 //     whole on black rather than cropped like a browser screenshot.
 //   - preview: Lightbox caption for projects with no public URL. The e-ink

@@ -120,11 +120,11 @@ export default function Home() {
             files rather than reordering arrays. */}
         <ul className="work-grid">
           {WORK.map((item) => {
-            const primary = item.links[0]
             const openPreview = () => setPreviewKey(item.key)
-            // The thumbnail repeats the primary action for mouse users. It's
-            // hidden from keyboard and screen readers because the primary
-            // button below offers the same action.
+            // The thumbnail is decorative and not a link: cards point to
+            // different kinds of places (case study, live app, preview), so
+            // every action is an explicit, labeled button instead. Hidden
+            // from screen readers since the title and buttons carry meaning.
             const thumbClass = `work-thumb${item.panel ? ' is-panel' : ''}${item.cardText ? ' is-text' : ''}`
             const thumbInner = item.cardText ? (
               <span className="work-thumb-text">
@@ -141,15 +141,9 @@ export default function Home() {
             )
             return (
               <li key={item.key} className="work-card">
-                {primary.preview ? (
-                  <button type="button" className={thumbClass} onClick={openPreview} tabIndex={-1} aria-hidden="true">
-                    {thumbInner}
-                  </button>
-                ) : (
-                  <a className={thumbClass} href={primary.href} tabIndex={-1} aria-hidden="true" {...externalProps(primary.href)}>
-                    {thumbInner}
-                  </a>
-                )}
+                <div className={thumbClass} aria-hidden="true">
+                  {thumbInner}
+                </div>
 
                 <div className="work-body">
                   <p className="work-card-eyebrow">

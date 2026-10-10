@@ -11,9 +11,9 @@ import diagHero from '../assets/diag-hero.png'
 //   - term: shown after the eyebrow ("Fall 2025").
 //   - sortDate: 'YYYY-MM' the work ended. Home sorts newest first. Ties
 //     keep array order.
-//   - links: card buttons, left to right. The first is the primary (filled)
-//     button and also where the thumbnail links. A working site goes first,
-//     a prototype goes after the case study.
+//   - links: card buttons, left to right. The first is the primary
+//     (filled) button. The case study always goes first, then any live
+//     site or prototype.
 //   - cardImage: optional thumbnail override. Defaults to heroImage, which
 //     stays the og:image and preload target.
 //   - cardImagePosition / cardImageFit: optional object-position /
@@ -33,8 +33,8 @@ export const CASE_STUDIES = [
     award: 'UMSI Expo 26 BSI UX Pathway Award',
     heroImage: seedSiteHero,
     links: [
-      { label: 'Open site', href: 'https://seed-library-eight.vercel.app/' },
       { label: 'Read the case study', href: '/seed-library' },
+      { label: 'Open site', href: 'https://seed-library-eight.vercel.app/' },
     ],
   },
   {

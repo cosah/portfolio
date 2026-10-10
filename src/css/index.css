@@ -150,7 +150,6 @@
   background: var(--surface-2);
   border: 0;
   padding: 0;
-  cursor: pointer;
 }
 /* Bottom 50px of the thumbnail fades into the page background, so the
    image melts into the card-less layout. On hover the fade lifts and the
@@ -186,7 +185,6 @@
 .work-thumb.is-panel {
   background: #000;
   padding: 6%;
-  cursor: zoom-in;
 }
 .work-thumb.is-panel img {
   object-fit: contain;
@@ -197,7 +195,6 @@
   display: flex;
   align-items: flex-end;
   padding: 28px;
-  text-decoration: none;
   background:
     linear-gradient(var(--rule) 1px, transparent 1px) 0 0 / 100% 32px,
     var(--surface-2);
